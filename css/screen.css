@@ -1,0 +1,236 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0 0 20px 0;
+	padding: 0;
+	font-family: 'Lucida Grande';
+	font-size: 12px;
+	color: #000000;
+}
+
+h1 {
+	font-size: 16px;
+}
+
+h2 {
+	font-size: 14px;
+}
+
+h3 {
+	font-size: 12px;
+	font-weight: bold;
+}
+
+img {
+	border: 0;
+}
+
+a {
+	color: #1E4E71;
+}
+
+a:focus,
+a:active  {
+	outline: 0 !important;
+	-moz-outline: 0 !important;
+}
+
+code {
+	font-family: Monaco;
+	font-size: 12px;
+}
+
+pre {
+	font-family: Monaco;
+	font-size: 12px;
+	padding: 5px;
+	border: 1px dotted #DCDBDB;
+	overflow: auto;
+}
+
+/* ---------- TABLES ---------- */
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	th {
+		background: #F1F1F1;
+	}
+
+	td, th {
+		padding: 3px;
+		border: 1px solid #E1E2E2;
+		text-align: left;
+		vertical-align: top;
+	}
+
+/* ---------- /TABLES ---------- */
+
+/* ---------- DEFINITION LIST ---------- */
+
+	dl {
+		margin: 0;
+		padding: 0;
+	}
+
+	dl dt {
+		font-weight: bold;
+		margin-bottom: 10px;
+	}
+
+	dl dd {
+		margin-bottom: 20px;
+	}
+
+/* ---------- /DEFINITION LIST ---------- */
+
+/* ---------- NAVIGATION ----------*/
+
+	body#navigation {
+		background-image: url(../images/navigation/background.png);
+	}
+
+	body#navigation ul {
+		margin: 0;
+		padding: 0;
+		position: absolute;
+		left: 47px;
+		bottom: 0;
+	}
+
+	body#navigation ul li {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		float: left;
+		background-image: url(../images/navigation/normal.png);
+		height: 36px;
+		text-align: center;
+	}
+
+	body#navigation ul li.first {
+		background-image: url(../images/navigation/normal-first.png);
+	}
+
+	body#navigation ul li.last {
+		background-image: url(../images/navigation/buy.png);
+		width: 180px;
+	}
+
+	body#navigation ul li a {
+		color: #FFFFFF;
+		text-decoration: none;
+		line-height: 36px;
+		text-shadow: #333333 0px 1px 0px;
+		font-weight: bold;
+		font-size: 14px;
+		padding: 0 10px 0 10px;
+	}
+
+	body#navigation ul li a:hover {
+		text-shadow: none;
+	}
+
+	body#navigation div#navigationPoweredBy {
+		position: absolute;
+		top: 0;
+		right: 19px;
+		line-height: 39px;
+		font-size: 10px;
+		color: #706E6F;
+	}
+
+	body#navigation div#navigationPoweredBy a {
+		color: #706E6F;
+	}
+
+/* ---------- /NAVIGATION ----------*/
+
+div#contentWrap {
+	width: 980px;
+}
+
+div#content {
+	margin-left: 47px;
+	margin-top: 20px;
+}
+
+div.column1 {
+	width: 570px;
+	float: left;
+}
+
+div.column2 {
+	width: 330px;
+	float: right;
+	text-align: left;
+}
+
+/* ---------- HEADER ----------*/
+
+	.headerLeft {
+		float: left;
+		width: 150px;
+		margin-bottom: 20px;
+	}
+
+	.headerRight {
+		float: right;
+		text-align: left;
+		width: 420px;
+		padding-top: 5px;
+		margin-bottom: 20px;
+	}
+
+	.headerRight h1 {
+		font-size: 26px;
+	}
+
+	.headerRight h2 {
+		font-size: 18px;
+		color: #666666;
+	}
+
+/* ---------- /HEADER ----------*/
+
+table.mysql th {
+	width: 100px;
+}
+
+.frame {
+	padding: 20px;
+	border: 1px solid #DCDBDB;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+}
+
+.frame > h1,
+.frame > h2 {
+	margin-top: 0;
+	padding-top: 0;
+}
+
+ul.news {
+	margin: 0;
+	padding: 0;
+}
+
+ul.news li {
+	margin: 0 0 10px 0;
+	padding: 0;
+	list-style: none;
+}
+
+ul.news li div.headline {
+	margin: 0 0 5px 0;
+	font-weight: bold;
+}
+
+.cb {
+	clear: both;
+}

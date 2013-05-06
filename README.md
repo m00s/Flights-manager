@@ -1,4 +1,0 @@
-airlines
-========
-
-Airlines php project
