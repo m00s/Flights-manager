@@ -1,5 +1,5 @@
 <?php
-function getByQuery($query)
+function getVoli()
 	{
 		$host="localhost"; 
 		$user="root"; 
@@ -10,9 +10,14 @@ function getByQuery($query)
 		//$dbname="msartore-ES";
 		$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
 		mysql_select_db($dbname);
+		$query = "SELECT vi.giorno, v.oraP, v.oraA, a1.citta AS da, a2.citta AS a, timediff(v.oraA,v.oraP) 
+				  FROM (Viaggi vi JOIN Voli v ON vi.voloId=v.numero), Aeroporti a1, Aeroporti a2 
+				  WHERE a1.id=v.da AND a2.id=v.a AND vi.stato='previsto' ORDER BY vi.giorno LIMIT 0,5";
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 		$num_righe=mysql_num_rows($result);
 		$record = mysql_fetch_assoc($result);
+		while ($row = mysql_fetch_array($result))
+    			echo_row($row);
 		return $record;
 	}
 
@@ -86,26 +91,16 @@ function invert_data($data)
 	return $data_finale;
 }
 
-function getDurata($start, $end)
-{
-   $part = explode(":", $start);
-   $arr = explode(":", $end);
-
-   $diff = mktime($arr[0], $arr[1], 0,1,1,2004) - mktime($part[0], $part[1],0,1,1,2004);
-
-   $tempo = floor($diff / (60*60)).".".(($diff / 60) % 60)." h";
-
-   return $tempo;
-}
-
 function echo_row($row)
 {
 	echo "<tr align=\"center\" onMouseover=\"this.bgColor='#FFFFFF'\"onMouseout=\"this.bgColor='#DDDDDD'\"><td>$row[0]</td>";
 	echo "<td>$row[1]</td>";
 	echo "<td>$row[2]</td>";
+	echo "<td>$row[3]</td>";
+	echo "<td>$row[4]</td>";
 	echo "<td>$row[5]</td>";
 	//echo "<td><a href=\"default.php?cmd=ss&id=$row[5]&d=$row[0]\">VEDI</a></td></tr>";
-	echo "<td><a href=\"default.php?cmd=ss&id=$row[6]&d=$row[0]\">
+	echo "<td><a href=\"default.php?cmd=\">
 			<img src=\"images/go.png\" width=\"20px\" height=\"20px\" alt=\"vedi\" /></a></td></tr>";
 }
 

@@ -140,7 +140,7 @@
 			$arrivi = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 			$num_arrivi=mysql_num_rows($arrivi);
 			
-			
+			//FORM DI RICERCA
 			echo"<table align=\"center\" style=\"margin-top:50px\">
 				<td>
 					<form name=form1 method=\"POST\" action=\"default.php?cmd=search\">
