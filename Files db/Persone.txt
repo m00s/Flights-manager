@@ -1,0 +1,13 @@
+Persone
+
+----------------
+id	nome		cognome	cf				nascita		sesso	telefono
+0	milly	maietti	ffd5fs65re85gf8d	1975/01/14	F	0425154825
+1	luca	rossi	fadfsadsqe85gf8d	1929/11/15	M	0425548547
+2	andrea	maietti	fsdrewfewe85gf8d	1990/10/29	M	0425625948
+3	Francesca	Rossi	qww2wqerre85gf8d	1981/12/10	F	0425847596
+4	Marco	maietti	vfnbygh5re85gf8d	1972/05/06	M	0425785621
+5	Riccardo	Vescera	zscfbg65re85gf8d	1976/10/10	M	0425524869
+6	Lucia	bianchi	sefwghj5re85gf8d	19456/10/20	F	0425123568
+7	Luisa	verdi	qwfedh65re85gf8d	1943/10/30	F	0425754862
+

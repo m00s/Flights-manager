@@ -1,0 +1,8 @@
+Prenotazioni
+
+-----------------
+id	giorno		voloId	utente	acquistati
+0	2013-05-30	AZ25465	5	2
+1	2013-08-25	AV54875	6	1
+2	2013-04-12	AV54875	5	3
+3	2013-04-12	AV54875	7	4

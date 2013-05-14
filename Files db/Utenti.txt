@@ -1,0 +1,9 @@
+Clienti
+
+-------------
+id	nome	cognome	nascita	sesso	mail	password	type
+1	ciao	pao	1987/06/03	F	p@dom.it	password	Guest
+2	laic	pao	1987/06/03	M	a@dom.it	password	Guest
+3	marc	pao	1987/06/03	M	b@dom.it	password	Guest
+4	fran	pao	1987/06/03	M	c@dom.it	password	Admin
+5	alex	pao	1987/06/03	M	d@dom.it	password	Admin

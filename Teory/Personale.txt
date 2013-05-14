@@ -1,8 +1,0 @@
-Personale
-
--------------
-matricola	nome	cognome		CF					nascita		sesso	grado
-10112		mario	dejaneiro	srtmsm91p20c11g		20/09/1989	M		Comandante
-13298		milly	maietti		srtmsm91p20c11g		01/06/1965	F		Assistente
-98721		willa	russian		srtmsm91p20c11g		17/12/1976	F		Vice
-87639		jenna	haze		srtmsm91p20c11g		31/11/1991	F		Assistente
