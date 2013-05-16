@@ -4,18 +4,18 @@
 	$login=$_POST['mail'];
 	if($insert!="" && $login!="")
 	{
-		$insert=$_POST['password'];
-		$login=$_POST['mail'];
-		$arr = get_record($login, "mail");
+		$query="SELECT password, type FROM Utenti WHERE mail=\"$login\"";
+		$arr = executeQ($query);		
 		$pwd = $arr['password'];
-		if ($pwd == $insert)
+		if ($pwd == sha1($insert))
 		{
-			header("Location: http://localhost:8888/default.php");
-			//header("Location: http://basidati/basidati/~mabarich/1.php");
-			$rec = get_record($login, "mail");
-			echo $rec['id'];
+			//header("Location: http://basidati/basidati/~msartore/1.php");
+			if($arr['type'] == "Guest")
+				header("Location: http://localhost:8888/default.php");
+			else
+				header("Location: http://localhost:8888/admin.php");
 			session_start();
-			$_SESSION['id'] = $rec['id'];
+			$_SESSION['id'] = $rec['mail'];
 		}
 		else
 		{

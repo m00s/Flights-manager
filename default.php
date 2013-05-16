@@ -13,7 +13,6 @@
 	<table align=\"center\" style=\"margin-top:50px\">
 	<?
 	require "functions.php";
-	
 	$voli = getVoli();
 	?>
 	</table>

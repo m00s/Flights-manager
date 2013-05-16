@@ -53,10 +53,6 @@
 									<td><input type=\"TEXT\" name=\"mail\"/></td>
 								</tr>
 								<tr width=\"96\" align=\"right\" class=\"sm\">
-									<td><label>telefono</label></td>
-									<td><input type=\"TEXT\" name=\"tel\"/></td>
-								</tr>
-								<tr width=\"96\" align=\"right\" class=\"sm\">
 									<td><label>password</label></td>
 									<td><input type=\"password\" name=\"psw\"/></td>
 								</tr></td></table>
@@ -68,10 +64,7 @@
 							</div>";
 				break;
 				case "submit":
-					$query="INSERT INTO Persone (nome, cognome, cf, nascita, sesso, telefono) VALUES ('$_POST[nome]', '$_POST[cog]', '$_POST[cf]', '$_POST[nascita]', '$_POST[sex]','$_POST[tel]')";
-					insert_Ut($query);
-					// recuperare id Persona appena inserita per inserire il Cliente
-					$query="INSERT INTO Clienti (mail, password) VALUES ('$_POST[mail]', sha1('$_POST[psw]')) WHERE";
+					$query="INSERT INTO Utenti (nome, cognome, nascita, sesso, mail, password) VALUES ('$_POST[nome]', '$_POST[cog]', '$_POST[nascita]', '$_POST[sex]','$_POST[mail]',sha1('$_POST[psw]'))";
 					insert_Ut($query);
 					header("Location: http://localhost:8888/default.php");
 					$login=$_POST['mail'];

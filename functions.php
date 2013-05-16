@@ -21,8 +21,7 @@ function getVoli()
 		return $record;
 	}
 
-
-function get_record($dato, $campo)
+function executeQ($query)
 	{
 		$host="localhost"; 
 		$user="root"; 
@@ -33,7 +32,6 @@ function get_record($dato, $campo)
 		//$dbname="msartore-ES";
 		$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
 		mysql_select_db($dbname);
-		$query="SELECT * FROM Clienti WHERE $campo=\"$dato\"";
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 		$num_righe=mysql_num_rows($result);
 		$record = mysql_fetch_assoc($result);
@@ -93,7 +91,8 @@ function invert_data($data)
 
 function echo_row($row)
 {
-	echo "<tr align=\"center\" onMouseover=\"this.bgColor='#FFFFFF'\"onMouseout=\"this.bgColor='#DDDDDD'\"><td>$row[0]</td>";
+	echo "<tr align=\"center\" onMouseover=\"this.bgColor='#FFFFFF'\"onMouseout=\"this.bgColor='#DDDDDD'\">
+	<td>$row[0]</td>";
 	echo "<td>$row[1]</td>";
 	echo "<td>$row[2]</td>";
 	echo "<td>$row[3]</td>";
