@@ -33,7 +33,7 @@ CREATE TABLE Dipendenti (
        cognome		VARCHAR(15) NOT NULL,
        nascita		DATE NOT NULL,
        sesso		ENUM('M','F') DEFAULT "M",
-       grado		ENUM('assistente','comandante','vice comandante'),
+       grado		ENUM('assistente','comandante','vice'),
        UNIQUE (matricola),
        PRIMARY KEY(matricola)
 ) ENGINE=InnoDB;

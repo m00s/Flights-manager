@@ -1,7 +1,0 @@
-Piloti
-
---------------
-idDipendente	grado
-2	comandante
-3	vice comandante
-4	vice comandante

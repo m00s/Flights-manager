@@ -132,7 +132,7 @@
 			$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 			$num_righe=mysql_num_rows($result);
 			
-			$query="SELECT DISTINCT cittaP From Voli vo, Viaggi v WHERE vo.numero=v.voloId AND v.stato='previsto' ORDER BY cittaP";
+			$query="SELECT nome From Voli Aeroporti ORDER BY cittaP";
 			$partenze = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 			$num_partenze=mysql_num_rows($partenze);
 			

@@ -14,8 +14,6 @@ function getVoli()
 				  FROM (Viaggi vi JOIN Voli v ON vi.voloId=v.numero), Aeroporti a1, Aeroporti a2 
 				  WHERE a1.id=v.da AND a2.id=v.a AND vi.stato='previsto' ORDER BY vi.giorno LIMIT 0,5";
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
-		$num_righe=mysql_num_rows($result);
-		$record = mysql_fetch_assoc($result);
 		while ($row = mysql_fetch_array($result))
     			echo_row($row);
 		return $record;
@@ -33,7 +31,6 @@ function executeQ($query)
 		$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
 		mysql_select_db($dbname);
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
-		$num_righe=mysql_num_rows($result);
 		$record = mysql_fetch_assoc($result);
 		return $record;
 	}
@@ -99,9 +96,26 @@ function echo_row($row)
 	echo "<td>$row[4]</td>";
 	echo "<td>$row[5]</td>";
 	//echo "<td><a href=\"default.php?cmd=ss&id=$row[5]&d=$row[0]\">VEDI</a></td></tr>";
-	echo "<td><a href=\"default.php?cmd=\">
+	echo "<td><a href=\"default.php?cmd=details\">
 			<img src=\"images/go.png\" width=\"20px\" height=\"20px\" alt=\"vedi\" /></a></td></tr>";
 }
+
+function select($query){
+	$host="localhost"; 
+	$user="root"; 
+	$pwd= "root";
+	//$user="msartore"; 
+	//$pwd= "ND0yj5lV"; 
+	$dbname="Airlines";
+	//$dbname="msartore-ES";
+	$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
+	mysql_select_db($dbname);
+	$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+	while ($row = mysql_fetch_array($result))
+  		populate_select($row);
+	return $record;	
+}
+
 
 function populate_select($row)
 {
