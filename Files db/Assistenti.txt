@@ -1,6 +1,0 @@
-Assistenti
-
-------------
-idDipendente
-0
-1
