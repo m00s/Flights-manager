@@ -232,6 +232,35 @@
 								</div>";
 							}
 						break;
+					case "privileges":
+						if(isset($_GET['cmd'])){
+							// CONCATENAMENTO STRINGHE PER TIPOx
+							$id=$_POST[Id];
+							$tipo=tipo.$id;
+							$query="UPDATE Utenti SET type='$_POST[$tipo]' WHERE Id=$id";
+							executeQ($query);
+							header("Location: http://localhost:8888/administration.php?submitted=Privileges");
+						}
+						else{
+							echo "<div align=\"center\" style=\"padding-top: 20px;\">
+			  				<form method=\"POST\" action=\"administration.php?manage=privileges&cmd=submit\" class=\"form\">
+							<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+								<tr>
+									<td align=\"center\"><h2 class=\"tt\">Modifica Permessi</h2></td>
+								</tr>
+								<td>
+								<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >";
+									$query="SELECT Id, nome, cognome, mail, type FROM Utenti";
+									echo_Users($query);
+									echo"
+									<tr>
+										<td align=\"center\"><input type=\"submit\" value=\"Salva\" class=\"button\"/></td>
+									</tr>
+									</table>
+								</form>
+								</div>";
+							}
+						break;
 				}
 			}
 			else
@@ -243,6 +272,8 @@
 						<li><a href=\"administration.php?manage=viaggi\">Viaggi</a></li>
 						<li><a href=\"administration.php?manage=aerei\">Aerei</a></li>
 						<li><a href=\"administration.php?manage=aeroporti\">Aeroporti</a></li>
+						<li><a href=\"administration.php?manage=voli\">Modifica un Volo esistente</a></li>
+						<li><a href=\"administration.php?manage=privileges\">Gestisci privilegi</a></li>
 					</ul>
 				</div>";
 			}

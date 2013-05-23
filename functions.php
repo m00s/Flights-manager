@@ -18,6 +18,21 @@ function getVoli()
     			echo_row($row);
 		return $record;
 	}
+	
+function changePassword($mail, $oldP, $newP)
+	{
+		$host="localhost"; 
+		$user="root"; 
+		$pwd= "root";
+		//$user="msartore"; 
+		//$pwd= "ND0yj5lV"; 
+		$dbname="Airlines";
+		//$dbname="msartore-ES";
+		$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
+		mysql_select_db($dbname);
+		$query = "UPDATE Utenti SET password=sha1('$newP') WHERE mail=\"$mail\" AND password=sha1('$oldP')";
+		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+	}	
 
 function executeQ($query)
 	{
@@ -25,7 +40,7 @@ function executeQ($query)
 		$user="root"; 
 		$pwd= "root";
 		//$user="msartore"; 
-		//$pwd= "ND0yj5lV"; 
+		//$pwd= "ND0yj5lV";
 		$dbname="Airlines";
 		//$dbname="msartore-ES";
 		$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
@@ -116,6 +131,36 @@ function select($query){
 	return $record;	
 }
 
+function echo_Users($query){
+	$host="localhost"; 
+	$user="root"; 
+	$pwd= "root";
+	//$user="msartore"; 
+	//$pwd= "ND0yj5lV"; 
+	$dbname="Airlines";
+	//$dbname="msartore-ES";
+	$conn=mysql_connect($host, $user, $pwd) or die($_SERVER['PHP_SELF'] . "Connessione fallita!");
+	mysql_select_db($dbname);
+	$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+	while ($row = mysql_fetch_array($result)){
+		echo 
+		"<tr width=\"96\" align=\"right\" class=\"sm\">
+			<input type=\"hidden\" value=\"$row[0]\" name=\"Id\"/>
+			<td align=\"center\" style=\"padding-right:10px\"><label>$row[0]</label></td>
+			<td align=\"center\" style=\"padding-right:10px\"><label>$row[1]</label></td>
+			<td align=\"center\" style=\"padding-right:10px\"><label>$row[2]</label></td>
+			<td align=\"center\" style=\"padding-right:10px\"><label>$row[3]</label></td>";
+			if($row[4]=='Guest'){
+				echo"<td><input type=\"radio\" name=\"tipo$row[0]\" value=\"Guest\" checked=\"checked\"/>&nbspGuest</td>
+				<td><input type=\"radio\" name=\"tipo$row[0]\" value=\"Admin\"/>&nbspAdmin</td>";	
+			}
+			else{
+				echo"<td><input type=\"radio\" name=\"tipo$row[0]\" value=\"Guest\"/>&nbspGuest</td>
+				<td><input type=\"radio\" name=\"tipo$row[0]\" value=\"Admin\" checked=\"checked\"/>&nbspAdmin</td>";
+			}
+			echo "</tr>";
+	}
+}
 
 function populate_select($row)
 {
