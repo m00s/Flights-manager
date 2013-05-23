@@ -1,4 +1,7 @@
-DROP TABLE IF EXISTS Prenotazioni;
+DROP SCHEMA IF EXISTS Airlines;
+CREATE SCHEMA Airlines;
+USE Airlines;
+/*DROP TABLE IF EXISTS Prenotazioni;
 DROP TABLE IF EXISTS Assistenze;
 DROP TABLE IF EXISTS Viaggi;
 DROP TABLE IF EXISTS Voli;
@@ -7,7 +10,7 @@ DROP TABLE IF EXISTS Aerei;
 DROP TABLE IF EXISTS Stipendiati;
 DROP TABLE IF EXISTS Dipendenti;
 DROP TABLE IF EXISTS Utenti;
-
+*/
 SET FOREIGN_KEY_CHECKS = 0;
 
 /* Crea la tabella Utenti */
@@ -87,6 +90,7 @@ CREATE TABLE Voli (
 /* Crea la tabella Viaggi */
 
 CREATE TABLE Viaggi (
+	   idViaggio	INT AUTO_INCREMENT,
        giorno		DATE,
        voloId		VARCHAR(7),
        stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
@@ -97,7 +101,7 @@ CREATE TABLE Viaggi (
        postiliberi	INT (3),
        InseritoDa   INT(10) NOT NULL,
        
-       PRIMARY KEY (giorno,voloId),
+       PRIMARY KEY (idViaggio),
 
        FOREIGN KEY (InseritoDa)     REFERENCES Utenti (id)
                                     ON DELETE CASCADE ON UPDATE CASCADE,
@@ -115,13 +119,10 @@ CREATE TABLE Viaggi (
 /* Crea la tabella delle Assistenze */
 
 CREATE TABLE Assistenze (
-       giorno		DATE,
-       voloId		VARCHAR(7),
+       idViaggio	INT,
        assistente	INT(10),
-       PRIMARY KEY (giorno,voloId,assistente),
-       FOREIGN KEY (giorno)	REFERENCES Viaggi (giorno)
-                            	ON DELETE CASCADE ON UPDATE CASCADE,
-       FOREIGN KEY (voloId) 	REFERENCES Viaggi (voloId)
+       PRIMARY KEY (idViaggio,assistente),
+       FOREIGN KEY (idViaggio) 	REFERENCES Viaggi (idViaggio)
                             	ON DELETE CASCADE ON UPDATE CASCADE,
        FOREIGN KEY (assistente) REFERENCES Dipendenti (matricola)
                             	ON DELETE CASCADE ON UPDATE CASCADE
@@ -132,51 +133,58 @@ CREATE TABLE Assistenze (
 /* Crea la tabella Prenotazioni */
 
 CREATE TABLE Prenotazioni (
-       id		int(100) AUTO_INCREMENT,
-       giorno		DATE,
-       voloId	    VARCHAR(7),
+       id			INT(100) AUTO_INCREMENT,
+       idViaggio	INT,
        utente		INT(10),
        acquistati	INT(3),
        
        PRIMARY KEY (id),
-       FOREIGN KEY (giorno) 	REFERENCES Viaggi (giorno)
-                            	ON DELETE CASCADE ON UPDATE CASCADE,
-       FOREIGN KEY (voloId) 	REFERENCES Viaggi (voloId)
+       
+       FOREIGN KEY (idViaggio) 	REFERENCES Viaggi (idViaggio)
                             	ON DELETE CASCADE ON UPDATE CASCADE,
        FOREIGN KEY (utente) 	REFERENCES Utenti (id)
                             	ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-/* Trigger admin */
 
-delimiter $$
-CREATE TRIGGER PostiDisp
-AFTER INSERT ON Viaggi
-FOR EACH ROW
-BEGIN
-	SET NEW.postiliberi=PostiDisponibili(NEW.aereo);
-END;$$
-delimiter ;
-
-
-CREATE FUNCTION PostiDisponibili (aereo INT)
+/* Trigger admin 
+*/
+CREATE FUNCTION PostiDisponibili(aereo VARCHAR)
 	RETURNS INT DETERMINISTIC
-    RETURN SELECT posti FROM Aerei WHERE aereo=matricola;
+	RETURN Select posti from Aerei where aereo=matricola
+
+delimiter $
+
+
+DROP TRIGGER IF EXISTS Posti;
+CREATE TRIGGER Posti 
+BEFORE INSERT ON 'Viaggi'
+BEGIN
+	IF NEW.postiliberi =0
+		THEN
+			SET NEW.postiliberi=PostiDisponibili(NEW.aereo);
+	END IF;
+END;
+delimiter $
 
 
 /*
+
 CREATE VIEW dettagliVolo AS
 SELECT  vo.cittaP as Da, vo.cittaA as A, vo.OraP as Partenza, vo.OraA as Arrivo, TIMEDIFF(vo.OraA, vo.OraP) as Durata, pe.nome, pe.cognome, vi.prezzo, vi.postiliberi, a.marca, a.modello
 FROM Voli vo, Viaggi vi, Aerei a, Personale pe
 WHERE vi.voloId='AZ112' AND vi.dat='2012-08-12' AND vo.numero=vi.voloID AND pe.matricola=vi.comandante AND a.matricola=vi.aereo
 */
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Aeroporti.txt' INTO TABLE Aeroporti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Voli.txt' INTO TABLE Voli FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Aerei.txt' INTO TABLE Aerei FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Utenti.txt' INTO TABLE Utenti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Dipendenti.txt' INTO TABLE Dipendenti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Stipendiati.txt' INTO TABLE Stipendiati FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Viaggi.txt' INTO TABLE Viaggi FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Prenotazioni.txt' INTO TABLE Prenotazioni FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Assistenze.txt' INTO TABLE Assistenze FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
 
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Prenotazioni.txt' INTO TABLE Prenotazioni FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Assistenze.txt' INTO TABLE Assistenze FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Viaggi.txt' INTO TABLE Viaggi FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Voli.txt' INTO TABLE Voli FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Aeroporti.txt' INTO TABLE Aeroporti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Aerei.txt' INTO TABLE Aerei FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Stipendiati.txt' INTO TABLE Stipendiati FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Dipendenti.txt' INTO TABLE Dipendenti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-LOAD DATA LOCAL INFILE '/Users/msartoretto/Desktop/Airlines/Files db/Utenti.txt' INTO TABLE Utenti FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
+
+SET FOREIGN_KEY_CHECKS = 1;
+

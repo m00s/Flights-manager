@@ -1,8 +1,8 @@
 Assistenze
 
 ------------------
-giorno		voloID	assistente
-2013-05-30	AZ25465	0
-2013-05-30	AZ25465	1
-2013-04-12	AV54875	1
-2013-05-15	AP69856	1
+idViaggio	assistente
+0	0
+0	1
+2	1
+3	1
