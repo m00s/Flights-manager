@@ -6,4 +6,4 @@ matricola	nome	cognome	nascita	sesso	grado
 1234567878	maria	curo	1990/06/09	M	comandante	
 7612576125	luca	curo	1990/06/09	M	assistente	
 0923781912	lucia	curo	1990/06/09	M	assistente	
-0219862369	franco	curo	1990/06/09	M	vice
+0219862369	franco	curo	1990/06/09	M	vice comandante	

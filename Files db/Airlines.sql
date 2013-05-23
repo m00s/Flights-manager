@@ -149,12 +149,12 @@ CREATE TABLE Prenotazioni (
 
 /* Trigger admin 
 */
-
-delimiter $
-
 CREATE FUNCTION PostiDisponibili(aereo VARCHAR)
 	RETURNS INT DETERMINISTIC
 	RETURN Select posti from Aerei where aereo=matricola
+
+delimiter $
+
 
 DROP TRIGGER IF EXISTS Posti;
 CREATE TRIGGER Posti 
@@ -163,6 +163,7 @@ BEGIN
 	IF NEW.postiliberi =0
 		THEN
 			SET NEW.postiliberi=PostiDisponibili(NEW.aereo);
+	END IF;
 END;
 delimiter $
 
