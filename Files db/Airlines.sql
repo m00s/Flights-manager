@@ -147,17 +147,22 @@ CREATE TABLE Prenotazioni (
                             	ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-/* Trigger admin 
+/* Trigger admin */
 
 delimiter $$
-CREATE TRIGGER admin BEFORE DELETE ON account Utenti
+CREATE TRIGGER PostiDisp
+AFTER INSERT ON Viaggi
 FOR EACH ROW
 BEGIN
-        DECLARE Nuovo int(5);
-        
+	SET NEW.postiliberi=PostiDisponibili(NEW.aereo);
 END;$$
 delimiter ;
-*/
+
+
+CREATE FUNCTION PostiDisponibili (aereo INT)
+	RETURNS INT DETERMINISTIC
+    RETURN SELECT posti FROM Aerei WHERE aereo=matricola;
+
 
 /*
 CREATE VIEW dettagliVolo AS
