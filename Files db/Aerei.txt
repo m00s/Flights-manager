@@ -1,8 +1,0 @@
-Aerei
-
---------------
-matricola	marca	modello	anno	posti
-m1	Boeing	747	2010	500
-m2	Boeing	725	2012	350
-m3	Airbus	A380	2012	250
-m4	Airbus	A392	2010	150

@@ -1,9 +1,0 @@
-Stipendiati
-
---------------
-idDipendente	tipocontratto	stipendiomese
-0219862369	determinato	1000.00
-1234567878	determinato	1000.00
-7612576125	indeterminato	2000.00
-0219862369	indeterminato	2500.00
-0923781912	indeterminato	2800.00
