@@ -1,0 +1,15 @@
+Anagrafiche
+
+--------------
+idAnag	nome	cognome	nascita	sesso
+1	Marco	Curo	1990/06/09	M
+2	Maria	Curo	1990/06/09	M
+3	Luca	Curo	1990/06/09	M
+4	Lucia	Curo	1990/06/09	M
+5	Franco	Curo	1990/06/09	M
+6	Angelo	Duro	1985/08/09	M	
+7	Marta Stolta	1993/12/12	F
+8	Monica	Maietti	1989/10/09	F
+9	Monica	Maietti	1989/10/09	F
+10	Luca	Martini	1975/01/31	M
+11	Dio	Lupacchiotto	1980/06/09	M

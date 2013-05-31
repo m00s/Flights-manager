@@ -1,0 +1,10 @@
+Aeroporti
+
+----------------
+idAeroporto		nome	idLuogo
+1	Marco Polo	1
+2	Treviso	Canova	2
+3	Roma	Termini	3
+4	Milano	Linate	4
+5	Boston	Edward Lawrence Logan 5
+6	Londra	Stansted	6

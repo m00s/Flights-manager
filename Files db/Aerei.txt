@@ -1,0 +1,13 @@
+Aerei
+
+--------------
+matricola	marca	modello	anno	postiPrima	postiSeconda	idCompagnia
+N-4BA	Boeing	747	2010	500	100	200	2
+N-9AZ	Boeing	725	2012	350	100	200	3
+N-014	Airbus	A380	2012	250	80	150	2
+N-04AZ	Airbus	A392	2010	\N	150	300	3
+N-02AZ	Boeing	737-800	2011	\N	150	300	1
+N-01AZ	Boeing	737-800	2010	\N	150	300	1
+N-429	Airbus	A319	2013	\N	150	300	4
+N-659	Airbus	A320	2011	\N	150	300	5
+N-999	Airbus	A319	2010	\N	150	300	6

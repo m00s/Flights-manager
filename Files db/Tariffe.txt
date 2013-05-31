@@ -1,0 +1,8 @@
+Tariffe
+
+--------------
+idTariffa	idViaggio	prezzoPrima	prezzoSeconda	ridottoperc	idCompagnia
+1	1	2000	1350	20	2
+2	2	3000	1650	10	1
+3	3	2400	2000	10	1
+4	4	2700	2000	15	2

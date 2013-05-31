@@ -1,0 +1,5 @@
+Passeggeri
+
+-------------
+idAnag	tipo
+8	adulto

@@ -1,0 +1,10 @@
+Compagnie
+
+----------------
+id	nome	numTel	email	nazione
+1	EasyJet	+393338765123	info@easyjet.com
+2	Lufthansa	+393338765019	info@lufthansa.com
+3	Alitalia	+393338765876	info@alitalia.com
+4	Airfrance	+393338765346	info@airfrance.com
+5	Airarabia	+393338712354	info@airarabia.com
+6	Ryanair	+393338765456	info@ryanair.com
