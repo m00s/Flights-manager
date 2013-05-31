@@ -1,0 +1,59 @@
+	body{
+		background-image: url(images/bg.gif);
+	}
+
+	.sm{
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:12px;
+		color:#000;
+		line-height:1;
+	}
+	
+	.error{
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:12px;
+		color:red;
+		line-height:1;
+	}
+	
+	.mm{
+		font-family:Helvetica, Geneva, sans-serif;
+		font-size:13px;
+		color:#000;
+		line-height:1;
+	}
+	
+	.tt{
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:20px;
+		color:#999999;
+		line-height:1;
+	}
+	.header{
+		font-family:Verdana, Geneva, sans-serif;
+		font-size:15px;
+		line-height:1;
+	}
+	.divi{
+		position: center;
+		margin: auto;
+		padding-top: 100px;
+		width: 400px;
+		text-align: center;
+	}
+	label { /* Stili per la label */
+    display: block; /* Impostiamo la label come elemento blocco */
+    line-height: 30px; /* Altezza di riga */
+    width: 150px; /* Larghezza */
+	}	
+	
+	.button{
+	font-family: monospace;
+	font-weight: bold;
+	width: 90px;
+	background-color: #FF9900;
+	}
+	
+	.table{
+	background-color: #DDDDDD;
+	}
