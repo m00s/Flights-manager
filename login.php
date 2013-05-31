@@ -19,6 +19,7 @@
 		$cmd=$_GET['cmd'];
 		switch($cmd)
 		{
+		
 			case "out":		$_SESSION=array();
 							session_destroy();
 							header("Location: http://localhost:8888/login.php");

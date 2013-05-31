@@ -18,6 +18,7 @@
 			  <a href=\"default.php\">Torna alla home</a>";
 	}
 	else
+	
 	{
 		include "banneradmin.php";
 		include "sidebar.php";
