@@ -6,13 +6,12 @@
 		Airlines
 	</title>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="../component/style.css">
 	</head>
 </head>
 </html>
 
 	<?php
-	require "functions.php";
 	if(isset($_GET[cmd])){
 		changePassword($_POST[mail], $_POST[oldP], $_POST[newP]);
 		echo "<h3></br>Password cambiata con successo</h3></br>
@@ -20,6 +19,8 @@
 	}
 	else
 	{
+		include "banneradmin.php";
+		include "sidebar.php";
 		echo "<div align=\"center\" style=\"padding-top: 50px;\">
 			<form method=\"POST\" action=\"changepassword.php?cmd=submit\" class=\"form\">
 			<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000; padding:7px\">
@@ -27,7 +28,7 @@
 				<td align=\"center\"><h2 class=\"tt\">Recupero password</h2></td>
 			</tr>
 			<td>
-			<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
+			<table border=\"1\" bordercolor=\"#A6ABB5\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 				
 				<tr width=\"96\" align=\"right\" class=\"sm\">
 					<td><label>Email di registrazione</label></td>

@@ -165,7 +165,8 @@ CREATE TABLE Scali(
 
 CREATE TABLE Viaggi (
        idViaggio	INT AUTO_INCREMENT,
-		idCompagnia	INT,
+	   idCompBase	INT,
+	   idCompEsec	INT,
        giorno		DATE,
        idTratta		INT,
        stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
@@ -175,7 +176,9 @@ CREATE TABLE Viaggi (
        InseritoDa   INT,
        
        PRIMARY KEY (idViaggio),
-       FOREIGN KEY (idCompagnia) REFERENCES Compagnie (idCompagnia)
+       FOREIGN KEY (idCompBase) REFERENCES Compagnie (idCompagnia)
+                            	ON DELETE CASCADE ON UPDATE CASCADE,
+       FOREIGN KEY (idCompEsec) REFERENCES Compagnie (idCompagnia)
                             	ON DELETE CASCADE ON UPDATE CASCADE,
        FOREIGN KEY (InseritoDa)   REFERENCES Utenti (idAnag)
                                   ON UPDATE CASCADE,

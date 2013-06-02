@@ -6,7 +6,7 @@
 		Airlines
 	</title>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="component/style.css">
 	</head>
 </head>
 
@@ -39,7 +39,7 @@
 		<br />
 
 		<div align="center" style="margin-top:120px">
-			<form method="POST" action="check.php" class="form">
+			<form method="POST" action="component/check.php" class="form">
 			<table cellpadding="1" style="border-right:1px solid #000000; border-bottom:2px solid #000000; padding:7px">
 				<tr height="30px">
 					<td align="center"><h2 class="tt">Autenticati
@@ -47,7 +47,7 @@
 				</tr>
 				<tr>
 					<td>
-						<table width="260" border="1" bordercolor="#99FFFF" cellspacing="0" align="center" class="table">
+						<table width="260" border="1" bordercolor="#6397D0" cellspacing="0" align="center" class="table">
 						  <tr align="center">
 							<td width="96" align="right" class="sm">
 							<? if(isset($_GET['a'])){

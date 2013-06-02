@@ -5,7 +5,7 @@
 		Airlines 
 	</title>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="../component/style.css">
 	</head>
 </head>
 
@@ -14,7 +14,7 @@
 	<?
 	if(isset($_SESSION['Admin']))
 	{
-		require "functions.php";
+		//require "functions.php";
 		$id = $_SESSION['Admin'];
 		echo $id."&nbsp&nbsp<a href=\"login.php?cmd=out\">Logout</a><br/>";		
 		if(isset($_GET['submitted'])){
@@ -280,7 +280,7 @@
 						else{
 							echo "<div align=\"center\" style=\"padding-top: 20px;\">
 			  				<form method=\"POST\" action=\"administration.php?manage=privileges&cmd=submit\" class=\"form\">
-							<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+							<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:3px\">
 								<tr>
 									<td align=\"center\"><h2 class=\"tt\">Modifica Permessi</h2></td>
 								</tr>
