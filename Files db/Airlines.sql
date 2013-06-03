@@ -8,6 +8,7 @@ DROP TABLE IF EXISTS Prenotazioni;
 DROP TABLE IF EXISTS Assistenze;
 DROP TABLE IF EXISTS Offerte;
 DROP TABLE IF EXISTS Tariffe;
+DROP TABLE IF EXISTS CompagnieViaggi;
 DROP TABLE IF EXISTS Viaggi;
 DROP TABLE IF EXISTS Voli;
 DROP TABLE IF EXISTS Aeroporti;
@@ -165,8 +166,6 @@ CREATE TABLE Scali(
 
 CREATE TABLE Viaggi (
        idViaggio	INT AUTO_INCREMENT,
-	   idCompBase	INT,
-	   idCompEsec	INT,
        giorno		DATE,
        idTratta		INT,
        stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
@@ -176,10 +175,6 @@ CREATE TABLE Viaggi (
        InseritoDa   INT,
        
        PRIMARY KEY (idViaggio),
-       FOREIGN KEY (idCompBase) REFERENCES Compagnie (idCompagnia)
-                            	ON DELETE CASCADE ON UPDATE CASCADE,
-       FOREIGN KEY (idCompEsec) REFERENCES Compagnie (idCompagnia)
-                            	ON DELETE CASCADE ON UPDATE CASCADE,
        FOREIGN KEY (InseritoDa)   REFERENCES Utenti (idAnag)
                                   ON UPDATE CASCADE,
        FOREIGN KEY (idTratta) 	REFERENCES Tratte (idTratta)
@@ -192,12 +187,23 @@ CREATE TABLE Viaggi (
                             	ON UPDATE CASCADE               		
 ) ENGINE=InnoDB;
 
+
+/* Crea la tabella CompagnieViaggi */
+
+CREATE TABLE CompagnieViaggi (
+       idVolo	VARCHAR(7),
+       idViaggio	INT,
+       idCompagniaEsec	INT,
+       PRIMARY KEY(idVolo, idViaggio),
+       FOREIGN KEY (idCompagniaEsec)REFERENCES Compagnie (idCompagnia)
+                            	ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 /* Crea la tabella Tariffe */
 
 CREATE TABLE Tariffe(
 	idTariffa		INT AUTO_INCREMENT PRIMARY KEY,
 	idViaggio 		INT,
-	aereo			VARCHAR(10),
 	prezzoPrima		INT(4),
 	prezzoSeconda	INT(4)NOT NULL,
 	ridottoperc	INT,
@@ -205,9 +211,7 @@ CREATE TABLE Tariffe(
 	FOREIGN KEY (idCompagnia)	REFERENCES Compagnie (idCompagnia)
                             	ON DELETE CASCADE  ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)		REFERENCES Viaggi (idViaggio)
-                            	ON UPDATE CASCADE, 
-	FOREIGN KEY (aereo) 		REFERENCES Aerei (matricola)
-                            	ON DELETE CASCADE ON UPDATE CASCADE
+                            	ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
 
