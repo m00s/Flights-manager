@@ -141,11 +141,17 @@ END; $
 
 delimiter ;
 
+<<<<<<< HEAD
 /* View voli utente */
 
 CREATE VIEW viewVoli AS 
 SELECT l1.nomeCitta AS Partenza,ap.nome AS A1,v1.oraP AS OraPartenza,
 	l2.nomeCitta AS Arrivo,aa.nome AS A2,v1.oraA AS OraArrivo,vi.giorno,vi.prezzoSeconda,c.nome AS Compagnia, TIMEDIFF(v1.oraA, v1.oraP) AS Durata, i.idViaggio,vi.inseritoDa
+=======
+CREATE VIEW viewVoli AS 
+SELECT l1.nomeCitta AS Partenza,ap.nome AS A1,v1.oraP AS OraPartenza,
+	l2.nomeCitta AS Arrivo,aa.nome AS A2,v1.oraA AS OraArrivo,vi.giorno,vi.prezzoSeconda,c.nome AS Compagnia,vi.idViaggio,vi.inseritoDa
+>>>>>>> bfe0cac667a771377cff05499f60a00e4c808981
 	FROM (Viaggi vi NATURAL JOIN Tratte t) JOIN Compagnie c ON (vi.idCompagniaEsec=c.idCompagnia),
 		(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
 		(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo),
@@ -153,8 +159,11 @@ SELECT l1.nomeCitta AS Partenza,ap.nome AS A1,v1.oraP AS OraPartenza,
 		ON(dv.idVolo=v1.idVolo))JOIN Tratte t3 ON(v1.idTratta=t3.idTratta))
 	WHERE t.da=t1.da AND t.a=t2.a AND vi.idViaggio=vi2.idViaggio
 	GROUP BY vi.idViaggio;
+<<<<<<< HEAD
 
 CREATE VIEW Comandanti AS
 SELECT d.matricola, a.nome, a.cognome, a.sesso, a.nascita, c.nome AS Compagnia
 FROM Dipendenti d NATURAL JOIN Anagrafiche a NATURAL JOIN Compagnie c
 WHERE d.grado='comandante'
+=======
+>>>>>>> bfe0cac667a771377cff05499f60a00e4c808981
