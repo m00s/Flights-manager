@@ -1,8 +1,0 @@
-Utenti
-
--------------
-idAnag	mail	password	type
-6	p@dom.it	5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8	Guest
-7	a@dom.it	5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8	Guest
-9	b@dom.it	5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8	Guest
-10	c@dom.it	5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8	Admin

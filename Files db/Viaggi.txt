@@ -1,8 +1,0 @@
-Viaggi
-
--------------
-idViaggio	idCompagnia	giorno	idTratta	stato	aereo	comandante	vice	InseritoDa
-1	2	2013-05-30	1	previsto	N-4BA	2	5	11	10
-2	1	2013-08-25	3	previsto	N-01AZ	1	5	5	10
-3	1	2013-04-12	4	previsto	N-01AZ	1	5	5	10
-4	2	2013-04-13	2	previsto	N-4BA	2	5	11	10
