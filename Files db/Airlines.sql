@@ -1,6 +1,8 @@
 /*DROP SCHEMA IF EXISTS Airlines;
 CREATE SCHEMA Airlines;
 USE Airlines;*/
+SET FOREIGN_KEY_CHECKS = 0;
+
 DROP TABLE IF EXISTS Anagrafiche;
 DROP TABLE IF EXISTS Utenti;
 DROP TABLE IF EXISTS Dipendenti;
@@ -20,8 +22,7 @@ DROP TABLE IF EXISTS Posti;
 DROP TABLE IF EXISTS Prenotazioni;
 DROP TABLE IF EXISTS ViaggiVoli;
 DROP TABLE IF EXISTS ViaggiAerei;
-
-SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS DettagliViaggi;
 
 /* Crea la tabella Anagrafiche */
 
@@ -261,6 +262,22 @@ CREATE TABLE ViaggiAerei(
 	FOREIGN KEY (aereo)		REFERENCES Aerei(matricola)
 							ON UPDATE CASCADE
 )ENGINE=InnoDB;
+
+
+CREATE TABLE DettagliViaggi(
+	idViaggio		INT,
+	aereo			VARCHAR(10),
+	idVolo			VARCHAR(7),
+	PRIMARY KEY(idViaggio, idVolo, aereo),
+	FOREIGN KEY (idViaggio)	REFERENCES Viaggi(idViaggio)
+							ON UPDATE CASCADE,
+	FOREIGN KEY (idVolo)	REFERENCES Voli(numero)
+				ON UPDATE CASCADE,
+	FOREIGN KEY (aereo)		REFERENCES Aerei(matricola)
+							ON UPDATE CASCADE
+)ENGINE=InnoDB;
+
+
 
 /*
 LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Assistenze.txt' INTO TABLE Assistenze FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
