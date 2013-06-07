@@ -12,29 +12,34 @@
 <body link="#002089" alink="#002089" vlink="#002089">
 	<table align=\"center\" style=\"margin-top:50px\">
 	<?
-	if(isset($_SESSION['Admin']))
+	if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin")
 	{
-		//require "functions.php";
-		$id = $_SESSION['Admin'];
-		echo $id."&nbsp&nbsp<a href=\"login.php?cmd=out\">Logout</a><br/>";		
-		if(isset($_GET['submitted'])){
-			$v = $_GET['submitted'];
-			echo"<h2> $v inserito con successo!</h2>";
-			echo "<br> &nbsp&nbsp<a href=\"administration.php\">Torna al men&ugrave</a><br/>";
-		}
-		else{
-			echo "<div style=\"margin-top:30px\">
-					<h2>Categoria</h2>
-					<ul>
-						<li><a href=\"administration.php?manage=voli\">Voli</a></li>
-						<li><a href=\"administration.php?manage=viaggi\">Viaggi</a></li>
-						<li><a href=\"administration.php?manage=aerei\">Aerei</a></li>
-						<li><a href=\"administration.php?manage=aeroporti\">Aeroporti</a></li>
-						<li><a href=\"administration.php?manage=voli\">Modifica un Volo esistente</a></li>
-						<li><a href=\"administration.php?manage=privileges\">Gestisci privilegi</a></li>
-					</ul>
-				</div>";
-			if(isset($_GET['manage']))
+		include "banneradmin.php";
+		include "sidebar.php";
+		require "db_connection.php";
+		$id = $_SESSION['Privileges'];
+		$query = "SELECT  FROM Viaggi vi ";
+
+	}
+	else
+		echo "Non sei autorizzato a stare qui. </br> Effettua il <a href=\"login.php\"> login come admin </a>";	
+	?>
+	</table>
+</body>
+</html>
+
+
+<?
+/*
+SELECT v.idViaggio, v.giorno, t.da, t.a, a.modello, 
+FROM (Viaggi v NATURAL JOIN Tratte t) JOIN Aerei a ON (v.aereo=Aerei.matricola) 
+WHERE v.stato='previsto'
+*/
+?>
+
+<?
+/*
+if(isset($_GET['manage']))
 			{	
 				$cmd=$_GET['manage'];
 				switch($cmd)
@@ -298,13 +303,6 @@
 							}
 						break;
 				}
-			}
-			
-		}
-	}
-	else
-		echo "Non sei autorizzato a stare qui. </br> Effettua il <a href=\"login.php\"> login come admin </a>";	
-	?>
-	</table>
-</body>
-</html>
+
+*/
+?>

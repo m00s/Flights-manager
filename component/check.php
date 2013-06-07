@@ -5,7 +5,7 @@
 	if($insert!="" && $login!="")
 	{
 		require "db_connection.php";
-		$query="SELECT * FROM Utenti WHERE email=\"$login\"";
+		$query="SELECT * FROM Anagrafiche NATURAL JOIN Utenti WHERE email=\"$login\"";
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 		$arr = mysql_fetch_assoc($result);
 		$pwd = $arr['password'];
@@ -15,11 +15,13 @@
 				header("Location: http://localhost:8888/default.php");
 				$_SESSION['Privileges'] = $arr['type'];
 				$_SESSION['email'] = $arr['email'];
+				$_SESSION['idAnag'] = $arr['idAnag'];
 			}
 			else{
-				header("Location: http://localhost:8888/admin/managevoli.php");
+				header("Location: http://localhost:8888/admin/administration.php");
 				$_SESSION['Privileges'] = $arr['type'];
 				$_SESSION['email'] = $arr['email'];
+				$_SESSION['id'] = $arr['idAnag'];
 			}
 		}
 		else
