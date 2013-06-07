@@ -5,7 +5,7 @@
 		Airlines 
 	</title>
 	<head>
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="component/style.css">
 	</head>
 
 <?

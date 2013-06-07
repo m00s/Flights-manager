@@ -1,23 +1,27 @@
 <?php
-	require "db_connection.php";
+	session_start();
 	$insert=$_POST['password'];
 	$login=$_POST['mail'];
 	if($insert!="" && $login!="")
 	{
-		$query="SELECT password, type, mail FROM Utenti WHERE mail=\"$login\"";
+		require "db_connection.php";
+		$query="SELECT * FROM Anagrafiche NATURAL JOIN Utenti WHERE email=\"$login\"";
 		$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 		$arr = mysql_fetch_assoc($result);
 		$pwd = $arr['password'];
 		if ($pwd == sha1($insert))
 		{
-			session_start();
 			if($arr['type'] == "Guest"){
 				header("Location: http://localhost:8888/default.php");
-				$_SESSION['Guest'] = $rec['mail'];
+				$_SESSION['Privileges'] = $arr['type'];
+				$_SESSION['email'] = $arr['email'];
+				$_SESSION['idAnag'] = $arr['idAnag'];
 			}
 			else{
-				header("Location: http://localhost:8888/administration.php");
-				$_SESSION['Admin'] = $arr['mail'];
+				header("Location: http://localhost:8888/admin/administration.php");
+				$_SESSION['Privileges'] = $arr['type'];
+				$_SESSION['email'] = $arr['email'];
+				$_SESSION['id'] = $arr['idAnag'];
 			}
 		}
 		else
