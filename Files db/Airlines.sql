@@ -16,7 +16,7 @@ DROP TABLE IF EXISTS Viaggi;
 DROP TABLE IF EXISTS Scali;
 DROP TABLE IF EXISTS Offerte;
 DROP TABLE IF EXISTS Assistenze;
-DROP TABLE IF EXISTS Posti;
+DROP TABLE IF EXISTS PostiPrimaClasse;
 DROP TABLE IF EXISTS Prenotazioni;
 DROP TABLE IF EXISTS DettagliVoli;
 */
@@ -27,8 +27,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE Anagrafiche (
 	idAnag		INT AUTO_INCREMENT PRIMARY KEY,
-	nome		VARCHAR(15) NOT NULL,
-	cognome		VARCHAR(15) NOT NULL,
+	nome		VARCHAR(20) NOT NULL,
+	cognome		VARCHAR(20) NOT NULL,
 	nascita		DATE NOT NULL,
 	sesso		ENUM('M','F') DEFAULT "M",
 	email		VARCHAR(25),
@@ -77,15 +77,15 @@ CREATE TABLE Aerei (
 
 CREATE TABLE Luoghi (
 	idLuogo			INT AUTO_INCREMENT PRIMARY KEY,
-	nomecitta	VARCHAR(15) NOT NULL,
-	nazione		VARCHAR(15)
+	nomecitta	VARCHAR(40) NOT NULL,
+	nazione		VARCHAR(40)
 ) ENGINE=InnoDB;
 
 /* Crea la tabella Aeroporti */
 
 CREATE TABLE Aeroporti (
 	idAeroporto	INT AUTO_INCREMENT PRIMARY KEY,
-	nome	     VARCHAR(15) NOT NULL,
+	nome	     VARCHAR(40) NOT NULL,
 	idLuogo		INT NOT NULL,
 	FOREIGN KEY (idLuogo)	REFERENCES Luoghi (idLuogo)
 				ON UPDATE CASCADE
@@ -211,9 +211,9 @@ CREATE TABLE Assistenze (
 ) ENGINE=InnoDB;
 
 
-/* Crea la tabella Posti */
+/* Crea la tabella PostiPrimaClasse */
 
-CREATE TABLE Posti(
+CREATE TABLE PostiPrimaClasse(
 	idPosto		INT AUTO_INCREMENT PRIMARY KEY,
 	numero		VARCHAR(3),
 	aereo		VARCHAR(10) NOT NULL,
@@ -234,7 +234,7 @@ CREATE TABLE Prenotazioni (
 	stato		ENUM('valido','annullato','rimborsato') DEFAULT 'valido',
 	prezzoPrenotazione INT,
 	idPosto		INT,
-	FOREIGN KEY (idPosto)	REFERENCES Posti (idPosto) 
+	FOREIGN KEY (idPosto)	REFERENCES PostiPrimaClasse (idPosto) 
 				ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE,
