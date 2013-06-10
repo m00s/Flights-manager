@@ -36,8 +36,16 @@
 					$idTratta=$row[0];
 					$query="INSERT INTO Voli VALUES ('$idvolo', '$oraP','$oraA','$idTratta','$idcomp')";
 					$result = mysql_query($query,$conn) or die("Query fallita insert volo" . mysql_error($conn));
-					header("Location: http://localhost:8888/managevoli.php");
+					header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
 				}
+			break;
+			
+			case "viaggi":
+				$query="INSERT INTO VIAGGI (giorno, comandante, vice, aereo, idVolo, prezzoPrima, prezzoSeconda, ridotto, idCompagniaEsec, inseritoDa)
+						VALUES ('$_SESSION[Giorno]','$_SESSION[Comandante]','$_SESSION[Vice]','$_SESSION[Aereo]','$_SESSION[idVolo]','$_POST[pPrima]','$_POST[pSeconda]',
+						'$_POST[ridotto]','$_SESSION[Compagnia]','$_SESSION[id]')";
+				echo $query;
+				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
 			break;
 			}
 		}
