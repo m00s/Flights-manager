@@ -592,16 +592,19 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
   `stato` enum('effettuato','previsto','soppresso') DEFAULT 'previsto',
   `comandante` int(10) NOT NULL,
   `vice` int(10) NOT NULL,
+  `aereo` varchar(10) NOT NULL,
+  `idVolo` varchar(7) NOT NULL,
   `prezzoPrima` int(11) DEFAULT NULL,
   `prezzoSeconda` int(11) NOT NULL,
-  `idTratta` int(11) NOT NULL,
   `idCompagniaEsec` int(11) NOT NULL,
   `inseritoDa` int(11) NOT NULL,
+  
   PRIMARY KEY (`idViaggio`),
   KEY `inseritoDa` (`inseritoDa`),
+  KEY `aereo` (`aereo`),
+  KEY `idVolo` (`idVolo`),
   KEY `comandante` (`comandante`),
   KEY `vice` (`vice`),
-  KEY `idTratta` (`idTratta`),
   KEY `idCompagniaEsec` (`idCompagniaEsec`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -805,8 +808,9 @@ ALTER TABLE `Viaggi`
   ADD CONSTRAINT `Viaggi_ibfk_1` FOREIGN KEY (`inseritoDa`) REFERENCES `Utenti` (`idAnag`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Viaggi_ibfk_2` FOREIGN KEY (`comandante`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Viaggi_ibfk_3` FOREIGN KEY (`vice`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_4` FOREIGN KEY (`idTratta`) REFERENCES `Tratte` (`idTratta`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_5` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Viaggi_ibfk_4` FOREIGN KEY (`idVolo`) REFERENCES `Voli` (`idVolo`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Viaggi_ibfk_5` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE,  
+  ADD CONSTRAINT `Viaggi_ibfk_6` FOREIGN KEY (`aereo`) REFERENCES `Aerei` (`matricola`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Voli`
