@@ -97,21 +97,22 @@ BEGIN
 	BEGIN END;
 	
 	UPDATE Viaggi SET idCompagnia=0,comandante=0,vice=0,stato='soppresso' WHERE idViaggio IN 
-											(SELECT idViaggio FROM Viaggi v NATURAL JOIN CompagnieViaggi cv 
-												WHERE cv.idCompagniaEsec=idCompagnia AND v.giorno>=CURRENT_DATE());
+											(SELECT idViaggio FROM Viaggi v 
+												WHERE v.idCompagniaEsec=OLD.idCompagnia AND v.giorno>=CURRENT_DATE());
 
-	DELETE FROM Offerte WHERE idViaggio IN (SELECT idViaggio FROM Viaggi v NATURAL JOIN CompagnieViaggi cv 
-							WHERE cv.idCompagniaEsec=idCompagnia AND v.giorno>=CURRENT_DATE());
-
-	DELETE FROM ViaggiVolo WHERE idViaggio IN (SELECT idViaggio FROM Viaggi v NATURAL JOIN CompagnieViaggi cv 
-							WHERE cv.idCompagniaEsec=idCompagnia AND v.giorno>=CURRENT_DATE());
-
-	DELETE FROM ViaggiAereo WHERE idViaggio IN (SELECT idViaggio FROM Viaggi v NATURAL JOIN CompagnieViaggi cv 
-							WHERE cv.idCompagniaEsec=idCompagnia AND v.giorno>=CURRENT_DATE());
+	UPDATE Itinerari SET stato='soppresso' WHERE idItinerario IN 
+											(SELECT idItinerario FROM DettagliItinerari di NATURAL JOIN Viaggi v 
+												WHERE v.idCompagniaEsec=OLD.idCompagnia AND v.giorno>=CURRENT_DATE());
+	DELETE FROM DettagliItinerari WHERE idViaggio IN 
+											(SELECT idViaggio FROM Viaggi v 
+												WHERE v.idCompagniaEsec=OLD.idCompagnia AND v.giorno>=CURRENT_DATE());
 
 
-	DELETE FROM Scali WHERE idViaggio IN (SELECT idViaggio FROM Viaggi v NATURAL JOIN CompagnieViaggi cv 
-												WHERE cv.idCompagniaEsec=idCompagnia AND v.giorno>=CURRENT_DATE());
+	DELETE FROM Offerte WHERE idViaggio IN (SELECT idViaggio FROM Viaggi v 
+							WHERE v.idCompagniaEsec=OLD.idCompagnia AND v.giorno>=CURRENT_DATE());
+
+	DELETE FROM Scali WHERE idItinerario IN (SELECT idItinerario FROM Viaggi v NATURAL JOIN DettagliItinerario di 
+												WHERE v.idCompagniaEsec=OLD.idCompagnia AND v.giorno>=CURRENT_DATE());
 
 	DELETE FROM PostiPrimaClasse WHERE aereo IN (SELECT matricola FROM Aerei WHERE idCompagnia=OLD.idCompagnia);
 	DELETE FROM Bagagli WHERE idCompagnia=OLD.idCompagnia;
@@ -130,12 +131,14 @@ BEGIN
 	CLOSE CurDip;
 END; $
 
-CREATE TRIGGER AnnullaPrenotazioni
+CREATE TRIGGER AnnullaPrenotazioniViaggi
 BEFORE UPDATE ON Viaggi
 FOR EACH ROW
 BEGIN 
 	IF NEW.stato='soppresso' THEN
 		UPDATE Prenotazioni p SET p.stato='annullato' WHERE p.idViaggio=NEW.idViaggio;
+		UPDATE Itinerari i SET i.stato='soppresso' WHERE i.idItinerario IN
+													(SELECT idItinerario FROM DettagliItinerari di WHERE di.idViaggio=NEW.idViaggio);
 	END IF;
 END; $
 
@@ -144,15 +147,24 @@ delimiter ;
 /* View voli utente */
 
 CREATE VIEW viewVoli AS 
-SELECT l1.nomeCitta AS Partenza,ap.nome AS A1,v1.oraP AS OraPartenza,
-	l2.nomeCitta AS Arrivo,aa.nome AS A2,v1.oraA AS OraArrivo,vi.giorno,vi.prezzoSeconda,c.nome AS Compagnia,vi.idViaggio,vi.inseritoDa
-	FROM (Viaggi vi NATURAL JOIN Tratte t) JOIN Compagnie c ON (vi.idCompagniaEsec=c.idCompagnia),
-		(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
-		(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo),
-		(((Viaggi vi2 JOIN DettagliViaggi dv ON (vi2.idViaggio=dv.idViaggio))JOIN Voli v1 
-		ON(dv.idVolo=v1.idVolo))JOIN Tratte t3 ON(v1.idTratta=t3.idTratta))
-	WHERE t.da=t1.da AND t.a=t2.a AND vi.idViaggio=vi2.idViaggio
-	GROUP BY vi.idViaggio;
+SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, v1.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
+v1.oraA AS OraArrivo, i.giorno AS Giorno, TIMEDIFF(v1.oraA,v1.oraP) AS Durata,i.prezzoSeconda, MAX(sc.ordine) AS Scali, i.idItinerario
+FROM ((((Itinerari i JOIN DettagliItinerari di ON(i.idItinerario=di.idItinerario)) JOIN Viaggi vi ON(di.idViaggio=vi.idViaggio)))
+JOIN Tratte t ON (i.idTratta=t.idTratta),  Viaggi vi1 JOIN Voli v1 ON (vi1.idVolo=v1.idVolo)) JOIN Scali sc ON (i.idItinerario=sc.idItinerario),
+(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
+(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
+WHERE t.da=t1.da AND t.a=t2.a AND vi1.idViaggio=vi.idViaggio
+GROUP BY i.idItinerario
+UNION
+SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, v1.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
+v1.oraA AS OraArrivo, i.giorno AS Giorno, TIMEDIFF(v1.oraA,v1.oraP) AS Durata,i.prezzoSeconda, 0, i.idItinerario
+FROM ((((Itinerari i JOIN DettagliItinerari di ON(i.idItinerario=di.idItinerario)) JOIN Viaggi vi ON(di.idViaggio=vi.idViaggio)))
+JOIN Tratte t ON (i.idTratta=t.idTratta),  Viaggi vi1 JOIN Voli v1 ON (vi1.idVolo=v1.idVolo)),
+(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
+(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
+WHERE t.da=t1.da AND t.a=t2.a AND vi1.idViaggio=vi.idViaggio
+GROUP BY i.idItinerario;
+
 
 CREATE VIEW viewComandanti AS
 SELECT d.matricola, a.nome, a.cognome, a.sesso, a.nascita, c.nome AS Compagnia
