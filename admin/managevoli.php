@@ -85,7 +85,16 @@
 			}
 			else
 			{
-				// VOLI INSERITI
+				if(isset($_GET['cmd']))
+					if(($_GET['cmd'])=="inserted")
+					{
+						echo"
+						<div class=\"content\" style=\"padding-left:35%\">
+							<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/admin/managevoli.php?option=insert\">
+							<h2>Volo inserito con successo</h2>
+							<h4>a breve sarai reindirizzato..</h4>
+						</div>";
+					}
 			}
 		}
 		else

@@ -23,9 +23,7 @@
 					header("Location: http://localhost:8888/managevoli.php");
 				}
 				else{
-				
-					$query="SELECT a1.idAeroporto, a2.idAeroporto FROM Aeroporti a1, Aeroporti a2 WHERE a1.nome='$aeroportoP'
-						AND a2.nome='$aeroportoA'";
+					$query="SELECT a1.idAeroporto, a2.idAeroporto FROM Aeroporti a1, Aeroporti a2 WHERE a1.nome='$aeroportoP' AND a2.nome='$aeroportoA'";
 					$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
 					$row = mysql_fetch_array($result);
 					$query="INSERT INTO Tratte (da,a) VALUES ('$row[0]','$row[1]')";
@@ -41,11 +39,16 @@
 			break;
 			
 			case "viaggi":
-				$query="INSERT INTO VIAGGI (giorno, comandante, vice, aereo, idVolo, prezzoPrima, prezzoSeconda, ridotto, idCompagniaEsec, inseritoDa)
-						VALUES ('$_SESSION[Giorno]','$_SESSION[Comandante]','$_SESSION[Vice]','$_SESSION[Aereo]','$_SESSION[idVolo]','$_POST[pPrima]','$_POST[pSeconda]',
-						'$_POST[ridotto]','$_SESSION[Compagnia]','$_SESSION[id]')";
+				$query="SELECT idCompagnia FROM Compagnie WHERE nome='$_SESSION[Compagnia]'";
+				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
+				$row = mysql_fetch_array($result);
+				$idComp=$row[0];
+				$query="INSERT INTO Viaggi (giorno, comandante, vice, aereo, idVolo, prezzoPrima, prezzoSeconda, ridotto, idCompagniaEsec, inseritoDa)
+						VALUES ('$_SESSION[Giorno]','$_SESSION[Comandante]','$_SESSION[Vice]','$_SESSION[Aereo]','$_SESSION[Volo]','$_POST[pPrima]','$_POST[pSeconda]',
+						'$_POST[ridotto]','$idComp','$_SESSION[id]')";
 				echo $query;
 				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
+				header("Location: http://localhost:8888/admin/manageviaggi.php?cmd=inserted");
 			break;
 			}
 		}

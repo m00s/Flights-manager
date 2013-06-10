@@ -15,14 +15,16 @@
 			require "../component/db_connection.php";
 			include "banneradmin.php";
 			include "sidebar.php";
-			if(isset($_GET['option']))
-				if($_GET['option']="insert"){
+			if(isset($_GET['option'])){
+				if($_GET['option']="insert")
 					if(isset($_GET['Compagnia'])){
 						if(isset($_GET['tariffe']))
 						{
 							$_SESSION[Aereo]=$_GET[aereo];
 							$_SESSION[Comandante]=$_GET[comandante];
 							$_SESSION[Vice]=$_GET[vice];
+							$_SESSION[Giorno]=$_GET[giorno];
+							$_SESSION[Volo]=$_GET[idVolo];
 							echo"
 								<div class=\"content\" style=\"padding-left:35%\">
 								<form method=\"POST\" action=\"managecheck.php?area=viaggi\" class=\"form\">
@@ -56,8 +58,6 @@
 						{
 							$path = $_SERVER['PHP_SELF'];
 							$_SESSION[Compagnia]=$_GET[Compagnia];
-							$_SESSION[Volo]=$_GET[idVolo];
-							$_SESSION[Giorno]=$_GET[giorno];
 							echo"
 								<div class=\"content\" style=\"padding-left:35%\">
 								<form method=\"GET\" action=\"$path\" class=\"form\">
@@ -70,6 +70,23 @@
 										<input type=\"hidden\" name=\"Compagnia\" value=\"$_SESSION[Compagnia]\">
 										<input type=\"hidden\" name=\"tariffe\" value=\"on\">
 										<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
+											<tr width=\"96\" align=\"right\" class=\"sm\">
+												<td style=\"padding-right:10px\"><label>numero di volo</label></td>
+												<td align=\"center\">
+											<select name=\"idVolo\">";
+											$query = "SELECT vo.idVolo FROM Voli vo WHERE vo.idCompagnia=
+													(SELECT c.idCompagnia FROM Compagnie c WHERE c.nome=\"$_SESSION[Compagnia]\") ORDER BY vo.idVolo";
+		    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+		    									while ($row = mysql_fetch_array($result))
+		    										echo "<option value=\"$row[0]\">$row[0]</option>";
+		    								echo"</select>
+		    								</td>
+											</tr>
+											<tr width=\"96\" align=\"right\" class=\"sm\">
+												<td><label>Data</label></td>
+												<td><input name=\"giorno\" type=\"TEXT\" value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" 
+												onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" /></td>
+											</tr>
 											<tr width=\"96\" align=\"right\" class=\"sm\">
 												<td style=\"padding-right:10px\"><label>Aereo</label></td>
 												<td align=\"center\">
@@ -122,7 +139,7 @@
 							<form method=\"GET\" action=\"$path\" class=\"form\">
 								<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
 									<tr>
-										<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio</h2></td>
+										<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio - Compagnia</h2></td>
 									</tr>
 									<td>
 									<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
@@ -138,22 +155,6 @@
 		    								echo"</select>
 		    								</td>
 										</tr>
-										<tr width=\"96\" align=\"right\" class=\"sm\">
-											<td style=\"padding-right:10px\"><label>numero di volo</label></td>
-											<td align=\"center\">
-											<select name=\"idvolo\">";
-											$query = "SELECT idVolo FROM Voli ORDER BY idVolo";
-		    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
-		    									while ($row = mysql_fetch_array($result))
-		    										echo "<option value=\"$row[0]\">$row[0]</option>";
-		    								echo"</select>
-		    								</td>
-										</tr>
-										<tr width=\"96\" align=\"right\" class=\"sm\">
-											<td><label>Data</label></td>
-											<td><input name=\"giorno\" type=\"TEXT\" value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" 
-											onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" /></td>
-										</tr>
 										<tr>
 											<td align=\"center\"><input type=\"submit\" value=\"Step 2\" class=\"button\"/></td>
 										</tr>
@@ -166,7 +167,16 @@
 			}
 			else
 			{
-				echo "Manca option=insert";
+				if(isset($_GET['cmd']))
+					if(($_GET['cmd'])=="inserted")
+					{
+						echo"
+						<div class=\"content\" style=\"padding-left:35%\">
+							<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
+							<h2>Viaggio inserito con successo</h2>
+							<h4>a breve sarai reindirizzato..</h4>
+						</div>";
+					}
 			}
 		}
 		else
@@ -175,3 +185,12 @@
 		</table>
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
