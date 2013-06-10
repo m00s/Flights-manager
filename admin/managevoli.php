@@ -47,7 +47,7 @@
 									$query = "SELECT nome FROM Aeroporti ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=$row[0]>$row[0]</option>";
+    										echo "<option value=\"$row[0]\">$row[0]</option>";
     								echo"</select>
     								</td>
 								</tr>
@@ -58,7 +58,7 @@
     								$query = "SELECT nome FROM Aeroporti ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=$row[0]>$row[0]</option>";	
+    										echo "<option value=\"$row[0]\">$row[0]</option>";	
     								echo"</select>
     								</td>
 								</tr>
@@ -66,10 +66,10 @@
 									<td style=\"padding-right:10px\"><label>Compagnia</label></td>
 									<td align=\"center\">
 									<select name=\"compagnia\">";
-    								$query = "SELECT nome FROM Compagnie ORDER BY nome";
+    								$query = "SELECT idCompagnia, nome FROM Compagnie ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=$row[0]>$row[0]</option>";	
+    										echo "<option value=\"$row[0]\">$row[1]</option>";	
     								echo"</select>
     								</td>
 								</tr>
@@ -82,6 +82,10 @@
 					</form>	
 					</div>";
 				}
+			}
+			else
+			{
+				// VOLI INSERITI
 			}
 		}
 		else
