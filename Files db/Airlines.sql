@@ -16,9 +16,9 @@ DROP TABLE IF EXISTS Viaggi;
 DROP TABLE IF EXISTS Scali;
 DROP TABLE IF EXISTS Offerte;
 DROP TABLE IF EXISTS Assistenze;
-DROP TABLE IF EXISTS PostiPrimaClasse;
+DROP TABLE IF EXISTS Posti;
 DROP TABLE IF EXISTS Prenotazioni;
-DROP TABLE IF EXISTS DettagliVoli;
+DROP TABLE IF EXISTS Itinerario;
 */
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -27,8 +27,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE Anagrafiche (
 	idAnag		INT AUTO_INCREMENT PRIMARY KEY,
-	nome		VARCHAR(20) NOT NULL,
-	cognome		VARCHAR(20) NOT NULL,
+	nome		VARCHAR(15) NOT NULL,
+	cognome		VARCHAR(15) NOT NULL,
 	nascita		DATE NOT NULL,
 	sesso		ENUM('M','F') DEFAULT "M",
 	email		VARCHAR(25),
@@ -77,15 +77,15 @@ CREATE TABLE Aerei (
 
 CREATE TABLE Luoghi (
 	idLuogo			INT AUTO_INCREMENT PRIMARY KEY,
-	nomecitta	VARCHAR(40) NOT NULL,
-	nazione		VARCHAR(40)
+	nomecitta	VARCHAR(15) NOT NULL,
+	nazione		VARCHAR(15)
 ) ENGINE=InnoDB;
 
 /* Crea la tabella Aeroporti */
 
 CREATE TABLE Aeroporti (
 	idAeroporto	INT AUTO_INCREMENT PRIMARY KEY,
-	nome	     VARCHAR(40) NOT NULL,
+	nome	     VARCHAR(15) NOT NULL,
 	idLuogo		INT NOT NULL,
 	FOREIGN KEY (idLuogo)	REFERENCES Luoghi (idLuogo)
 				ON UPDATE CASCADE
@@ -178,11 +178,11 @@ CREATE TABLE Viaggi (
 /* Crea la tabella Scali */
 
 CREATE TABLE Scali(
-	idViaggio		INT,
+	idItinerario		INT,
 	idAeroporto		INT,
 	ordine			INT,
-	PRIMARY KEY(idViaggio,idAeroporto),
-	FOREIGN KEY(idViaggio) 		REFERENCES Viaggi (idViaggio),
+	PRIMARY KEY(idItinerario,idAeroporto),
+	FOREIGN KEY(idItinerario) 		REFERENCES Itinerari (idItinerario),
 	FOREIGN KEY(idAeroporto)	REFERENCES Aeroporti (idAeroporto)
 )ENGINE=InnoDB;
 
@@ -190,10 +190,10 @@ CREATE TABLE Scali(
 /* Crea la tabella delle Offerte */
 
 CREATE TABLE Offerte (
-       idViaggio	INT PRIMARY KEY,
+       idItinerario	INT PRIMARY KEY,
        scontoperc	INT,
        disponibili	INT,
-       FOREIGN KEY (idViaggio) 	REFERENCES Viaggi (idViaggio)
+       FOREIGN KEY (idItinerario) 	REFERENCES Itinerari (idItinerario)
                             	ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
@@ -211,9 +211,9 @@ CREATE TABLE Assistenze (
 ) ENGINE=InnoDB;
 
 
-/* Crea la tabella PostiPrimaClasse */
+/* Crea la tabella Posti */
 
-CREATE TABLE PostiPrimaClasse(
+CREATE TABLE Posti(
 	idPosto		INT AUTO_INCREMENT PRIMARY KEY,
 	numero		VARCHAR(3),
 	aereo		VARCHAR(10) NOT NULL,
@@ -234,7 +234,7 @@ CREATE TABLE Prenotazioni (
 	stato		ENUM('valido','annullato','rimborsato') DEFAULT 'valido',
 	prezzoPrenotazione INT,
 	idPosto		INT,
-	FOREIGN KEY (idPosto)	REFERENCES PostiPrimaClasse (idPosto) 
+	FOREIGN KEY (idPosto)	REFERENCES Posti (idPosto) 
 				ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE,
@@ -245,21 +245,32 @@ CREATE TABLE Prenotazioni (
 ) ENGINE=InnoDB;
 
 
-/* Crea la tabella ViaggiVoli*/
+/* Crea la tabella Itinerari*/
 
-CREATE TABLE DettagliViaggi(
-	idViaggio		INT,
-	idVolo			VARCHAR(7),
-	matricola		VARCHAR(7),
-	PRIMARY KEY(idViaggio,idVolo),
-	FOREIGN KEY (idViaggio)	REFERENCES Viaggi(idViaggio)
-				ON UPDATE CASCADE,
-	FOREIGN KEY (idVolo)	REFERENCES Voli(idVolo)
-				ON UPDATE CASCADE,
-	FOREIGN KEY (matricola)	REFERENCES Aerei(matricola)
-				ON UPDATE CASCADE
+CREATE TABLE Itinerari(
+	idItinerario	INT AUTO_INCREMENT PRIMARY KEY,
+	idTratta		INT,
+	giorno			DATE NOT NULL,
+	prezzoPrima		INT,
+	prezzoSeconda	INT,
+	stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
+	FOREIGN KEY (idTratta)	REFERENCES Tratte (idTratta)
+								ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
+/* Crea la tabella DettagliItinerari*/
+
+CREATE TABLE DettagliItinerari(
+	idItinerario	INT ,
+	idViaggio		INT,
+	PRIMARY KEY(idItinerario,idViaggio),
+	FOREIGN KEY (idItinerario)	REFERENCES Itinerari (idItinerario)
+								ON UPDATE CASCADE ,
+	
+	FOREIGN KEY (idViaggio) REFERENCES Viaggi (idViaggio)
+							ON UPDATE CASCADE
+
+)ENGINE=InnoDB;
 
 
 /*
