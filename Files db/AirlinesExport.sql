@@ -596,6 +596,8 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
   `idVolo` varchar(7) NOT NULL,
   `prezzoPrima` int(11) DEFAULT NULL,
   `prezzoSeconda` int(11) NOT NULL,
+  `postiSeconda` int(11) DEFAULT 0,
+  `postiPrima` int(11) DEFAULT 0,
   `ridotto` int(11) NOT NULL,
   `idCompagniaEsec` int(11) NOT NULL,
   `inseritoDa` int(11) NOT NULL,
