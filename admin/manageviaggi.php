@@ -174,13 +174,13 @@
 						<div class=\"content\" style=\"padding-left:35%\">
 							<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
 							<h2>Viaggio inserito con successo</h2>
-							<h4>a breve sarai reindirizzato..</h4>
+							<h4>a breve sarai reindirizzato alla pagina delle hostess zoccolone..</h4>
 						</div>";
 					}
 			}
 		}
 		else
-			echo "Non sei autorizzato a stare qui. </br> Effettua il <a href=\"../login.php\"> login come admin </a>";
+			include "error.php";
 		?>
 		</table>
 	</body>

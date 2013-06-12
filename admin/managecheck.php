@@ -50,6 +50,13 @@
 				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
 				header("Location: http://localhost:8888/admin/manageviaggi.php?cmd=inserted");
 			break;
+			
+			case "assistenze":
+				$query="INSERT INTO Assistenze VALUES ('$_POST[viaggio]','$_POST[assistente]')";
+				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
+				echo $query;
+				header("Location: http://localhost:8888/admin/manageassistenze.php?viaggio='$_POST[viaggio]'");
+			break;
 			}
 		}
 	}

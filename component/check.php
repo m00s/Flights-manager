@@ -18,7 +18,11 @@
 				$_SESSION['idAnag'] = $arr['idAnag'];
 			}
 			else{
-				header("Location: http://localhost:8888/admin/administration.php");
+				if(isset($_SESSION['acquista']))
+					$path=$_SESSION['acquista']."&prima="$_SESSION['bigliettiPrima']."&seconda="$_SESSION['bigliettiSeconda'];
+				else
+					$path="http://localhost:8888/admin/administration.php";
+				header("Location: $path");
 				$_SESSION['Privileges'] = $arr['type'];
 				$_SESSION['email'] = $arr['email'];
 				$_SESSION['id'] = $arr['idAnag'];

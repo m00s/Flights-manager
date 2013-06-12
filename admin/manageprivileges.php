@@ -59,7 +59,7 @@
 				</div>";
 				}
 			else
-				echo "Non sei autorizzato a stare qui. </br> Effettua il <a href=\"../login.php\"> login come admin </a>";
+				include "error.php";
 		?>
 	</body>
 </html>
