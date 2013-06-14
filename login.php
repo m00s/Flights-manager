@@ -33,10 +33,10 @@
 			echo "<h3>Prima effettua il <a href=\"login.php?cmd=out\">logout</a><br/></h3>";
 		}
 		else{
-			if(isset($_SESSION[acquista]))
+			if(isset($_SESSION['acquista']))
 			{
-				$_SESSION[bigliettiPrima]=$_REQUEST[bigliettiPrima];
-				$_SESSION[bigliettiSeconda]=$_REQUEST[bigliettiSeconda];
+				$_SESSION['bigliettiPrima']=$_REQUEST['bigliettiPrima'];
+				$_SESSION['bigliettiSeconda']=$_REQUEST['bigliettiSeconda'];
 			}
 		
 	?>
