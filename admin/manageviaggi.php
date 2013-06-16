@@ -17,14 +17,13 @@
 			include "sidebar.php";
 			if(isset($_GET['option'])){
 				if($_GET['option']="insert")
-					if(isset($_GET['Compagnia'])){
+					if(isset($_GET['idVolo']) && isset($_GET['Compagnia'])){
 						if(isset($_GET['tariffe']))
 						{
 							$_SESSION[Aereo]=$_GET[aereo];
 							$_SESSION[Comandante]=$_GET[comandante];
 							$_SESSION[Vice]=$_GET[vice];
 							$_SESSION[Giorno]=$_GET[giorno];
-							$_SESSION[Volo]=$_GET[idVolo];
 							echo"
 								<div class=\"content\" style=\"padding-left:35%\">
 								<form method=\"POST\" action=\"managecheck.php?area=viaggi\" class=\"form\">
@@ -57,6 +56,7 @@
 						else
 						{
 							$path = $_SERVER['PHP_SELF'];
+							$_SESSION[Volo]=$_GET[idVolo];
 							$_SESSION[Compagnia]=$_GET[Compagnia];
 							echo"
 								<div class=\"content\" style=\"padding-left:35%\">
@@ -67,21 +67,11 @@
 										</tr>
 										<td>
 										<input type=\"hidden\" name=\"option\" value=\"insert\">
+										<input type=\"hidden\" name=\"idVolo\" value=\"$_SESSION[Volo]\">
 										<input type=\"hidden\" name=\"Compagnia\" value=\"$_SESSION[Compagnia]\">
 										<input type=\"hidden\" name=\"tariffe\" value=\"on\">
 										<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
-											<tr width=\"96\" align=\"right\" class=\"sm\">
-												<td style=\"padding-right:10px\"><label>numero di volo</label></td>
-												<td align=\"center\">
-											<select name=\"idVolo\">";
-											$query = "SELECT vo.idVolo FROM Voli vo WHERE vo.idCompagnia=
-													(SELECT c.idCompagnia FROM Compagnie c WHERE c.nome=\"$_SESSION[Compagnia]\") ORDER BY vo.idVolo";
-		    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
-		    									while ($row = mysql_fetch_array($result))
-		    										echo "<option value=\"$row[0]\">$row[0]</option>";
-		    								echo"</select>
-		    								</td>
-											</tr>
+											
 											<tr width=\"96\" align=\"right\" class=\"sm\">
 												<td><label>Data</label></td>
 												<td><input name=\"giorno\" type=\"TEXT\" value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" 
@@ -144,8 +134,22 @@
 									<td>
 									<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 										<input type=\"hidden\" name=\"option\" value=\"insert\">
+										
 										<tr width=\"96\" align=\"right\" class=\"sm\">
-											<td style=\"padding-right:10px\"><label>Compagnia</label></td>
+											<td style=\"padding-right:10px\"><label>numero di volo</label></td>
+											<td align=\"center\">
+											<select name=\"idVolo\">";
+											// MOSTRO SOLO I VOLI CHE NON APPARTENGONO AD ALCUN VIAGGIO
+											$query = "SELECT vo.idVolo FROM Voli vo WHERE vo.idVolo NOT IN 
+													(SELECT idVolo FROM Viaggi)";
+		    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+		    									while ($row = mysql_fetch_array($result))
+		    										echo "<option value=\"$row[0]\">$row[0]</option>";
+		    								echo"</select>
+		    								</td>
+										</tr>
+										<tr width=\"96\" align=\"right\" class=\"sm\">
+											<td style=\"padding-right:10px\"><label>Compagnia esecutrice</label></td>
 											<td align=\"center\">
 											<select name=\"Compagnia\">";
 		    								$query = "SELECT nome FROM Compagnie ORDER BY nome";

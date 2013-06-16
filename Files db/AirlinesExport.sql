@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Giu 10, 2013 alle 10:48
+-- Generato il: Giu 16, 2013 alle 11:05
 -- Versione del server: 5.5.25
 -- Versione PHP: 5.4.4
 
@@ -243,14 +243,14 @@ INSERT INTO `Compagnie` (`idCompagnia`, `nome`, `numTel`, `email`, `nazione`) VA
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `DettagliItinerari`
+-- Struttura della tabella `DettagliScali`
 --
 
-CREATE TABLE IF NOT EXISTS `DettagliItinerari` (
-  `idItinerario` int(11) NOT NULL DEFAULT '0',
-  `idViaggio` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`idItinerario`,`idViaggio`),
-  KEY `idViaggio` (`idViaggio`)
+CREATE TABLE IF NOT EXISTS `DettagliScali` (
+  `idViaggioConScali` int(11) NOT NULL DEFAULT '0',
+  `idViaggioDiretto` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`idViaggioConScali`,`idViaggioDiretto`),
+  KEY `idViaggioDiretto` (`idViaggioDiretto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -306,23 +306,6 @@ INSERT INTO `Dipendenti` (`idAnag`, `matricola`, `grado`, `idCompagnia`) VALUES
 (34, 165278938, 'vice', 8),
 (35, 109876387, 'assistente', 8),
 (36, 100937746, 'assistente', 8);
-
--- --------------------------------------------------------
-
---
--- Struttura della tabella `Itinerari`
---
-
-CREATE TABLE IF NOT EXISTS `Itinerari` (
-  `idItinerario` int(11) NOT NULL AUTO_INCREMENT,
-  `idTratta` int(11) DEFAULT NULL,
-  `giorno` date NOT NULL,
-  `prezzoPrima` int(11) DEFAULT NULL,
-  `prezzoSeconda` int(11) DEFAULT NULL,
-  `stato` enum('effettuato','previsto','soppresso') DEFAULT 'previsto',
-  PRIMARY KEY (`idItinerario`),
-  KEY `idTratta` (`idTratta`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -396,10 +379,10 @@ INSERT INTO `Luoghi` (`idLuogo`, `nomecitta`, `nazione`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Offerte` (
-  `idItinerario` int(11) NOT NULL,
+  `idViaggioConScali` int(11) NOT NULL,
   `scontoperc` int(11) DEFAULT NULL,
   `disponibili` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idItinerario`)
+  PRIMARY KEY (`idViaggioConScali`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -521,10 +504,10 @@ CREATE TABLE IF NOT EXISTS `Prenotazioni` (
 --
 
 CREATE TABLE IF NOT EXISTS `Scali` (
-  `idItinerario` int(11) NOT NULL DEFAULT '0',
+  `idViaggioConScali` int(11) NOT NULL DEFAULT '0',
   `idAeroporto` int(11) NOT NULL DEFAULT '0',
   `ordine` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idItinerario`,`idAeroporto`),
+  PRIMARY KEY (`idViaggioConScali`,`idAeroporto`),
   KEY `idAeroporto` (`idAeroporto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -555,7 +538,14 @@ CREATE TABLE IF NOT EXISTS `Tratte` (
   PRIMARY KEY (`idTratta`),
   KEY `a` (`a`),
   KEY `da` (`da`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dump dei dati per la tabella `Tratte`
+--
+
+INSERT INTO `Tratte` (`idTratta`, `da`, `a`) VALUES
+(1, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -590,26 +580,47 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
   `idViaggio` int(11) NOT NULL AUTO_INCREMENT,
   `giorno` date NOT NULL,
   `stato` enum('effettuato','previsto','soppresso') DEFAULT 'previsto',
-  `comandante` int(10) NOT NULL,
-  `vice` int(10) NOT NULL,
-  `aereo` varchar(10) NOT NULL,
-  `idVolo` varchar(7) NOT NULL,
   `prezzoPrima` int(11) DEFAULT NULL,
   `prezzoSeconda` int(11) NOT NULL,
-  `postiSeconda` int(11) DEFAULT 0,
-  `postiPrima` int(11) DEFAULT 0,
-  `ridotto` int(11) NOT NULL,
-  `idCompagniaEsec` int(11) NOT NULL,
+  `postiPrima` int(11) DEFAULT NULL,
+  `postiSeconda` int(11) NOT NULL,
+  `idTratta` int(11) NOT NULL,
   `inseritoDa` int(11) NOT NULL,
-  
   PRIMARY KEY (`idViaggio`),
   KEY `inseritoDa` (`inseritoDa`),
+  KEY `idTratta` (`idTratta`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `ViaggiConScali`
+--
+
+CREATE TABLE IF NOT EXISTS `ViaggiConScali` (
+  `idViaggioConScali` int(11) NOT NULL,
+  PRIMARY KEY (`idViaggioConScali`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struttura della tabella `ViaggiDiretti`
+--
+
+CREATE TABLE IF NOT EXISTS `ViaggiDiretti` (
+  `idViaggioDiretto` int(11) NOT NULL,
+  `aereo` varchar(10) DEFAULT NULL,
+  `comandante` int(10) NOT NULL,
+  `vice` int(10) NOT NULL,
+  `ridottoPerc` int(11) DEFAULT NULL,
+  `idCompagniaEsec` int(11) NOT NULL,
+  PRIMARY KEY (`idViaggioDiretto`),
   KEY `aereo` (`aereo`),
-  KEY `idVolo` (`idVolo`),
   KEY `comandante` (`comandante`),
   KEY `vice` (`vice`),
   KEY `idCompagniaEsec` (`idCompagniaEsec`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -650,9 +661,9 @@ CREATE TABLE IF NOT EXISTS `viewTratte` (
 -- --------------------------------------------------------
 
 --
--- Struttura stand-in per le viste `viewViceComandanti`
+-- Struttura stand-in per le viste `viewViceComandante`
 --
-CREATE TABLE IF NOT EXISTS `viewViceComandanti` (
+CREATE TABLE IF NOT EXISTS `viewViceComandante` (
 `matricola` int(10)
 ,`nome` varchar(15)
 ,`cognome` varchar(15)
@@ -676,6 +687,13 @@ CREATE TABLE IF NOT EXISTS `Voli` (
   KEY `idCompagnia` (`idCompagnia`),
   KEY `idTratta` (`idTratta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `Voli`
+--
+
+INSERT INTO `Voli` (`idVolo`, `oraP`, `oraA`, `idTratta`, `idCompagnia`) VALUES
+('AE30Y7', '08:00:00', '09:40:00', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -707,11 +725,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struttura per la vista `viewViceComandanti`
+-- Struttura per la vista `viewViceComandante`
 --
-DROP TABLE IF EXISTS `viewViceComandanti`;
+DROP TABLE IF EXISTS `viewViceComandante`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViceComandanti` AS select `d`.`matricola` AS `matricola`,`a`.`nome` AS `nome`,`a`.`cognome` AS `cognome`,`a`.`sesso` AS `sesso`,`a`.`nascita` AS `nascita`,`c`.`nome` AS `Compagnia` from ((`Dipendenti` `d` join `Anagrafiche` `a` on((`d`.`idAnag` = `a`.`idAnag`))) join `Compagnie` `c` on((`d`.`idCompagnia` = `c`.`idCompagnia`))) where (`d`.`grado` = 'vice');
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViceComandante` AS select `d`.`matricola` AS `matricola`,`a`.`nome` AS `nome`,`a`.`cognome` AS `cognome`,`a`.`sesso` AS `sesso`,`a`.`nascita` AS `nascita`,`c`.`nome` AS `Compagnia` from ((`Dipendenti` `d` join `Anagrafiche` `a` on((`d`.`idAnag` = `a`.`idAnag`))) join `Compagnie` `c` on((`d`.`idCompagnia` = `c`.`idCompagnia`))) where (`d`.`grado` = 'vice');
 
 --
 -- Limiti per le tabelle scaricate
@@ -737,11 +755,11 @@ ALTER TABLE `Assistenze`
   ADD CONSTRAINT `Assistenze_ibfk_2` FOREIGN KEY (`matricola`) REFERENCES `Dipendenti` (`matricola`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `DettagliItinerari`
+-- Limiti per la tabella `DettagliScali`
 --
-ALTER TABLE `DettagliItinerari`
-  ADD CONSTRAINT `DettagliItinerari_ibfk_1` FOREIGN KEY (`idItinerario`) REFERENCES `Itinerari` (`idItinerario`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DettagliItinerari_ibfk_2` FOREIGN KEY (`idViaggio`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE;
+ALTER TABLE `DettagliScali`
+  ADD CONSTRAINT `DettagliScali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `DettagliScali_ibfk_2` FOREIGN KEY (`idViaggioDiretto`) REFERENCES `ViaggiDiretti` (`idViaggioDiretto`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Dipendenti`
@@ -751,16 +769,10 @@ ALTER TABLE `Dipendenti`
   ADD CONSTRAINT `Dipendenti_ibfk_2` FOREIGN KEY (`idCompagnia`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `Itinerari`
---
-ALTER TABLE `Itinerari`
-  ADD CONSTRAINT `Itinerari_ibfk_1` FOREIGN KEY (`idTratta`) REFERENCES `Tratte` (`idTratta`) ON UPDATE CASCADE;
-
---
 -- Limiti per la tabella `Offerte`
 --
 ALTER TABLE `Offerte`
-  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idItinerario`) REFERENCES `Itinerari` (`idItinerario`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `PostiPrimaClasse`
@@ -781,7 +793,7 @@ ALTER TABLE `Prenotazioni`
 -- Limiti per la tabella `Scali`
 --
 ALTER TABLE `Scali`
-  ADD CONSTRAINT `Scali_ibfk_1` FOREIGN KEY (`idItinerario`) REFERENCES `Itinerari` (`idItinerario`),
+  ADD CONSTRAINT `Scali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`),
   ADD CONSTRAINT `Scali_ibfk_2` FOREIGN KEY (`idAeroporto`) REFERENCES `Aeroporti` (`idAeroporto`);
 
 --
@@ -809,11 +821,23 @@ ALTER TABLE `Utenti`
 --
 ALTER TABLE `Viaggi`
   ADD CONSTRAINT `Viaggi_ibfk_1` FOREIGN KEY (`inseritoDa`) REFERENCES `Utenti` (`idAnag`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_2` FOREIGN KEY (`comandante`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_3` FOREIGN KEY (`vice`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_4` FOREIGN KEY (`idVolo`) REFERENCES `Voli` (`idVolo`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Viaggi_ibfk_5` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE,  
-  ADD CONSTRAINT `Viaggi_ibfk_6` FOREIGN KEY (`aereo`) REFERENCES `Aerei` (`matricola`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Viaggi_ibfk_2` FOREIGN KEY (`idTratta`) REFERENCES `Tratte` (`idTratta`) ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `ViaggiConScali`
+--
+ALTER TABLE `ViaggiConScali`
+  ADD CONSTRAINT `ViaggiConScali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE;
+
+--
+-- Limiti per la tabella `ViaggiDiretti`
+--
+ALTER TABLE `ViaggiDiretti`
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_1` FOREIGN KEY (`idViaggioDiretto`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_2` FOREIGN KEY (`aereo`) REFERENCES `Aerei` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_3` FOREIGN KEY (`comandante`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_4` FOREIGN KEY (`vice`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_5` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Voli`

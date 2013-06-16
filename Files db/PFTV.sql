@@ -165,7 +165,6 @@ JOIN Tratte t ON (i.idTratta=t.idTratta),  Viaggi vi1 JOIN Voli v1 ON (vi1.idVol
 WHERE t.da=t1.da AND t.a=t2.a AND vi1.idViaggio=vi.idViaggio
 GROUP BY i.idItinerario;
 
-
 CREATE VIEW viewComandanti AS
 SELECT d.matricola, a.nome, a.cognome, a.sesso, a.nascita, c.nome AS Compagnia
 FROM Dipendenti d NATURAL JOIN Anagrafiche a JOIN Compagnie c ON (d.idCompagnia=c.idCompagnia)
@@ -174,3 +173,24 @@ WHERE d.grado='comandante'
 CREATE VIEW viewTratte AS
 SELECT t.idTratta AS Tratta, a1.nome AS Partenza, a2.nome AS Arrivo
 FROM Tratte t JOIN Aeroporti a1 ON (t.da=a1.idAeroporto) JOIN Aeroporti a2 ON (t.a=a2.idAeroporto)
+
+CREATE VIEW viewVoli AS
+SELECT 
+FROM Viaggi v NATURAL JOIN ViaggiDiretti JOIN ViaggiConScali ON (idViaggio = )
+WHERE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

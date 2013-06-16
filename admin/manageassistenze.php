@@ -65,10 +65,11 @@
 									<td style=\"padding-right:10px\"><label>Viaggio</label></td>
 									<td align=\"center\">
 									<select name=\"viaggio\">";
-    								$query = "SELECT idViaggio, idCompagniaEsec FROM Viaggi WHERE stato='previsto' ORDER BY idViaggio";
+    								$query = "SELECT v.idViaggio, v.idVolo, v.giorno, c.nome FROM Viaggi v JOIN Compagnie c ON (v.idCompagniaEsec=c.idCompagnia) 
+    											WHERE v.stato='previsto' ORDER BY idViaggio";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\">$row[0] - $row[1]</option>";	
+    										echo "<option value=\"$row[0]\">$row[1] - $row[2] - $row[3]</option>";	
     								echo"</select>
     								</td>
 								</tr>

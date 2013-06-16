@@ -11,16 +11,15 @@
 				$aeroportoP=$_POST['da'];
 				$aeroportoA=$_POST['a'];
 				$idcomp=$_POST['compagnia'];
-				echo $idcomp;
 				
 				$query="SELECT Tratta FROM viewTratte WHERE Partenza='$aeroportoP' AND Arrivo='$aeroportoA'";
 				$result = mysql_query($query,$conn) or die ("Query fallita select" . mysql_error($conn));
 				if($row = mysql_fetch_array($result)){
 					$idTratta=$row[0];
 					$query="INSERT INTO Voli VALUES ('$idvolo', '$oraP', '$oraA', '$idTratta', '$idcomp')";
-					echo $query;
+					//echo $query;
 					$result = mysql_query($query,$conn) or die("Query fallita insert volo" . mysql_error($conn));
-					header("Location: http://localhost:8888/managevoli.php");
+					header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
 				}
 				else{
 					$query="SELECT a1.idAeroporto, a2.idAeroporto FROM Aeroporti a1, Aeroporti a2 WHERE a1.nome='$aeroportoP' AND a2.nome='$aeroportoA'";
@@ -33,7 +32,7 @@
 					$row = mysql_fetch_array($result);
 					$idTratta=$row[0];
 					$query="INSERT INTO Voli VALUES ('$idvolo', '$oraP','$oraA','$idTratta','$idcomp')";
-					$result = mysql_query($query,$conn) or die("Query fallita insert volo" . mysql_error($conn));
+					$result = mysql_query($query,$conn) or die("Query fallita insert volo insert tratta" . mysql_error($conn));
 					header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
 				}
 			break;
