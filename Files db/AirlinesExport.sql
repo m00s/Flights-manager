@@ -243,12 +243,13 @@ INSERT INTO `Compagnie` (`idCompagnia`, `nome`, `numTel`, `email`, `nazione`) VA
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `DettagliScali`
+-- Struttura della tabella `Scali`
 --
 
-CREATE TABLE IF NOT EXISTS `DettagliScali` (
+CREATE TABLE IF NOT EXISTS `Scali` (
   `idViaggioConScali` int(11) NOT NULL DEFAULT '0',
   `idViaggioDiretto` int(11) NOT NULL DEFAULT '0',
+  `ordine` int(11) DEFAULT '0',
   PRIMARY KEY (`idViaggioConScali`,`idViaggioDiretto`),
   KEY `idViaggioDiretto` (`idViaggioDiretto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -500,20 +501,6 @@ CREATE TABLE IF NOT EXISTS `Prenotazioni` (
 -- --------------------------------------------------------
 
 --
--- Struttura della tabella `Scali`
---
-
-CREATE TABLE IF NOT EXISTS `Scali` (
-  `idViaggioConScali` int(11) NOT NULL DEFAULT '0',
-  `idAeroporto` int(11) NOT NULL DEFAULT '0',
-  `ordine` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idViaggioConScali`,`idAeroporto`),
-  KEY `idAeroporto` (`idAeroporto`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Struttura della tabella `TariffeBagagli`
 --
 
@@ -755,13 +742,6 @@ ALTER TABLE `Assistenze`
   ADD CONSTRAINT `Assistenze_ibfk_2` FOREIGN KEY (`matricola`) REFERENCES `Dipendenti` (`matricola`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Limiti per la tabella `DettagliScali`
---
-ALTER TABLE `DettagliScali`
-  ADD CONSTRAINT `DettagliScali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `DettagliScali_ibfk_2` FOREIGN KEY (`idViaggioDiretto`) REFERENCES `ViaggiDiretti` (`idViaggioDiretto`) ON UPDATE CASCADE;
-
---
 -- Limiti per la tabella `Dipendenti`
 --
 ALTER TABLE `Dipendenti`
@@ -793,8 +773,8 @@ ALTER TABLE `Prenotazioni`
 -- Limiti per la tabella `Scali`
 --
 ALTER TABLE `Scali`
-  ADD CONSTRAINT `Scali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`),
-  ADD CONSTRAINT `Scali_ibfk_2` FOREIGN KEY (`idAeroporto`) REFERENCES `Aeroporti` (`idAeroporto`);
+  ADD CONSTRAINT `Scali_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Scali_ibfk_2` FOREIGN KEY (`idViaggioDiretto`) REFERENCES `ViaggiDiretti` (`idViaggioDiretto`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `TariffeBagagli`

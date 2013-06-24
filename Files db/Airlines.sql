@@ -172,6 +172,7 @@ CREATE TABLE Viaggi (
 
 CREATE TABLE ViaggiDiretti (
 	idViaggioDiretto	INT PRIMARY KEY,
+	idVolo	VARCHAR(7) NOT NULL,
 	aereo	VARCHAR(10),
 	comandante	INT(10) NOT NULL, 
 	vice		INT(10)NOT NULL,
@@ -186,20 +187,10 @@ CREATE TABLE ViaggiDiretti (
 	FOREIGN KEY (vice) REFERENCES Dipendenti (matricola)
 			   ON UPDATE CASCADE,
 	FOREIGN KEY (idCompagniaEsec) REFERENCES Compagnie (idCompagnia)
+			   ON UPDATE CASCADE,
+	FOREIGN KEY (idVolo) REFERENCES Voli (idVolo)
 			   ON UPDATE CASCADE			   
 ) ENGINE=InnoDB;
-
-/* Crea la tabella Scali */
-
-CREATE TABLE Scali(
-	idViaggioConScali		INT,
-	idAeroporto		INT,
-	ordine			INT,
-	PRIMARY KEY(idViaggioConScali,idAeroporto),
-	FOREIGN KEY(idViaggioConScali) 	REFERENCES ViaggiConScali (idViaggioConScali),
-	FOREIGN KEY(idAeroporto)	REFERENCES Aeroporti (idAeroporto)
-)ENGINE=InnoDB;
-
 
 /* Crea la tabella delle Offerte */
 
@@ -267,11 +258,12 @@ CREATE TABLE ViaggiConScali(
 								ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
-/* Crea la tabella DettagliItinerari*/
+/* Crea la tabella DettagliScali*/
 
 CREATE TABLE DettagliScali(
 	idViaggioConScali	INT ,
 	idViaggioDiretto		INT,
+	ordine			INT,
 	PRIMARY KEY(idViaggioConScali, idViaggioDiretto),
 	FOREIGN KEY (idViaggioConScali)	REFERENCES ViaggiConScali (idViaggioConScali)
 								ON UPDATE CASCADE,

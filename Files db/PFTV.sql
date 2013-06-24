@@ -155,7 +155,7 @@ JOIN Tratte t ON (i.idTratta=t.idTratta),  Viaggi vi1 JOIN Voli v1 ON (vi1.idVol
 (Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
 WHERE t.da=t1.da AND t.a=t2.a AND vi1.idViaggio=vi.idViaggio
 GROUP BY i.idItinerario
-UNION
+	UNION
 SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, v1.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
 v1.oraA AS OraArrivo, i.giorno AS Giorno, TIMEDIFF(v1.oraA,v1.oraP) AS Durata,i.prezzoSeconda, 0, i.idItinerario
 FROM ((((Itinerari i JOIN DettagliItinerari di ON(i.idItinerario=di.idItinerario)) JOIN Viaggi vi ON(di.idViaggio=vi.idViaggio)))
@@ -180,7 +180,15 @@ FROM Viaggi v NATURAL JOIN ViaggiDiretti JOIN ViaggiConScali ON (idViaggio = )
 WHERE
 
 
-
+DROP VIEW IF EXISTS viewVoli;
+CREATE VIEW viewVoli AS
+SELECT l1.nomeCitta AS Partenza,ap.nome AS AeroportoPartenza,vo.oraP,l2.nomeCitta AS Arrivo,aa.nome AS AeroportoArrivo,vo.oraA,
+		TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.giorno,v.prezzoSeconda,v.postiSeconda,v.idViaggio
+FROM (Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio = vd.idViaggioDiretto))JOIN Voli vo ON (vo.idVolo=vd.idViaggioDiretto)
+		JOIN Tratte t ON (v.idTratta=t.idTratta),
+	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
+	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
+WHERE t.da=t1.da AND t.a=t2.a 
 
 
 
