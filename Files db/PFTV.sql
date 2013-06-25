@@ -47,6 +47,16 @@ BEGIN
 END; $
 
 
+CREATE PROCEDURE InserisciViaggio  (IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT,IN postiPrima INT,IN postiSeconda INT,
+										IN idTratta INT,IN inseritoDa INT,IN compagnia INT,IN aereo VARCHAR(10),IN comandante INT(10),
+										 IN vice INT(10), IN ridottoPerc INT) 
+BEGIN
+	DECLARE ultimoId INT;
+	INSERT INTO Viaggi VALUES (giotno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa);
+	SELECT COUNT(*) INTO ultimoId FROM Viaggi;
+	INSERT INTO ViaggiDiretti VALUES (ultimoId, aereo, comandante, vice, ridottoPerc, compagnia);
+END; $
+
 
 CREATE PROCEDURE PostiLiberi(IN idV INT,OUT PostiPrima INT,OUT PostiSeconda INT) 
 BEGIN
