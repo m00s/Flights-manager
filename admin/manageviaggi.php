@@ -140,8 +140,7 @@
 											<td align=\"center\">
 											<select name=\"idVolo\">";
 											// MOSTRO SOLO I VOLI CHE NON APPARTENGONO AD ALCUN VIAGGIO
-											$query = "SELECT vo.idVolo FROM Voli vo WHERE vo.idVolo NOT IN 
-													(SELECT idVolo FROM Viaggi)";
+											$query = "SELECT vo.idVolo FROM Voli vo ";
 		    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 		    									while ($row = mysql_fetch_array($result))
 		    										echo "<option value=\"$row[0]\">$row[0]</option>";

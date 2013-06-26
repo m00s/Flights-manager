@@ -273,8 +273,5 @@ CREATE TABLE DettagliScali(
 )ENGINE=InnoDB;
 
 
-/*
-LOAD DATA LOCAL INFILE 'C:/xampp/htdocs/Filesdb/Assistenze.txt' INTO TABLE Assistenze FIELDS TERMINATED BY '\t' LINES TERMINATED BY '\n' IGNORE 4 LINES;
-*/
 SET FOREIGN_KEY_CHECKS = 1;
 

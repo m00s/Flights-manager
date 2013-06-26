@@ -1,5 +1,5 @@
-<? ob_start(); ?>
-<?session_start();?>
+<?php ob_start(); ?>
+<?php session_start();?>
 <html>
 	<title> 
 		Airlines 
@@ -8,8 +8,8 @@
 		<link rel="stylesheet" type="text/css" href="component/style.css">
 	</head>
 
-<?
-	require "db_connection.php";
+<?php
+	require "component/db_connection.php";
 	if(isset($_GET['cmd']))
 		{
 			$cmd=$_GET['cmd'];
@@ -62,10 +62,7 @@
 							</div>";
 				break;
 				case "submit":{
-					// $path=$_SERVER[’PHP_SELF’];
-					$anagrafiche = "'".$_POST[mail]."', '".$_POST[nome]."', '".$_POST[cog]."', '".$_POST[nascita]."', '".$_POST[sex]."'";
-					$utente = "'".$_POST[mail]."', '".sha1($_POST[nome])."'";
-					$query="call InserisciUtente('$_POST[mail]' , $anagrafiche, $utente, @x);";
+					$query="call InserisciUtente('$_POST[nome]','$_POST[cog]','$_POST[nascita]','$_POST[sex]','$_POST[mail]','$_POST[psw]', @x);";
 					$ins = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));;
 					$Qcontrol = "SELECT @x AS FLAG";
 					$Rcontrol = mysql_query($Qcontrol,$conn) or die("Query fallita" . mysql_error($conn));;
@@ -77,11 +74,11 @@
 						$_SESSION['utente'] = $_POST['mail'];
 					}
 					else{
-						
+						$_SESSION['mail']="! email non valida";
 					}
 				}
 				break;
 			}
 		}	
 ?></html>
-<? ob_flush();?>
+<?php ob_flush();?>

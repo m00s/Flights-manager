@@ -7,6 +7,10 @@
 -- Versione del server: 5.5.25
 -- Versione PHP: 5.4.4
 
+DROP SCHEMA IF EXISTS Airlines;
+CREATE SCHEMA Airlines;
+USE Airlines;
+
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
@@ -597,12 +601,14 @@ CREATE TABLE IF NOT EXISTS `ViaggiConScali` (
 
 CREATE TABLE IF NOT EXISTS `ViaggiDiretti` (
   `idViaggioDiretto` int(11) NOT NULL,
-  `aereo` varchar(10) DEFAULT NULL,
+  `idVolo` varchar(7),
+  `aereo` varchar(10),
   `comandante` int(10) NOT NULL,
   `vice` int(10) NOT NULL,
   `ridottoPerc` int(11) DEFAULT NULL,
   `idCompagniaEsec` int(11) NOT NULL,
   PRIMARY KEY (`idViaggioDiretto`),
+  KEY `idVolo` (`idVolo`),
   KEY `aereo` (`aereo`),
   KEY `comandante` (`comandante`),
   KEY `vice` (`vice`),
@@ -648,9 +654,9 @@ CREATE TABLE IF NOT EXISTS `viewTratte` (
 -- --------------------------------------------------------
 
 --
--- Struttura stand-in per le viste `viewViceComandante`
+-- Struttura stand-in per le viste `viewViceComandanti`
 --
-CREATE TABLE IF NOT EXISTS `viewViceComandante` (
+CREATE TABLE IF NOT EXISTS `viewViceComandanti` (
 `matricola` int(10)
 ,`nome` varchar(15)
 ,`cognome` varchar(15)
@@ -712,11 +718,11 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- --------------------------------------------------------
 
 --
--- Struttura per la vista `viewViceComandante`
+-- Struttura per la vista `viewViceComandanti`
 --
-DROP TABLE IF EXISTS `viewViceComandante`;
+DROP TABLE IF EXISTS `viewViceComandanti`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViceComandante` AS select `d`.`matricola` AS `matricola`,`a`.`nome` AS `nome`,`a`.`cognome` AS `cognome`,`a`.`sesso` AS `sesso`,`a`.`nascita` AS `nascita`,`c`.`nome` AS `Compagnia` from ((`Dipendenti` `d` join `Anagrafiche` `a` on((`d`.`idAnag` = `a`.`idAnag`))) join `Compagnie` `c` on((`d`.`idCompagnia` = `c`.`idCompagnia`))) where (`d`.`grado` = 'vice');
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViceComandanti` AS select `d`.`matricola` AS `matricola`,`a`.`nome` AS `nome`,`a`.`cognome` AS `cognome`,`a`.`sesso` AS `sesso`,`a`.`nascita` AS `nascita`,`c`.`nome` AS `Compagnia` from ((`Dipendenti` `d` join `Anagrafiche` `a` on((`d`.`idAnag` = `a`.`idAnag`))) join `Compagnie` `c` on((`d`.`idCompagnia` = `c`.`idCompagnia`))) where (`d`.`grado` = 'vice');
 
 --
 -- Limiti per le tabelle scaricate
@@ -814,10 +820,11 @@ ALTER TABLE `ViaggiConScali`
 --
 ALTER TABLE `ViaggiDiretti`
   ADD CONSTRAINT `ViaggiDiretti_ibfk_1` FOREIGN KEY (`idViaggioDiretto`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `ViaggiDiretti_ibfk_2` FOREIGN KEY (`aereo`) REFERENCES `Aerei` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `ViaggiDiretti_ibfk_3` FOREIGN KEY (`comandante`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `ViaggiDiretti_ibfk_4` FOREIGN KEY (`vice`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `ViaggiDiretti_ibfk_5` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_2` FOREIGN KEY (`idVolo`) REFERENCES `Voli` (`idVolo`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_3` FOREIGN KEY (`aereo`) REFERENCES `Aerei` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_4` FOREIGN KEY (`comandante`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_5` FOREIGN KEY (`vice`) REFERENCES `Dipendenti` (`matricola`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `ViaggiDiretti_ibfk_6` FOREIGN KEY (`idCompagniaEsec`) REFERENCES `Compagnie` (`idCompagnia`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Voli`

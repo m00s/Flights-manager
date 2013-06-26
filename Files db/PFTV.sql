@@ -47,14 +47,14 @@ BEGIN
 END; $
 
 
-CREATE PROCEDURE InserisciViaggio  (IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT,IN postiPrima INT,IN postiSeconda INT,
-										IN idTratta INT,IN inseritoDa INT,IN compagnia INT,IN aereo VARCHAR(10),IN comandante INT(10),
-										 IN vice INT(10), IN ridottoPerc INT) 
+CREATE PROCEDURE InserisciViaggio  (IN Volo VARCHAR(7),IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT, IN idTratta INT,IN inseritoDa INT,
+					IN compagnia INT,IN aereo VARCHAR(10),IN comandante INT(10), IN vice INT(10), IN ridottoPerc INT) 
 BEGIN
 	DECLARE ultimoId INT;
-	INSERT INTO Viaggi VALUES (giotno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa);
-	SELECT COUNT(*) INTO ultimoId FROM Viaggi;
-	INSERT INTO ViaggiDiretti VALUES (ultimoId, aereo, comandante, vice, ridottoPerc, compagnia);
+	INSERT INTO Viaggi (giorno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa) VALUES
+						(giorno, prezzoPrima, prezzoSeconda,0,0, idTratta, inseritoDa);
+	SELECT MAX(IdViaggio) INTO ultimoId FROM Viaggi;
+	INSERT INTO ViaggiDiretti VALUES (ultimoId, Volo, aereo, comandante, vice, ridottoPerc, compagnia);
 END; $
 
 
