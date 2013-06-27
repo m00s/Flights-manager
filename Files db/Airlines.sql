@@ -32,6 +32,7 @@ CREATE TABLE Anagrafiche (
 	nascita		DATE NOT NULL,
 	sesso		ENUM('M','F') DEFAULT "M",
 	email		VARCHAR(25),
+	tipo		ENUM('adulto','bambino') DEFAULT "adulto",
 	UNIQUE (email)
 ) ENGINE=InnoDB;
 

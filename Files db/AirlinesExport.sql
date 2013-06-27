@@ -144,6 +144,7 @@ CREATE TABLE IF NOT EXISTS `Anagrafiche` (
   `nascita` date NOT NULL,
   `sesso` enum('M','F') DEFAULT 'M',
   `email` varchar(25) DEFAULT NULL,
+  `tipo` enum('adulto','bambino') DEFAULT 'adulto',
   PRIMARY KEY (`idAnag`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37 ;

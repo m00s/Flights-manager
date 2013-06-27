@@ -7,7 +7,6 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="component/style.css">
 	</head>
-
 <?php
 	require "component/db_connection.php";
 	if(isset($_GET['cmd']))
@@ -62,20 +61,19 @@
 							</div>";
 				break;
 				case "submit":{
-					$query="call InserisciUtente('$_POST[nome]','$_POST[cog]','$_POST[nascita]','$_POST[sex]','$_POST[mail]','$_POST[psw]', @x);";
-					$ins = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));;
-					$Qcontrol = "SELECT @x AS FLAG";
-					$Rcontrol = mysql_query($Qcontrol,$conn) or die("Query fallita" . mysql_error($conn));;
-					$test = mysql_fetch_assoc($Rcontrol);
-					if($test['flag']=1){
-						echo "<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/default.php\">";
-						//header("Location: http://localhost:8888/default.php");
-						echo "Registrazione effettuata con successo, verrai reindirizzato a breve..";
-						$_SESSION['utente'] = $_POST['mail'];
-					}
-					else{
-						$_SESSION['mail']="! email non valida";
-					}
+						$query="call InserisciUtente('$_POST[nome]','$_POST[cog]','$_POST[nascita]','$_POST[sex]','$_POST[mail]',sha1('$_POST[psw]'),'Guest', @x);";
+						$ins = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));;
+						$Qcontrol = "SELECT @x AS FLAG";
+						$Rcontrol = mysql_query($Qcontrol,$conn) or die("Query fallita" . mysql_error($conn));;
+						$test = mysql_fetch_assoc($Rcontrol);
+						if($test['flag']=1){
+							echo "<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/default.php\">";
+							//header("Location: http://localhost:8888/default.php");
+							echo "Registrazione effettuata con successo, verrai reindirizzato a breve..";
+							$_SESSION['utente'] = $_POST['mail'];
+						}
+						else{
+						}
 				}
 				break;
 			}

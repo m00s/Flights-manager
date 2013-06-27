@@ -14,15 +14,15 @@ DROP VIEW IF EXISTS viewVoli;
 delimiter $
 
 CREATE PROCEDURE InserisciUtente (IN nome VARCHAR(15),IN cognome VARCHAR(15),IN nascita DATE,IN sesso VARCHAR(1),IN mail VARCHAR(25),
-									IN password VARCHAR(40),IN tipo VARCHAR(5),OUT inserito BOOL) 
+									IN psw VARCHAR(40),IN tipo VARCHAR(5),OUT inserito BOOL) 
 BEGIN
 	DECLARE Test INT;
 	DECLARE ultimoId INT;
-	SELECT COUNT(*) INTO Test FROM Utenti u WHERE u.email=mail;
+	SELECT COUNT(*) INTO Test FROM Anagrafiche a WHERE a.email=mail;
 	IF Test=0 THEN
-		INSERT INTO Anagrafiche VALUES (nome,cognome,nascita,sesso,mail);
-		SELECT COUNT(*) INTO ultimoId FROM Anagrafiche;
-		INSERT INTO Utenti VALUES (ultimoId,password,tipo);
+		INSERT INTO Anagrafiche (nome, cognome, nascita, sesso, email) VALUES (nome,cognome,nascita,sesso,mail);
+		SELECT MAX(idAnag) INTO ultimoId FROM Anagrafiche;
+		INSERT INTO Utenti VALUES (ultimoId,psw,tipo);
 		SET inserito=1;
 	ELSE
 		SET inserito=0;
@@ -55,6 +55,18 @@ BEGIN
 						(giorno, prezzoPrima, prezzoSeconda,0,0, idTratta, inseritoDa);
 	SELECT MAX(IdViaggio) INTO ultimoId FROM Viaggi;
 	INSERT INTO ViaggiDiretti VALUES (ultimoId, Volo, aereo, comandante, vice, ridottoPerc, compagnia);
+END; $
+
+/* Can't update table 'ViaggiDiretti' in stored function/trigger because it is already used by statement which invoked this stored function/trigger */
+CREATE TRIGGER setPosti
+BEFORE INSERT ON ViaggiDiretti
+FOR EACH ROW
+BEGIN
+	DECLARE postiP INT;
+	DECLARE postiS INT;
+	SELECT postiPrima INTO postiP FROM Aerei a WHERE a.matricola=NEW.aereo;
+	SELECT postiSeconda INTO postiS FROM Aerei a WHERE a.matricola=NEW.aereo;
+	UPDATE ViaggiDiretti SET postiPrima=postiP, postiSeconda=postiS WHERE idViaggioDiretto=NEW.idViaggioDiretto;
 END; $
 
 
