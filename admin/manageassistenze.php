@@ -1,4 +1,4 @@
-<? session_start(); ?>
+<?php session_start(); ?>
 <html>
 	<head>
 		<title> 
@@ -10,7 +10,7 @@
 	</head>
 	
 	<body link="#002089" alink="#002089" vlink="#002089">
-		<?
+		<?php
 		if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin"){
 			require "../component/db_connection.php";
 			include "banneradmin.php";
@@ -18,7 +18,7 @@
 			
 			if(isset($_GET['viaggio'])){	
 				echo "<div class=\"content\">
-						<table border=\"2\">
+						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti</h2></td>
 						</tr>
@@ -28,8 +28,8 @@
 						<th>Compagnia</th>
 						<th colspan=\"2\">permessi</th>";
 						$idViaggio=$_GET['viaggio'];
-						$query="SELECT va.matricola, va.nome, va.cognome, va.Compagnia FROM Viaggi v, viewAssistenti va, Compagnie c 
-								WHERE v.idViaggio=$idViaggio AND v.idCompagniaEsec=c.idCompagnia AND va.Compagnia=c.nome
+						$query="SELECT va.matricola, va.nome, va.cognome, va.Compagnia FROM ViaggiDiretti v, viewAssistenti va, Compagnie c 
+								WHERE v.idViaggioDiretto=$idViaggio AND v.idCompagniaEsec=c.idCompagnia AND va.Compagnia=c.nome
 								AND va.matricola NOT IN (SELECT DISTINCT matricola FROM Assistenze)";
 						$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 						while ($row = mysql_fetch_row($result))
@@ -53,9 +53,9 @@
 			}
 			else{
 				echo"
-					<div class=\"content\" style=\"padding-left:35%\">
+					<div class=\"content\">
 					<form method=\"GET\" action=\"manageassistenze.php?viaggio=$row[0]\" class=\"form\">
-						<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+						<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
 							<tr>
 								<td align=\"center\"><h2 class=\"tt\">Assegna assistenze</h2></td>
 							</tr>
@@ -65,11 +65,10 @@
 									<td style=\"padding-right:10px\"><label>Viaggio</label></td>
 									<td align=\"center\">
 									<select name=\"viaggio\">";
-    								$query = "SELECT v.idViaggio, v.idVolo, v.giorno, c.nome FROM Viaggi v JOIN Compagnie c ON (v.idCompagniaEsec=c.idCompagnia) 
-    											WHERE v.stato='previsto' ORDER BY idViaggio";
+    								$query = "SELECT v.idViaggioDiretto, v.idVolo, vi.giorno, c.nome FROM ViaggiDiretti v JOIN Compagnie c ON (v.idCompagniaEsec=c.idCompagnia) 												JOIN Viaggi vi ON (vi.idViaggio=v.idViaggioDiretto) WHERE vi.stato='previsto' ORDER BY vi.giorno";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\">$row[1] - $row[2] - $row[3]</option>";	
+    										echo "<option value=\"$row[0]\"> $row[3]:  $row[1] - $row[2]</option>";	
     								echo"</select>
     								</td>
 								</tr>

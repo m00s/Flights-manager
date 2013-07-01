@@ -15,7 +15,7 @@
 				header("Location: http://localhost:8888/default.php");
 				$_SESSION['Privileges'] = $arr['type'];
 				$_SESSION['email'] = $arr['email'];
-				$_SESSION['idAnag'] = $arr['idAnag'];
+				$_SESSION['id'] = $arr['idAnag'];
 			}
 			else{
 				if(isset($_SESSION['acquista']))

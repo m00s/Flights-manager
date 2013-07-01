@@ -18,9 +18,9 @@
 			if(isset($_GET['option'])){
 				if($_GET['option']="insert"){
 				echo"
-					<div class=\"content\" style=\"padding-left:35%\">
+					<div class=\"content\">
 					<form method=\"POST\" action=\"managecheck.php?area=voli\" class=\"form\">
-						<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+						<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
 							<tr>
 								<td align=\"center\"><h2 class=\"tt\">Inserisci Volo</h2></td>
 							</tr>
@@ -31,12 +31,12 @@
 									<td><input type=\"TEXT\" name=\"numero\"/></td>
 								</tr>
 								<tr width=\"96\" align=\"right\" class=\"sm\">
-									<td style=\"padding-right:10px\"><label>oraP</label></td>
+									<td style=\"padding-right:10px\"><label>Ora di partenza</label></td>
 									<td><input name=\"oraP\" type=\"TEXT\" value=\"(hh:mm)\" onblur=\"if(this.value=='') this.value='(hh:mm)';\" 
 									onfocus=\"if(this.value=='(hh:mm)') this.value='';\" /></td>
 								</tr>
 								<tr width=\"96\" align=\"right\" class=\"sm\">
-									<td style=\"padding-right:10px\"><label>oraA</label></td>
+									<td style=\"padding-right:10px\"><label>Ora di arrivo</label></td>
 									<td><input name=\"oraA\" type=\"TEXT\" value=\"(hh:mm)\" onblur=\"if(this.value=='') this.value='(hh:mm)';\" 
 									onfocus=\"if(this.value=='(hh:mm)') this.value='';\" /></td>
 								</tr>
@@ -89,10 +89,12 @@
 					if(($_GET['cmd'])=="inserted")
 					{
 						echo"
-						<div class=\"content\" style=\"padding-left:35%\">
-							<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/managevoli.php?option=insert\">
-							<h2>Volo inserito con successo</h2>
-							<h4>a breve sarai reindirizzato..</h4>
+						<div class=\"content\">
+							<div style=\"padding-left:15%\">
+								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/managevoli.php?option=insert\">
+								<h2>Volo inserito con successo</h2>
+								<h4>a breve sarai reindirizzato..</h4>
+							</div>
 						</div>";
 					}
 			}

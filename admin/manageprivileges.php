@@ -1,4 +1,4 @@
-<? session_start(); ?>
+<?php session_start(); ?>
 <html>
 	<head>
 		<title> 
@@ -10,18 +10,24 @@
 	</head>
 	
 	<body link="#002089" alink="#002089" vlink="#002089">
-		<?
+		<?php
 			if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin"){
 				require "../component/db_connection.php";
 				include "banneradmin.php";
 				include "sidebar.php";
-				if(isset($_GET['userid'])){
+				if(isset($_GET['userid']) && $_REQUEST['buttonForm']=="Aggiorna"){
 					$id=$_GET['userid'];		
 					$query="UPDATE Utenti SET type='$_POST[type]' WHERE idAnag=$id";
 					$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));		
 				}
+				elseif(isset($_GET['userid']) && $_REQUEST['buttonForm']=="Elimina"){
+					$id=$_GET['userid'];		
+					$query="call eliminaUtente('$id');";
+					$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+				}
 						 
 				echo "<div class=\"content\">
+						<div style=\"padding-left:5%\">
 						<table border=\"2\">
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Manage privileges</h2></td>
@@ -31,7 +37,7 @@
 						<th>cognome</th>
 						<th>email</th>
 						<th colspan=\"2\">permessi</th>";
-							$query="SELECT idAnag, nome, cognome, email, type FROM Anagrafiche NATURAL JOIN Utenti";
+							$query="SELECT idAnag, nome, cognome, email, type FROM Anagrafiche a NATURAL JOIN Utenti";
 							$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 								while ($row = mysql_fetch_row($result))
 									{
@@ -50,12 +56,16 @@
 														<td><input type=\"radio\" name=\"type\" value=\"Admin\" checked=\"checked\"/>&nbspAdmin&nbsp</td>";
 													}
 													echo"
-													<td align=\"center\"><input type=\"submit\" value=\"Aggiorna\" class=\"button\"/></td>
+													<td align=\"center\"><input type=\"submit\" name=\"buttonForm\" value=\"Aggiorna\" class=\"button\"/></td>
+													<td align=\"center\">
+														<button type=\"submit\" name=\"buttonForm\" value=\"Elimina\"><img src=\"..\images\delete_user.png\" alt=\"Elimina utente\"></button>
+													</td>
 												</tr>
 										  </form>";
 								}
 								echo"				
 						</table>
+						</div>
 				</div>";
 				}
 			else

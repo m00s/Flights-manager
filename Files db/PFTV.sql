@@ -13,6 +13,13 @@ DROP VIEW IF EXISTS viewVoli;
 
 delimiter $
 
+CREATE PROCEDURE eliminaUtente (IN idAnagraf INT) 
+BEGIN
+	DELETE FROM Prenotazioni WHERE acquirente=idAnagraf OR passeggero=idAnagraf;
+	DELETE FROM	Utenti WHERE idAnag=idAnagraf;
+	DELETE FROM Anagrafiche WHERE idAnag=idAnagraf;
+END; $
+
 CREATE PROCEDURE InserisciUtente (IN nome VARCHAR(15),IN cognome VARCHAR(15),IN nascita DATE,IN sesso VARCHAR(1),IN mail VARCHAR(25),
 									IN psw VARCHAR(40),IN tipo VARCHAR(5),OUT inserito BOOL) 
 BEGIN
@@ -46,15 +53,34 @@ BEGIN
 	END IF;
 END; $
 
+CREATE FUNCTION getPosti(classe BOOL, aereo VARCHAR(10)) RETURNS INT
+BEGIN
+	DECLARE Posti INT;
+	IF(classe=0) THEN 
+		SELECT postiPrima INTO Posti FROM Aerei WHERE matricola=aereo;
+	ELSE 
+		SELECT postiSeconda INTO Posti FROM Aerei WHERE matricola=aereo;
+	END IF;
+	RETURN Posti;
+END
 
 CREATE PROCEDURE InserisciViaggio  (IN Volo VARCHAR(7),IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT, IN idTratta INT,IN inseritoDa INT,
 					IN compagnia INT,IN aereo VARCHAR(10),IN comandante INT(10), IN vice INT(10), IN ridottoPerc INT) 
 BEGIN
 	DECLARE ultimoId INT;
 	INSERT INTO Viaggi (giorno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa) VALUES
-						(giorno, prezzoPrima, prezzoSeconda,0,0, idTratta, inseritoDa);
+						(giorno, prezzoPrima, prezzoSeconda, getPosti(0,aereo), getPosti(1,aereo), idTratta, inseritoDa);
 	SELECT MAX(IdViaggio) INTO ultimoId FROM Viaggi;
 	INSERT INTO ViaggiDiretti VALUES (ultimoId, Volo, aereo, comandante, vice, ridottoPerc, compagnia);
+END; $
+
+CREATE PROCEDURE inserisciViaggioConScali (IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT,IN postiPrima INT,
+IN postiSeconda INT,IN idTratta INT,IN inseritoDa INT,OUT VIAGGIO INT)
+BEGIN
+	INSERT INTO Viaggi (giorno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa) VALUES
+						(giorno, prezzoPrima, prezzoSeconda, postiPrima, postiSeconda, idTratta, inseritoDa);
+	SELECT MAX(IdViaggio) INTO VIAGGIO FROM Viaggi;
+	INSERT INTO ViaggiConScali VALUES (VIAGGIO);
 END; $
 
 /* Can't update table 'ViaggiDiretti' in stored function/trigger because it is already used by statement which invoked this stored function/trigger */

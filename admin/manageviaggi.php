@@ -25,9 +25,9 @@
 							$_SESSION[Vice]=$_GET[vice];
 							$_SESSION[Giorno]=$_GET[giorno];
 							echo"
-								<div class=\"content\" style=\"padding-left:35%\">
+								<div class=\"content\">
 								<form method=\"POST\" action=\"managecheck.php?area=viaggi\" class=\"form\">
-									<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+									<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
 										<tr>
 											<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio</h2></td>
 										</tr>
@@ -59,9 +59,9 @@
 							$_SESSION[Volo]=$_GET[idVolo];
 							$_SESSION[Compagnia]=$_GET[Compagnia];
 							echo"
-								<div class=\"content\" style=\"padding-left:35%\">
+								<div class=\"content\">
 								<form method=\"GET\" action=\"$path\" class=\"form\">
-									<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+									<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
 										<tr>
 											<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio</h2></td>
 										</tr>
@@ -125,9 +125,10 @@
 					{	
 						$path = $_SERVER['PHP_SELF'];
 						echo"
-							<div class=\"content\" style=\"padding-left:35%\">
+							<div class=\"content\">
+	
 							<form method=\"GET\" action=\"$path\" class=\"form\">
-								<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px\">
+								<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
 									<tr>
 										<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio - Compagnia</h2></td>
 									</tr>
@@ -174,10 +175,12 @@
 					if(($_GET['cmd'])=="inserted")
 					{
 						echo"
-						<div class=\"content\" style=\"padding-left:35%\">
-							<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
-							<h2>Viaggio inserito con successo</h2>
-							<h4>a breve sarai reindirizzato alla pagina delle hostess zoccolone..</h4>
+						<div class=\"content\">
+							<div style=\"padding-left:15%\">
+								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
+								<h2>Viaggio inserito con successo</h2>
+								<h4>a breve sarai reindirizzato alla pagina delle hostess zoccolone..</h4>
+							</div>
 						</div>";
 					}
 			}
