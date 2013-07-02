@@ -219,8 +219,9 @@ WHERE s1.ordine=1 AND s2.ordine=(select MAX(ordine) from Scali where Scali.idVia
 
 DROP VIEW IF EXISTS viewViaggi;
 CREATE VIEW viewViaggi AS 
-SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
-		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, 0 AS Scali, v.idViaggio AS Viaggio
+SELECT  l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
+		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoPrima,v.prezzoSeconda,
+		v.postiPrima,v.postiSeconda, 0 AS Scali,v.idViaggio AS Viaggio,v.inseritoDa	
 FROM (((((Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
 		JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
 	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
@@ -228,7 +229,8 @@ FROM (((((Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto))JO
 WHERE t.da=t1.da AND t.a=t2.a 
 UNION
 SELECT  l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
-		vo1.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo1.oraA,vo.oraP) AS Durata,v.prezzoSeconda, MAX(s1.ordine)-1 AS Scali, v.idViaggio AS Viaggio		
+		vo1.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo1.oraA,vo.oraP) AS Durata,v.prezzoPrima,v.prezzoSeconda,
+		v.postiPrima,v.postiSeconda, MAX(s1.ordine)-1 AS Scali,v.idViaggio AS Viaggio,v.inseritoDa		
 FROM (((((((Viaggi v JOIN ViaggiConScali vcs ON(v.idViaggio=vcs.idViaggioConScali))JOIN Scali s ON(vcs.idViaggioConScali=s.idViaggioConScali))
 	JOIN ViaggiDiretti vd ON (s.idViaggioDiretto=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
 	JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
