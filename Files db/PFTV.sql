@@ -201,30 +201,6 @@ CREATE VIEW viewTratte AS
 SELECT t.idTratta AS Tratta, a1.nome AS Partenza, a2.nome AS Arrivo
 FROM Tratte t JOIN Aeroporti a1 ON (t.da=a1.idAeroporto) JOIN Aeroporti a2 ON (t.a=a2.idAeroporto);
 
-DROP VIEW IF EXISTS viewVoli;
-CREATE VIEW viewVoli AS 
-SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
-		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, 0 AS Scali, v.idViaggio AS Viaggio
-FROM (((((Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
-		JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
-	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
-	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
-WHERE t.da=t1.da AND t.a=t2.a 
-UNION
-SELECT  l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
-		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, MAX(s.ordine) AS Scali, v.idViaggio AS Viaggio		
-FROM (((((((Viaggi v JOIN ViaggiConScali vcs ON(v.idViaggio=vcs.idViaggioConScali))JOIN Scali s ON(vcs.idViaggioConScali=s.idViaggioConScali))
-	JOIN ViaggiDiretti vd ON (s.idViaggioDiretto=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
-	JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
-	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
-	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
-WHERE t.da=t1.da AND t.a=t2.a;
-
-
-
-
-
-
 CREATE VIEW viewViaggiDiretti AS
 SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, l1.nomecitta AS luogoP, l2.nomecitta AS luogoA, vo.oraP, vo.oraA, v.stato, v.prezzoPrima, v.prezzoSeconda,
 		v.postiPrima, v.postiSeconda, c.nome AS compagnia, v.inseritoDa AS admin
