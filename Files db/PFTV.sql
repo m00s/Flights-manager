@@ -217,4 +217,33 @@ FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOI
 WHERE s1.ordine=1 AND s2.ordine=(select MAX(ordine) from Scali where Scali.idViaggioConScali=vcs.idViaggioConScali)
 
 
+DROP VIEW IF EXISTS viewViaggi;
+CREATE VIEW viewViaggi AS 
+SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
+		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, 0 AS Scali, v.idViaggio AS Viaggio
+FROM (((((Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
+		JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
+	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
+	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
+WHERE t.da=t1.da AND t.a=t2.a 
+UNION
+SELECT  l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
+		vo1.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo1.oraA,vo.oraP) AS Durata,v.prezzoSeconda, MAX(s1.ordine)-1 AS Scali, v.idViaggio AS Viaggio		
+FROM (((((((Viaggi v JOIN ViaggiConScali vcs ON(v.idViaggio=vcs.idViaggioConScali))JOIN Scali s ON(vcs.idViaggioConScali=s.idViaggioConScali))
+	JOIN ViaggiDiretti vd ON (s.idViaggioDiretto=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
+	JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
+	
+	(((((((Viaggi v1 JOIN ViaggiConScali vcs1 ON(v1.idViaggio=vcs1.idViaggioConScali))JOIN Scali s1 ON(vcs1.idViaggioConScali=s1.idViaggioConScali))
+	JOIN ViaggiDiretti vd1 ON (s1.idViaggioDiretto=vd1.idViaggioDiretto))JOIN Voli vo1 ON (vd1.idVolo=vo1.idVolo))
+	JOIN Compagnie co1 ON(co1.idCompagnia=vd1.idCompagniaEsec))JOIN Aerei ae1 ON (ae1.matricola=vd1.aereo))JOIN Tratte t1 ON(v1.idTratta=t1.idTratta)),
+	
+	(Tratte t3 JOIN Aeroporti ap ON(t3.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
+	(Tratte t4 JOIN Aeroporti aa ON(t4.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
+	
+WHERE t.da=t3.da AND t.a=t4.a AND s.ordine=(SELECT MIN(s2.ordine)
+													FROM Scali s2 
+													WHERE s2.idViaggioConScali=vcs.idViaggioConScali)
+		AND s1.ordine=(SELECT MAX(s2.ordine)
+								FROM Scali s2 
+								WHERE s2.idViaggioConScali=vcs.idViaggioConScali);
 
