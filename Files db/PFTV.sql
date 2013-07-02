@@ -246,4 +246,3 @@ WHERE t.da=t3.da AND t.a=t4.a AND s.ordine=(SELECT MIN(s2.ordine)
 		AND s1.ordine=(SELECT MAX(s2.ordine)
 								FROM Scali s2 
 								WHERE s2.idViaggioConScali=vcs.idViaggioConScali);
-
