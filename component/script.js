@@ -1,5 +1,5 @@
 <script type="text/javascript">	
-		function checkScript(){
+		function checkRegistration(){
 			var nome = document.formreg.nome.value;
 			var cog = document.formreg.cog.value;
 			var nascita = document.formreg.nascita.value;
@@ -57,4 +57,6 @@
 				document.formreg.submit();
 			}		
 		}
+		
+		
 </script>

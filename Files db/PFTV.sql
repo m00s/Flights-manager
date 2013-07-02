@@ -226,10 +226,11 @@ WHERE t.da=t1.da AND t.a=t2.a;
 
 
 CREATE VIEW viewViaggiDiretti AS
-SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, vo.oraP, vo.oraA, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima, v.postiSeconda,
-		v.inseritoDa AS admin
+SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, l1.nomecitta AS luogoP, l2.nomecitta AS luogoA, vo.oraP, vo.oraA, v.stato, v.prezzoPrima, v.prezzoSeconda,
+		v.postiPrima, v.postiSeconda, c.nome AS compagnia, v.inseritoDa AS admin
 FROM Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
-		JOIN Voli vo ON vd.idVolo=vo.idVolo
+		JOIN Voli vo ON vd.idVolo=vo.idVolo JOIN Compagnie c ON (vd.idCompagniaEsec=c.idCompagnia) JOIN Tratte t ON 
+		vt.Tratta=t.idTratta JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)
 
 
 CREATE VIEW viewViaggiConScali AS

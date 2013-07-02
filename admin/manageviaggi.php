@@ -177,9 +177,9 @@
 						echo"
 						<div class=\"content\">
 							<div style=\"padding-left:15%\">
-								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
+								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageassistenze.php\">
 								<h2>Viaggio inserito con successo</h2>
-								<h4>a breve sarai reindirizzato alla pagina delle hostess zoccolone..</h4>
+								<h4>a breve sarai reindirizzato alla pagina degli assistenti di volo..</h4>
 							</div>
 						</div>";
 					}

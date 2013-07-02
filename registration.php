@@ -56,7 +56,7 @@
 									<td><input type=\"password\" name=\"pswconf\"/></td>
 								</tr></td></table>
 								<tr>
-									<td align=\"right\"><input type=\"button\" value=\"Procedi\" onClick=\"checkScript()\" class=\"button\"/></td>
+									<td align=\"right\"><input type=\"button\" value=\"Procedi\" onClick=\"checkRegistration()\" class=\"button\"/></td>
 								</tr>
 							</table>
 						</form>

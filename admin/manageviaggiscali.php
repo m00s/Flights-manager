@@ -17,7 +17,7 @@
 			include "sidebar.php";
 			if(isset($_REQUEST['option']) && $_REQUEST['option']="insert"){
 				if(isset($_REQUEST['scali'])){
-					$n = $_REQUEST['scali'];
+					$n = $_REQUEST['scali']+1;
 					echo"
 						<div class=\"content\">
 						<form method=\"POST\" action=\"managecheck.php?area=viaggiScali\" class=\"form\">
@@ -44,7 +44,12 @@
 									</tr>";}
 									echo"
 									<tr>
-										<td align=\"center\"><input type=\"submit\" value=\"Step 3\" class=\"button\"/></td>
+										<td align=\"center\"><input type=\"submit\" value=\"Step 3\" class=\"button\"/></td>";
+										if(isset($_REQUEST['error']) && $_REQUEST['error']=="aero")
+											echo"<td><span class=\"error\">&nbsp &nbsp (!) Gli aeroporti di arrivo e partenza non corrispondono</span></td>";
+										if(isset($_REQUEST['error']) && $_REQUEST['error']=="date")
+											echo"<td><span class=\"error\">&nbsp &nbsp (!) Le date di arrivo e partenza non corrispondono</span></td>";
+									echo"
 									</tr>
 								</table>
 								</td>
@@ -92,7 +97,7 @@
 						echo"
 						<div class=\"content\">
 							<div style=\"padding-left:15%\">
-								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggi.php?option=insert\">
+								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggiscali.php?option=insert\">
 								<h2>Viaggio inserito con successo</h2>
 								<h4>a breve sarai reindirizzato..</h4>
 							</div>

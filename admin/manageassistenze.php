@@ -16,7 +16,7 @@
 			include "banneradmin.php";
 			include "sidebar.php";
 			
-			if(isset($_GET['viaggio'])){	
+			if(isset($_REQUEST['idviaggio'])){	
 				echo "<div class=\"content\">
 						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
 						<tr>
@@ -27,7 +27,7 @@
 						<th>Cognome</th>
 						<th>Compagnia</th>
 						<th colspan=\"2\">permessi</th>";
-						$idViaggio=$_GET['viaggio'];
+						$idViaggio=$_REQUEST['idviaggio'];
 						$query="SELECT va.matricola, va.nome, va.cognome, va.Compagnia FROM ViaggiDiretti v, viewAssistenti va, Compagnie c 
 								WHERE v.idViaggioDiretto=$idViaggio AND v.idCompagniaEsec=c.idCompagnia AND va.Compagnia=c.nome
 								AND va.matricola NOT IN (SELECT DISTINCT matricola FROM Assistenze)";
@@ -54,31 +54,34 @@
 			else{
 				echo"
 					<div class=\"content\">
-					<form method=\"GET\" action=\"manageassistenze.php?viaggio=$row[0]\" class=\"form\">
-						<table cellspacing=\"2\" cellpadding=\"7\" style=\"border-right:1px solid #000000; border-bottom:2px solid #000000;padding:7px; margin-left:25%\">
-							<tr>
-								<td align=\"center\"><h2 class=\"tt\">Assegna assistenze</h2></td>
-							</tr>
-							<td>
-							<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
-								<tr width=\"96\" align=\"right\" class=\"sm\">
-									<td style=\"padding-right:10px\"><label>Viaggio</label></td>
-									<td align=\"center\">
-									<select name=\"viaggio\">";
-    								$query = "SELECT v.idViaggioDiretto, v.idVolo, vi.giorno, c.nome FROM ViaggiDiretti v JOIN Compagnie c ON (v.idCompagniaEsec=c.idCompagnia) 												JOIN Viaggi vi ON (vi.idViaggio=v.idViaggioDiretto) WHERE vi.stato='previsto' ORDER BY vi.giorno";
-    								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
-    									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\"> $row[3]:  $row[1] - $row[2]</option>";	
-    								echo"</select>
-    								</td>
-								</tr>
-								<tr>
-									<td align=\"center\"><input type=\"submit\" value=\"Step 2\" class=\"button\"/></td>
-								</tr>
-							</table>
-							</td>
+						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
+						<tr>
+							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti</h2></td>
+						</tr>
+						<th>Matricola</th>
+						<th>Nome</th>
+						<th>Cognome</th>
+						<th>Compagnia</th>
+						<th colspan=\"2\">permessi</th>";
+						$query="SELECT v.idViaggio, v.giorno, v. FROM viewViaggiDiretti v";
+						$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
+						while ($row = mysql_fetch_row($result))
+						{
+							echo "<form method=\"GET\" action=\"manageassistenze.php?idviaggio=$row[0]\" class=\"form\">
+									<tr>
+										<input type=\"hidden\" name=\"viaggio\" value=\"$idViaggio\"/>
+										<input type=\"hidden\" name=\"assistente\" value=\"$row[0]\"/>
+										<td align=\"center\" style=\"padding-right:10px\"><label> $row[0] </label></td>
+										<td align=\"center\" style=\"padding-right:10px\"><label> $row[1] </label></td>
+										<td align=\"center\" style=\"padding-right:10px\"><label> $row[2] </label></td>
+										<td align=\"center\" style=\"padding-right:10px\"><label> $row[3] </label></td>";
+										echo"
+										<td align=\"center\"><input type=\"submit\" value=\"Assegna\" class=\"button\"/></td>
+									</tr>
+							  </form>";
+						}
+						echo"				
 						</table>
-					</form>
 					</div>";
 			}
 			
