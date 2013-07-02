@@ -225,7 +225,38 @@ WHERE t.da=t1.da AND t.a=t2.a;
 
 
 
+CREATE VIEW viewViaggiDiretti AS
+SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, vo.oraP, vo.oraA, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima, v.postiSeconda,
+		v.inseritoDa AS admin
+FROM Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
+		JOIN Voli vo ON vd.idVolo=vo.idVolo
 
+
+/* 
+	SOLUZIONE SEMPLICE CHE NELLA VIEW DEI NON DIRETTI SALVA IL NUMERO DI SCALI E L'ORA LA CALCOLI AL
+	MOMENTO DELLA STAMPA IN DEFAULT.PHP, TANTO AVENDO L'ID VIAGGIO SI FA PRESTO
+*/
+CREATE VIEW viewViaggiConScali AS
+SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima, v.postiSeconda, 
+		(select max(ordine) from Scali s where s.idViaggioConScali=v.idViaggio) AS ordine,v.inseritoDa AS admin
+FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)		
+		
+		
+/*
+	SOLUZIONE ASSURDA MA CHE FUNZIONA, SELECT MULTIPLE DENTRO LA SELECT, FUNZIONA E HAI GLI STESSI
+	CAMPI DELLA VIEW DEI VIAGGI DIRETTI IN MODO DA FARE UNION TRANQUILLAMENTE, IN QUESTA NON HO SALVATO
+	IL NUMERO DI SCALI PERCHÉ NON SERVIVA MA BASTA FARE UN JOIN CON SCALI AVENDO L'IDVIAGGIOCONSCALI
+	(IO VOTO PER QUESTA, ANCHE SE BALDAN CI UCCIDEREBBE PER ME É UNA FIGATA!)
+*/
+	
+CREATE VIEW viewViaggiConScali AS
+SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a,
+		(select oraP from viewViaggiDiretti vvd where vvd.idViaggio=
+			(select ss.idViaggioDiretto from Scali ss where ordine=1 and ss.idViaggioConScali=v.idViaggio)) as oraP,
+		(select oraA from viewViaggiDiretti vvd where vvd.idViaggio=
+			(select ss.idViaggioDiretto from Scali ss where ordine=(select max(ordine) from Scali s where s.idViaggioConScali=v.idViaggio) and ss.idViaggioConScali=v.idViaggio)) as oraA,
+	v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima, v.postiSeconda,v.inseritoDa AS admin
+FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
 
 
 
