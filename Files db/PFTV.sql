@@ -206,7 +206,6 @@ SELECT
 FROM Viaggi v NATURAL JOIN ViaggiDiretti JOIN ViaggiConScali ON (idViaggio = )
 WHERE
 
-
 DROP VIEW IF EXISTS viewVoli;
 CREATE VIEW viewVoli AS 
 SELECT l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
@@ -216,19 +215,15 @@ FROM (((((Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto))JO
 	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
 	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
 WHERE t.da=t1.da AND t.a=t2.a 
-GROUP BY v.idViaggio
 UNION
 SELECT  l1.nomeCitta AS Partenza, ap.nome AS A1, vo.oraP AS OraPartenza,l2.nomeCitta AS Arrivo, aa.nome AS A2, 
-		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, ds.ordine AS Scali, v.idViaggio AS Viaggio		
+		vo.oraA AS OraArrivo, v.giorno AS Giorno, TIMEDIFF(vo.oraA,vo.oraP) AS Durata,v.prezzoSeconda, MAX(ds.ordine) AS Scali, v.idViaggio AS Viaggio		
 FROM (((((((Viaggi v JOIN ViaggiConScali vcs ON(v.idViaggio=vcs.idViaggioConScali))JOIN DettagliScali ds ON(vcs.idViaggioConScali=ds.idViaggioConScali))
 	JOIN ViaggiDiretti vd ON (ds.idViaggioDiretto=vd.idViaggioDiretto))JOIN Voli vo ON (vd.idVolo=vo.idVolo))
 	JOIN Compagnie co ON(co.idCompagnia=vd.idCompagniaEsec))JOIN Aerei ae ON (ae.matricola=vd.aereo))JOIN Tratte t ON(v.idTratta=t.idTratta)),
 	(Tratte t1 JOIN Aeroporti ap ON(t1.da=ap.idAeroporto))JOIN Luoghi l1 ON(ap.idLuogo=l1.idLuogo),
 	(Tratte t2 JOIN Aeroporti aa ON(t2.a=aa.idAeroporto))JOIN Luoghi l2 ON(aa.idLuogo=l2.idLuogo)
-WHERE t.da=t1.da AND t.a=t2.a 
-GROUP BY v.idViaggio
-HAVING ds.ordine=MAX(ds.ordine);
-
+WHERE t.da=t1.da AND t.a=t2.a;
 
 
 
