@@ -9,6 +9,7 @@ DROP PROCEDURE IF EXISTS CreaVistaVoliUtente;
 DROP TRIGGER IF EXISTS CancellazioneCompagnia;
 DROP TRIGGER IF EXISTS AnnullaPrenotazioni;
 DROP TRIGGER IF EXISTS EliminaAereo;
+DROP PROCEDURE IF EXISTS eliminaUtente;
 DROP VIEW IF EXISTS viewVoli;
 
 delimiter $
@@ -62,9 +63,9 @@ BEGIN
 		SELECT postiSeconda INTO Posti FROM Aerei WHERE matricola=aereo;
 	END IF;
 	RETURN Posti;
-END
+END; $ 
 
-CREATE PROCEDURE InserisciViaggio  (IN Volo VARCHAR(7),IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT, IN idTratta INT,IN inseritoDa INT,
+CREATE PROCEDURE InserisciViaggio(IN Volo VARCHAR(7),IN giorno DATE,IN prezzoPrima INT,IN prezzoSeconda INT, IN idTratta INT,IN inseritoDa INT,
 					IN compagnia INT,IN aereo VARCHAR(10),IN comandante INT(10), IN vice INT(10), IN ridottoPerc INT) 
 BEGIN
 	DECLARE ultimoId INT;
