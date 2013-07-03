@@ -16,7 +16,7 @@
 			include "banneradmin.php";
 			include "sidebar.php";
 			if(isset($_GET['option'])){
-				if($_GET['option']="insert"){
+				if($_GET['option']=="insert"){
 				echo"
 					<div class=\"content\">
 					<form method=\"POST\" action=\"managecheck.php?area=voli\" class=\"form\">

@@ -9,7 +9,9 @@
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-
+drop schema Airlines;
+create schema Airlines;
+use Airlines;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -429,10 +431,10 @@ INSERT INTO `Luoghi` (`idLuogo`, `nomecitta`, `nazione`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Offerte` (
-  `idViaggioConScali` int(11) NOT NULL,
+  `idViaggio` int(11) NOT NULL,
   `scontoperc` int(11) DEFAULT NULL,
   `disponibili` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idViaggioConScali`)
+  PRIMARY KEY (`idViaggio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -917,7 +919,7 @@ ALTER TABLE `Dipendenti`
 -- Limiti per la tabella `Offerte`
 --
 ALTER TABLE `Offerte`
-  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idViaggio`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `PostiPrimaClasse`
