@@ -49,6 +49,8 @@
 											echo"<td><span class=\"error\">&nbsp &nbsp (!) Gli aeroporti di arrivo e partenza non corrispondono</span></td>";
 										if(isset($_REQUEST['error']) && $_REQUEST['error']=="date")
 											echo"<td><span class=\"error\">&nbsp &nbsp (!) Le date di arrivo e partenza non corrispondono</span></td>";
+										if(isset($_REQUEST['error']) && $_REQUEST['error']=="ora")
+											echo"<td><span class=\"error\">&nbsp &nbsp (!) Gli orari di arrivo e partenza non corrispondono</span></td>";
 									echo"
 									</tr>
 								</table>

@@ -62,27 +62,33 @@
 				// CONTROLLO CHE I VIAGGI SIANO SCELTI IN MODO CHE GLI AEROPORTI CORRISPONDANO
 				$errorA=false; // ERRORE AEROPORTI
 				$errorD=false; // ERRORE DATA
+				$errorO=false; // ERRORE ORA
 				for($k=1; $k<$n & !$errorA & !$errorD; $k++){
 					$var="idViaggio".$k;
 					$w=$k+1;
 					$var1="idViaggio".$w;
-					
-					$query="SELECT v1.a, v1.giorno, v2.da, v2.giorno FROM viewViaggiDiretti v1, viewViaggiDiretti v2 WHERE
-							v1.idViaggio=$_REQUEST[$var] AND v2.idViaggio=$_REQUEST[$var1]";
+					$query="SELECT v1.Arrivo, v1.Giorno, v2.Partenza, v2.Giorno, v1.OraArrivo, v2.OraPartenza FROM viewViaggi v1, viewViaggi v2 WHERE
+							v1.Viaggio=$_REQUEST[$var] AND v2.Viaggio=$_REQUEST[$var1]";
 					$result = mysql_query($query,$conn) or die("Query fallita - SELECT Aeroporti Arrivo - Partenza" . mysql_error($conn));
 					$row = mysql_fetch_array($result);
 					if($row[0]!=$row[2])
 						$errorA=true;
-					if($row[1]>$row[3])
+					if($row[1]!=$row[3])
 						$errorD=true;
+					if($row[4]<$row[5])
+						$errorO=true;
 				}
 				
 				if($errorA || $errorD){
 					$n=$n-1;
 					if($errorA)
 						header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=aero");
-					else
-						header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=date");
+					else{
+						if($errorD)
+							header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=date");
+						else
+							header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=ora");
+					}		
 				}
 				else{
 					$prezzoPtotale=0;

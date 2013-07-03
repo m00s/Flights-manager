@@ -248,3 +248,13 @@ WHERE t.da=t3.da AND t.a=t4.a AND s.ordine=(SELECT MIN(s2.ordine)
 		AND s1.ordine=(SELECT MAX(s2.ordine)
 								FROM Scali s2 
 								WHERE s2.idViaggioConScali=vcs.idViaggioConScali);
+								
+								
+								
+								
+								
+								
+								
+CREATE EVENT `StatoViaggi` ON SCHEDULE EVERY1 DAY STARTS '2013-07-15 00:00:00' 
+ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Mette a effettuato i viaggi non soppressi dei giorni passati'
+ DO UPDATE Viaggi v SET v.stato = 'effettuato' WHERE v.stato =  'previsto' AND v.giorno < CURDATE( )
