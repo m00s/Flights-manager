@@ -139,13 +139,6 @@
 							$postiStotale = $row[1];
 	
 					}
-					/*
-					echo "posti prima: ".$postiPtotale;
-					echo "posti seconda: ".$postiStotale;
-					echo "prezzo prima: ".$prezzoPtotale;
-					echo "prezzo seconda: ".$prezzoStotale;
-					echo "giorno: ".$giorno;
-					*/
 					
 					// CERCO ID_TRATTA E SE NON É PRESENTE LA CREO
 					$query="SELECT Tratta FROM viewTratte WHERE Partenza='$aeroportoP' AND Arrivo='$aeroportoA'";

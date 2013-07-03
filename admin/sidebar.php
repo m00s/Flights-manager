@@ -28,8 +28,8 @@
    <li><a href='manageassistenze.php'><span>Assistenze</span></a></li>
    <li class='active has-sub'><a href='#'><span>Offerte</span></a>
       <ul>
-         <li><a href='#'><span>Inserisci</span></a></li>
-         <li><a href='#'><span>Modifica</span></a></li>
+         <li><a href='manageofferte.php?option=insert'><span>Inserisci</span></a></li>
+         <li><a href='manageofferte.php?option=edit'><span>Modifica</span></a></li>
       </ul>
    </li>
    <li><a href='manageprivileges.php'><span>Gestisci privilegi</span></a></li>

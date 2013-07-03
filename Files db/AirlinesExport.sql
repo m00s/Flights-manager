@@ -3,15 +3,13 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Lug 02, 2013 alle 19:04
+-- Generato il: Lug 03, 2013 alle 15:39
 -- Versione del server: 5.5.25
 -- Versione PHP: 5.4.4
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
-drop schema Airlines;
-create schema Airlines;
-use Airlines;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -568,8 +566,10 @@ CREATE TABLE IF NOT EXISTS `Scali` (
 --
 
 INSERT INTO `Scali` (`idViaggioConScali`, `idViaggioDiretto`, `ordine`) VALUES
-(5, 1, 2),
-(5, 4, 1);
+(6, 1, 2),
+(6, 3, 1),
+(7, 1, 2),
+(7, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -652,7 +652,7 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
   PRIMARY KEY (`idViaggio`),
   KEY `inseritoDa` (`inseritoDa`),
   KEY `idTratta` (`idTratta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dump dei dati per la tabella `Viaggi`
@@ -661,9 +661,10 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
 INSERT INTO `Viaggi` (`idViaggio`, `giorno`, `stato`, `prezzoPrima`, `prezzoSeconda`, `postiPrima`, `postiSeconda`, `idTratta`, `inseritoDa`) VALUES
 (1, '2013-09-18', 'previsto', 700, 600, 15, 200, 3, 4),
 (2, '2013-09-28', 'previsto', 800, 400, 0, 500, 1, 4),
-(3, '2013-10-02', 'previsto', 600, 500, 0, 300, 2, 4),
+(3, '2013-09-18', 'previsto', 600, 500, 0, 300, 2, 4),
 (4, '2013-08-08', 'previsto', 600, 400, 0, 400, 2, 4),
-(5, '2013-08-08', 'previsto', 1300, 1000, 0, 200, 4, 4);
+(6, '2013-09-18', 'previsto', 1300, 1100, 0, 200, 4, 4),
+(7, '2013-09-18', 'previsto', 1300, 1100, 0, 200, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -681,7 +682,8 @@ CREATE TABLE IF NOT EXISTS `ViaggiConScali` (
 --
 
 INSERT INTO `ViaggiConScali` (`idViaggioConScali`) VALUES
-(5);
+(6),
+(7);
 
 -- --------------------------------------------------------
 
@@ -761,8 +763,6 @@ CREATE TABLE IF NOT EXISTS `viewViaggiConScali` (
 ,`giorno` date
 ,`da` varchar(40)
 ,`a` varchar(40)
-,`oraP` time
-,`oraA` time
 ,`stato` enum('effettuato','previsto','soppresso')
 ,`prezzoPrima` int(11)
 ,`prezzoSeconda` int(11)
@@ -784,6 +784,7 @@ CREATE TABLE IF NOT EXISTS `viewViaggiDiretti` (
 ,`luogoA` varchar(40)
 ,`oraP` time
 ,`oraA` time
+,`durata` time
 ,`stato` enum('effettuato','previsto','soppresso')
 ,`prezzoPrima` int(11)
 ,`prezzoSeconda` int(11)
@@ -865,7 +866,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `viewViaggiConScali`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiConScali` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`vvd1`.`oraP` AS `oraP`,`vvd2`.`oraA` AS `oraA`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`v`.`inseritoDa` AS `admin` from ((((((`Viaggi` `v` join `ViaggiConScali` `vcs` on((`v`.`idViaggio` = `vcs`.`idViaggioConScali`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Scali` `s1` on((`vcs`.`idViaggioConScali` = `s1`.`idViaggioConScali`))) join `viewViaggiDiretti` `vvd1` on((`s1`.`idViaggioDiretto` = `vvd1`.`idViaggio`))) join `Scali` `s2` on((`vcs`.`idViaggioConScali` = `s2`.`idViaggioConScali`))) join `viewViaggiDiretti` `vvd2` on((`s2`.`idViaggioDiretto` = `vvd2`.`idViaggio`))) where ((`s1`.`ordine` = 1) and (`s2`.`ordine` = (select max(`Scali`.`ordine`) from `Scali` where (`Scali`.`idViaggioConScali` = `vcs`.`idViaggioConScali`))));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiConScali` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`v`.`inseritoDa` AS `admin` from ((`Viaggi` `v` join `ViaggiConScali` `vcs` on((`v`.`idViaggio` = `vcs`.`idViaggioConScali`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`)));
 
 -- --------------------------------------------------------
 
@@ -874,7 +875,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `viewViaggiDiretti`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiDiretti` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`l1`.`nomecitta` AS `luogoP`,`l2`.`nomecitta` AS `luogoA`,`vo`.`oraP` AS `oraP`,`vo`.`oraA` AS `oraA`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`c`.`nome` AS `compagnia`,`v`.`inseritoDa` AS `admin` from (((((((`Viaggi` `v` join `ViaggiDiretti` `vd` on((`v`.`idViaggio` = `vd`.`idViaggioDiretto`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Voli` `vo` on((`vd`.`idVolo` = `vo`.`idVolo`))) join `Compagnie` `c` on((`vd`.`idCompagniaEsec` = `c`.`idCompagnia`))) join `Tratte` `t` on((`vt`.`Tratta` = `t`.`idTratta`))) join `Luoghi` `l1` on((`t`.`da` = `l1`.`idLuogo`))) join `Luoghi` `l2` on((`t`.`a` = `l2`.`idLuogo`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiDiretti` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`l1`.`nomecitta` AS `luogoP`,`l2`.`nomecitta` AS `luogoA`,`vo`.`oraP` AS `oraP`,`vo`.`oraA` AS `oraA`,timediff(`vo`.`oraA`,`vo`.`oraP`) AS `durata`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`c`.`nome` AS `compagnia`,`v`.`inseritoDa` AS `admin` from (((((((`Viaggi` `v` join `ViaggiDiretti` `vd` on((`v`.`idViaggio` = `vd`.`idViaggioDiretto`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Voli` `vo` on((`vd`.`idVolo` = `vo`.`idVolo`))) join `Compagnie` `c` on((`vd`.`idCompagniaEsec` = `c`.`idCompagnia`))) join `Tratte` `t` on((`vt`.`Tratta` = `t`.`idTratta`))) join `Luoghi` `l1` on((`t`.`da` = `l1`.`idLuogo`))) join `Luoghi` `l2` on((`t`.`a` = `l2`.`idLuogo`)));
 
 -- --------------------------------------------------------
 
