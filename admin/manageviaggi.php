@@ -149,7 +149,7 @@
 		    								</td>
 										</tr>
 										<tr width=\"96\" align=\"right\" class=\"sm\">
-											<td style=\"padding-right:10px\"><label>Compagnia esecutrice</label></td>
+											<td style=\"padding-right:10px\"><label>Compagnia</label></td>
 											<td align=\"center\">
 											<select name=\"Compagnia\">";
 		    								$query = "SELECT nome FROM Compagnie ORDER BY nome";

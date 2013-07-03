@@ -27,7 +27,7 @@
 				}
 						 
 				echo "<div class=\"content\">
-						<div style=\"padding-left:5%\">
+						<div style=\"padding-left:10%\">
 						<table border=\"2\">
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Manage privileges</h2></td>
@@ -36,7 +36,9 @@
 						<th>nome</th>
 						<th>cognome</th>
 						<th>email</th>
-						<th colspan=\"2\">permessi</th>";
+						<th colspan=\"2\">permessi</th>
+						<th colspan=\"2\">azioni</th>";
+						
 							$query="SELECT idAnag, nome, cognome, email, type FROM Anagrafiche a NATURAL JOIN Utenti";
 							$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 								while ($row = mysql_fetch_row($result))
@@ -48,15 +50,17 @@
 														<td align=\"center\" style=\"padding-right:10px\"><label> $row[2] </label></td>
 														<td align=\"center\" style=\"padding-right:10px\"><label> $row[3] </label></td>";
 													if($row[4]=="Guest"){
-														echo"<td><input type=\"radio\" name=\"type\" value=\"Guest\" checked=\"checked\"/>&nbspGuest&nbsp</td>
+														echo"<td><input type=\"radio\" name=\"type\" value=\"Guest\" checked=\"checked\"/>&nbspGuest&nbsp&nbsp&nbsp</td>
 														<td><input type=\"radio\" name=\"type\" value=\"Admin\"/>&nbspAdmin&nbsp</td>";	
 													}
 													else{
 														echo"<td><input type=\"radio\" name=\"type\" value=\"Guest\"/>&nbspGuest&nbsp</td>
-														<td><input type=\"radio\" name=\"type\" value=\"Admin\" checked=\"checked\"/>&nbspAdmin&nbsp</td>";
+														<td><input type=\"radio\" name=\"type\" value=\"Admin\" checked=\"checked\"/>&nbspAdmin&nbsp&nbsp&nbsp</td>";
 													}
 													echo"
-													<td align=\"center\"><input type=\"submit\" name=\"buttonForm\" value=\"Aggiorna\" class=\"button\"/></td>
+													<td align=\"center\">
+														<button type=\"submit\" name=\"buttonForm\" value=\"Aggiorna\"><img src=\"..\images\update_user.png\" alt=\"Aggiorna utente\"></button>
+													</td>
 													<td align=\"center\">
 														<button type=\"submit\" name=\"buttonForm\" value=\"Elimina\"><img src=\"..\images\delete_user.png\" alt=\"Elimina utente\"></button>
 													</td>

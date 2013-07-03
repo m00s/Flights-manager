@@ -217,4 +217,4 @@ FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOI
 								
 CREATE EVENT `StatoViaggi` ON SCHEDULE EVERY1 DAY STARTS '2013-07-15 00:00:00' 
 ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Mette a effettuato i viaggi non soppressi dei giorni passati'
- DO UPDATE Viaggi v SET v.stato = 'effettuato' WHERE v.stato =  'previsto' AND v.giorno < CURDATE( )
+ DO UPDATE Viaggi v SET v.stato = 'effettuato' WHERE v.stato = 'previsto' AND v.giorno < CURDATE( )

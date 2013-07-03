@@ -47,8 +47,8 @@
 	label { /* Stili per la label */
     display: block; /* Impostiamo la label come elemento blocco */
     line-height: 30px; /* Altezza di riga */
-    width: 150px; /* Larghezza */
-	}	
+    width: 90px; /* Larghezza */
+	}
 	
 	.button{
 	font-family: monospace;

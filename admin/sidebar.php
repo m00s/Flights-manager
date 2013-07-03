@@ -17,7 +17,7 @@
 
 <div id='cssmenu'>
 <ul>
-   <li><a href='#'><span>Home</span></a></li>
+   <li><a href='summary.php'><span>Home</span></a></li>
    <li><a href='managevoli.php?option=insert'><span>Voli</span></a></li>
    <li class='active has-sub'><a href='#'><span>Viaggi</span></a>
       <ul>
