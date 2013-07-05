@@ -13,6 +13,31 @@ DROP PROCEDURE IF EXISTS eliminaUtente;
 DROP VIEW IF EXISTS viewVoli;
 
 delimiter $
+								
+CREATE EVENT `StatoViaggi` ON SCHEDULE EVERY1 DAY STARTS '2013-07-15 00:00:00' 
+ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Cambia lo stato dei viaggi eseguiti'
+ DO call setViaggiEffettuati();
+
+CREATE PROCEDURE setViaggiEffettuati()
+BEGIN
+	DECLARE Done INT DEFAULT 0;
+	DECLARE idV INT;
+	DECLARE Cur CURSOR FOR
+			SELECT idViaggio FROM Viaggi v WHERE v.stato = 'previsto' AND v.giorno < CURDATE();
+	DECLARE CONTINUE HANDLER FOR NOT FOUND
+		SET Done=1;
+	
+	OPEN Cur;
+	REPEAT
+		FECTH Cur INTO idV;
+		IF NOT Done THEN
+			UPDATE Viaggi v SET v.stato = 'effettuato' WHERE idViaggio=idV;
+			DELETE FROM Offerte WHERE idViaggio=idV;
+		ENDIF;
+	UNTIL Done END REPEAT;
+	CLOSE Cur;
+END;
+
 
 CREATE PROCEDURE eliminaUtente (IN idAnagraf INT) 
 BEGIN
@@ -213,8 +238,4 @@ CREATE VIEW viewViaggiConScali AS
 SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima,
 		v.postiSeconda,v.inseritoDa AS admin
 FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
-															
-								
-CREATE EVENT `StatoViaggi` ON SCHEDULE EVERY1 DAY STARTS '2013-07-15 00:00:00' 
-ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Mette a effettuato i viaggi non soppressi dei giorni passati'
- DO UPDATE Viaggi v SET v.stato = 'effettuato' WHERE v.stato = 'previsto' AND v.giorno < CURDATE( )
+														
