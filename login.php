@@ -99,7 +99,7 @@
 			</table>
 		</div>
 		<?
-		}}
+		}
 		?>
 </body>
 </html>
