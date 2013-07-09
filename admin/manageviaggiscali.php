@@ -99,7 +99,7 @@
 						echo"
 						<div class=\"content\">
 							<div style=\"padding-left:15%\">
-								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/manageviaggiscali.php?option=insert\">
+								<meta http-equiv=\"refresh\" content=\"3;url=/basidati/~msartore/admin/manageviaggiscali.php?option=insert\">
 								<h2>Viaggio inserito con successo</h2>
 								<h4>a breve sarai reindirizzato..</h4>
 							</div>

@@ -18,7 +18,8 @@
 					$idTratta=$row[0];
 					$query="INSERT INTO Voli VALUES ('$idvolo', '$oraP', '$oraA', '$idTratta', '$idcomp')";
 					$result = mysql_query($query,$conn) or die("Query fallita insert volo" . mysql_error($conn));
-					header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
+					//header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
+					header("Location: /basidati/~msartore/admin/managevoli.php?cmd=inserted");
 				}
 				else{
 					$query="SELECT a1.idAeroporto, a2.idAeroporto FROM Aeroporti a1, Aeroporti a2 WHERE a1.nome='$aeroportoP' AND a2.nome='$aeroportoA'";
@@ -32,7 +33,8 @@
 					$idTratta=$row[0];
 					$query="INSERT INTO Voli VALUES ('$idvolo', '$oraP','$oraA','$idTratta','$idcomp')";
 					$result = mysql_query($query,$conn) or die("Query fallita insert volo insert tratta" . mysql_error($conn));
-					header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
+					//header("Location: http://localhost:8888/admin/managevoli.php?cmd=inserted");
+					header("Location: /basidati/~msartore/admin/managevoli.php?cmd=inserted");
 				}
 			break;
 
@@ -48,13 +50,15 @@
 				$query="call InserisciViaggio ('$_SESSION[Volo]','$_SESSION[Giorno]', '$_POST[pPrima]', '$_POST[pSeconda]', '$idTratta', '$_SESSION[id]', '$idComp',
 						'$_SESSION[Aereo]', '$_SESSION[Comandante]', '$_SESSION[Vice]', '$_POST[ridotto]');";
 				$result = mysql_query($query,$conn) or die("Query fallita procedura" . mysql_error($conn));
-				header("Location: http://localhost:8888/admin/manageviaggi.php?cmd=inserted");
+				//header("Location: http://localhost:8888/admin/manageviaggi.php?cmd=inserted");
+				header("Location: /basidati/~msartore/admin/manageviaggi.php?cmd=inserted");
 			break;
 
 			case "assistenze":
 				$query="INSERT INTO Assistenze VALUES ('$_POST[viaggio]','$_POST[assistente]')";
 				$result = mysql_query($query,$conn) or die("Query fallita insert tratta 1" . mysql_error($conn));
-				header("Location: http://localhost:8888/admin/manageassistenze.php?viaggio='$_POST[viaggio]'");
+				//header("Location: http://localhost:8888/admin/manageassistenze.php?viaggio='$_POST[viaggio]'");
+				header("Location: /basidati/~msartore/admin/manageassistenze.php?viaggio='$_POST[viaggio]'");
 			break;
 			
 			case "viaggiScali":
@@ -82,12 +86,15 @@
 				if($errorA || $errorD){
 					$n=$n-1;
 					if($errorA)
-						header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=aero");
+						//header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=aero");
+						header("Location: /basidati/~msartore/admin/manageviaggiscali.php?option=insert&scali=$n&error=aero");
 					else{
 						if($errorD)
-							header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=date");
+							//header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=date");
+							header("Location: /basidati/~msartore/admin/manageviaggiscali.php?option=insert&scali=$n&error=date");
 						else
-							header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=ora");
+							//header("Location: http://localhost:8888/admin/manageviaggiscali.php?option=insert&scali=$n&error=ora");
+							header("Location: /basidati/~msartore/admin/manageviaggiscali.php?option=insert&scali=$n&error=ora");
 					}		
 				}
 				else{
@@ -172,17 +179,14 @@
 							$result = mysql_query($query,$conn) or die("Query fallita - INSERT Scalo: ".$k . mysql_error($conn));
 						}	
 					}
-					header("Location: http://localhost:8888/admin/manageviaggiscali.php?cmd=inserted");
+					//header("Location: http://localhost:8888/admin/manageviaggiscali.php?cmd=inserted");
+					header("Location: /basidati/~msartore/admin/manageviaggiscali.php?cmd=inserted");
 				}
 			break;			
 			
 			}
 		}
 	}
-/*
-call inserisciViaggioConScali ('2014/09/09','1900','1700','0','200','1','3', @x);
-SELECT @x;
-*/
 ?>
 
 

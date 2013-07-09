@@ -1,4 +1,3 @@
-<? session_start(); ?>
 <?
 echo"
 <div id=\"bannerAdmin\">

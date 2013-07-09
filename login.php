@@ -15,15 +15,18 @@
 	<?php
 	if(isset($_GET['cmd']))
 	{
+		$path=$_SERVER['PHP_SELF'];
 		$cmd=$_GET['cmd'];
 		switch($cmd)
 		{
 		
 			case "out":		$_SESSION=array();
 							session_destroy();
-							header("Location: http://localhost:8888/login.php");
+							//header("Location: http://localhost:8888/login.php");
+							header("Location: $path");
 							break;
-			case "nauth":	header("Location: http://localhost:8888/login.php?a=nauth");
+			case "nauth":	//header("Location: http://localhost:8888/login.php?a=nauth");
+							header("Location: $path.?a=nauth");
 							break;
 		}
 	}
@@ -57,7 +60,7 @@
 						  <tr align="center">
 							<td width="96" align="right" class="sm">
 							<? if(isset($_GET['a'])){
-								$alert=$_GET['cmd'];
+								$alert=$_GET['a'];
 								if($alert=='nauth')
 									echo"(!)";}
 								?>

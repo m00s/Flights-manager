@@ -1,26 +1,3 @@
-DROP SCHEMA IF EXISTS Airlines;
-CREATE SCHEMA Airlines;
-USE Airlines;
-/*DROP TABLE IF EXISTS Anagrafiche;
-DROP TABLE IF EXISTS Utenti;
-DROP TABLE IF EXISTS Dipendenti;
-DROP TABLE IF EXISTS Aerei;
-DROP TABLE IF EXISTS Luoghi;
-DROP TABLE IF EXISTS Aeroporti;
-DROP TABLE IF EXISTS Compagnie;
-DROP TABLE IF EXISTS Bagagli;
-DROP TABLE IF EXISTS TariffeBagagli;
-DROP TABLE IF EXISTS Tratte;
-DROP TABLE IF EXISTS Voli;
-DROP TABLE IF EXISTS Viaggi;
-DROP TABLE IF EXISTS Scali;
-DROP TABLE IF EXISTS Offerte;
-DROP TABLE IF EXISTS Assistenze;
-DROP TABLE IF EXISTS Posti;
-DROP TABLE IF EXISTS Prenotazioni;
-DROP TABLE IF EXISTS Itinerario;
-*/
-
 SET FOREIGN_KEY_CHECKS = 0;
 
 /* Crea la tabella Anagrafiche */
@@ -92,7 +69,7 @@ CREATE TABLE Aeroporti (
 				ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-/* Crea la tabella Compagnia */
+/* Crea la tabella Compagnie */
 
 CREATE TABLE Compagnie (
 	idCompagnia	INT AUTO_INCREMENT PRIMARY KEY,
@@ -102,14 +79,14 @@ CREATE TABLE Compagnie (
 	nazione		VARCHAR(50)
 )ENGINE=InnoDB;
 
-/* Crea la tabella Bagaglio */
+/* Crea la tabella Bagagli */
 
 CREATE TABLE Bagagli(
 	idBagaglio	INT AUTO_INCREMENT PRIMARY KEY,
 	peso		INT(2)
 )ENGINE=InnoDB;
 
-/* Crea la tabella TariffeBagaglio*/
+/* Crea la tabella TariffeBagagli */
 
 CREATE TABLE TariffeBagagli(
 	idBagaglio	INT,
@@ -122,9 +99,7 @@ CREATE TABLE TariffeBagagli(
 				 ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
-
-
-/* Crea la tabella Tratta */
+/* Crea la tabella Tratte */
 
 CREATE TABLE Tratte (
 	idTratta	INT AUTO_INCREMENT PRIMARY KEY,
@@ -196,10 +171,10 @@ CREATE TABLE ViaggiDiretti (
 /* Crea la tabella delle Offerte */
 
 CREATE TABLE Offerte (
-       idViaggioConScali	INT PRIMARY KEY,
+       idViaggio	INT PRIMARY KEY,
        scontoperc	INT,
        disponibili	INT,
-       FOREIGN KEY (idViaggioConScali) 	REFERENCES ViaggiConScali (idViaggioConScali)
+       FOREIGN KEY (idViaggio) 	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
@@ -233,6 +208,7 @@ CREATE TABLE PostiPrimaClasse(
 CREATE TABLE Prenotazioni (
 	idPrenotazione	INT(100) AUTO_INCREMENT PRIMARY KEY,
 	idViaggio	INT NOT NULL,
+	idViaggioConScali INT default NULL,
 	acquirente	INT NOT NULL,
 	passeggero	INT NOT NULL,
 	numeroBagagli	INT(3),
@@ -244,6 +220,8 @@ CREATE TABLE Prenotazioni (
 				ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE,
+	FOREIGN KEY (idViaggioConScali)	REFERENCES Viaggi (idViaggio)
+                            	ON UPDATE CASCADE,                            	
 	FOREIGN KEY (acquirente)REFERENCES Utenti (idAnag)
                             	ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (passeggero)REFERENCES Anagrafiche (idAnag)
@@ -259,10 +237,10 @@ CREATE TABLE ViaggiConScali(
 								ON UPDATE CASCADE
 )ENGINE=InnoDB;
 
-/* Crea la tabella DettagliScali*/
+/* Crea la tabella Scali*/
 
-CREATE TABLE DettagliScali(
-	idViaggioConScali	INT ,
+CREATE TABLE Scali(
+	idViaggioConScali	INT,
 	idViaggioDiretto		INT,
 	ordine			INT,
 	PRIMARY KEY(idViaggioConScali, idViaggioDiretto),

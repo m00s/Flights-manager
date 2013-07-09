@@ -13,7 +13,7 @@
 		<?php
 		if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin"){
 			require "../component/db_connection.php";
-			include "banneradmin.php";
+			require "banneradmin.php";
 			include "sidebar.php";
 			
 			if(isset($_REQUEST['idviaggio'])){	
@@ -57,7 +57,7 @@
 					<div class=\"content\">
 						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
 						<tr>
-							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti</h2></td>
+							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti - Scelta viaggio</h2></td>
 						</tr>
 						<th>Giorno</th>
 						<th>Da</th>

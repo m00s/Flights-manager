@@ -298,7 +298,7 @@ INSERT INTO `Compagnie` (`idCompagnia`, `nome`, `numTel`, `email`, `nazione`) VA
 (2, 'Lufthansa', '+393338765019', 'info@lufthansa.com', 'Germania'),
 (3, 'Alitalia', '+393338765876', 'info@alitalia.com', 'Italia'),
 (4, 'Airfrance', '+393338765346', 'info@airfrance.com', 'Francia'),
-(5, 'Airarabia', '+393338712354', 'info@airarabia.com', 'Arabia Saudita'),
+(5, 'Air Arabia', '+393338712354', 'info@airarabia.com', 'Arabia Saudita'),
 (6, 'Ryanair', '+393338765456', 'info@ryanair.com', 'Irlanda'),
 (7, 'Air Asia', '0229319093', 'airasia@info.com', 'Malesia'),
 (8, 'Air Berlin', '0219823823', 'airberlin@info.com', 'Germania');

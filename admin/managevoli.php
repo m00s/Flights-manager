@@ -47,7 +47,7 @@
 									$query = "SELECT nome FROM Aeroporti ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\">$row[0]</option>";
+    										echo "<option align=\"center\" value=\"$row[0]\">$row[0]</option>";
     								echo"</select>
     								</td>
 								</tr>
@@ -58,7 +58,7 @@
     								$query = "SELECT nome FROM Aeroporti ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\">$row[0]</option>";	
+    										echo "<option align=\"center\" value=\"$row[0]\">$row[0]</option>";	
     								echo"</select>
     								</td>
 								</tr>
@@ -69,7 +69,7 @@
     								$query = "SELECT idCompagnia, nome FROM Compagnie ORDER BY nome";
     								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
     									while ($row = mysql_fetch_array($result))
-    										echo "<option value=\"$row[0]\">$row[1]</option>";	
+    										echo "<option align=\"center\" value=\"$row[0]\">$row[1]</option>";	
     								echo"</select>
     								</td>
 								</tr>
@@ -91,7 +91,7 @@
 						echo"
 						<div class=\"content\">
 							<div style=\"padding-left:15%\">
-								<meta http-equiv=\"refresh\" content=\"3;url=http://localhost:8888/admin/managevoli.php?option=insert\">
+								<meta http-equiv=\"refresh\" content=\"3;url=/basidati/~msartore/admin/managevoli.php?option=insert\">
 								<h2>Volo inserito con successo</h2>
 								<h4>a breve sarai reindirizzato..</h4>
 							</div>

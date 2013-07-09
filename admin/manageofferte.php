@@ -53,7 +53,7 @@
 														<td align=\"center\" style=\"padding-right:10px\"><label> $row[3] </label></td>
 														<td><input style=\"text-align:center\" type=\"TEXT\" name=\"discount\" value=\"10\"/></td>
 														<td><input style=\"text-align:center\" type=\"TEXT\" name=\"disp\" value=\"30\"/></td>
-														<td align=\"center\"><input type=\"submit\" value=\"Vai\" class=\"button\"/></td>
+														<td align=\"center\"><input type=\"submit\" value=\"Inserisci\" class=\"button\"/></td>
 													</tr>
 											  </form>";
 									}
@@ -84,8 +84,7 @@
 							<th>Sconto</th>
 							<th>Elimina offerta</th>";
 								$query = "SELECT vi.idViaggio, vi.giorno, vt.Partenza, vt.Arrivo, o.disponibili, o.scontoperc
-											FROM Viaggi vi JOIN viewTratte vt ON (vi.idTratta=vt.Tratta) JOIN Offerte o ON (vi.idViaggio=o.idViaggio)
-											WHERE vi.stato='previsto' AND vi.idViaggio IN (SELECT idViaggio FROM Offerte) ORDER BY vi.giorno";
+											FROM Viaggi vi JOIN viewTratte vt ON (vi.idTratta=vt.Tratta) JOIN Offerte o ON (vi.idViaggio=o.idViaggio) WHERE vi.stato='previsto' AND vi.idViaggio IN (SELECT idViaggio FROM Offerte) ORDER BY vi.giorno";
 								$result = mysql_query($query,$conn) or die("Query fallita" . mysql_error($conn));
 									while ($row = mysql_fetch_row($result))
 										{
