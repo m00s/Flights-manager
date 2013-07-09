@@ -17,7 +17,7 @@ CREATE TABLE Anagrafiche (
 
 CREATE TABLE Utenti (
 	idAnag		INT PRIMARY KEY,
-	password	VARCHAR(40) NOT NULL,
+	password	VARCHAR(40),
 	type         ENUM('Guest','Admin') DEFAULT "Guest",
 	FOREIGN KEY (idAnag) 	REFERENCES Anagrafiche (idAnag)
 				ON DELETE CASCADE ON UPDATE CASCADE
@@ -29,7 +29,7 @@ CREATE TABLE Dipendenti (
 	   idAnag		INT PRIMARY KEY,
 	   matricola	INT(10),
 	   grado		ENUM('assistente','comandante','vice'),
-	   idCompagnia	INT NOT NULL,	
+	   idCompagnia	INT,	
 	   UNIQUE (matricola),
 	   FOREIGN KEY (idAnag) REFERENCES Anagrafiche (idAnag)
 				ON UPDATE CASCADE,
@@ -55,7 +55,7 @@ CREATE TABLE Aerei (
 
 CREATE TABLE Luoghi (
 	idLuogo			INT AUTO_INCREMENT PRIMARY KEY,
-	nomecitta	VARCHAR(40) NOT NULL,
+	nomecitta	VARCHAR(40),
 	nazione		VARCHAR(30)
 ) ENGINE=InnoDB;
 
@@ -63,7 +63,7 @@ CREATE TABLE Luoghi (
 
 CREATE TABLE Aeroporti (
 	idAeroporto	INT AUTO_INCREMENT PRIMARY KEY,
-	nome	     VARCHAR(40) NOT NULL,
+	nome	     VARCHAR(40),
 	idLuogo		INT NOT NULL,
 	FOREIGN KEY (idLuogo)	REFERENCES Luoghi (idLuogo)
 				ON UPDATE CASCADE
@@ -103,8 +103,8 @@ CREATE TABLE TariffeBagagli(
 
 CREATE TABLE Tratte (
 	idTratta	INT AUTO_INCREMENT PRIMARY KEY,
-	da			INT NOT NULL,
-	a			INT NOT NULL,
+	da			INT,
+	a			INT,
 	FOREIGN KEY (a) REFERENCES Aeroporti (idAeroporto)
 		        ON DELETE CASCADE ON UPDATE CASCADE,
 	FOREIGN KEY (da) REFERENCES Aeroporti (idAeroporto)
@@ -115,9 +115,9 @@ CREATE TABLE Tratte (
 
 CREATE TABLE Voli (
 	idVolo		VARCHAR(7) PRIMARY KEY,
-	oraP		TIME NOT NULL,
-	oraA		TIME NOT NULL,
-	idTratta	INT NOT NULL,
+	oraP		TIME,
+	oraA		TIME,
+	idTratta	INT,
 	idCompagnia	INT NOT NULL,
 	FOREIGN KEY (idCompagnia)REFERENCES Compagnie (idCompagnia)
 				 ON DELETE CASCADE ON UPDATE CASCADE,
@@ -132,10 +132,10 @@ CREATE TABLE Viaggi (
 	giorno		DATE NOT NULL,
 	stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
 	prezzoPrima INT,
-	prezzoSeconda INT NOT NULL,
+	prezzoSeconda INT,
 	postiPrima INT,
-	postiSeconda INT NOT NULL,
-	idTratta	INT NOT NULL,
+	postiSeconda INT,
+	idTratta	INT,
 	inseritoDa   INT NOT NULL,       
 	FOREIGN KEY (inseritoDa) REFERENCES Utenti (idAnag)
 				ON UPDATE CASCADE,
@@ -148,10 +148,10 @@ CREATE TABLE Viaggi (
 
 CREATE TABLE ViaggiDiretti (
 	idViaggioDiretto	INT PRIMARY KEY,
-	idVolo	VARCHAR(7) NOT NULL,
+	idVolo	VARCHAR(7),
 	aereo	VARCHAR(10),
-	comandante	INT(10) NOT NULL, 
-	vice		INT(10)NOT NULL,
+	comandante	INT(10), 
+	vice		INT(10),
 	ridottoPerc INT,
 	idCompagniaEsec INT NOT NULL,
 	FOREIGN KEY (idViaggioDiretto) REFERENCES Viaggi (idViaggio)
@@ -208,9 +208,10 @@ CREATE TABLE PostiPrimaClasse(
 CREATE TABLE Prenotazioni (
 	idPrenotazione	INT(100) AUTO_INCREMENT PRIMARY KEY,
 	idViaggio	INT NOT NULL,
-	idViaggioConScali INT default NULL,
+	diretto BOOL DEFAULT TRUE,
+	idViaggioConScali INT DEFAULT NULL,
 	acquirente	INT NOT NULL,
-	passeggero	INT NOT NULL,
+	passeggero	INT,
 	numeroBagagli	INT(3),
 	type		ENUM('prima','seconda') DEFAULT 'seconda',
 	stato		ENUM('valido','annullato','rimborsato') DEFAULT 'valido',
@@ -220,7 +221,7 @@ CREATE TABLE Prenotazioni (
 				ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE,
-	FOREIGN KEY (idViaggioConScali)	REFERENCES Viaggi (idViaggio)
+	FOREIGN KEY (idViaggioConScali)	REFERENCES ViaggiConScali (idViaggioConScali)
                             	ON UPDATE CASCADE,                            	
 	FOREIGN KEY (acquirente)REFERENCES Utenti (idAnag)
                             	ON DELETE CASCADE ON UPDATE CASCADE,
