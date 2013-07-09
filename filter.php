@@ -1,5 +1,5 @@
 <?php
-require "\component\db_connection.php";
+require "/component/db_connection.php";
 
 echo"<form name=\"form1\" method=\"GET\" action=\"research.php\">
 		<table cellpadding=\"8\"style=\"background-color:white; border-right:1px solid #99FFFF; border-bottom:2px solid #99FFFF; padding:7px\">

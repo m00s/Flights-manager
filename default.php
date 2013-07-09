@@ -45,7 +45,7 @@
 
 <div id="voliDelGiorno" align="center" color="123456" style="background-color:#805080; width:75%; float:left;">
 	<?php
-		require "\component\db_connection.php";
+		//require "/component/db_connection.php";
 		$query="SELECT * FROM viewViaggiDiretti WHERE giorno=CURDATE() AND postiSeconda>1 ";
 		$result=mysql_query($query,$conn);
 			
