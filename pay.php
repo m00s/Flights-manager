@@ -19,13 +19,13 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location: default.php");
+				header("Location: /basidati/~msartore/default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
 	}
 	else{
-		header("Location: default.php");	
+		header("Location: /basidati/~msartore/default.php");	
 	}
 	
 ?>
@@ -181,7 +181,7 @@
 						$resultprezzoSeconda=mysql_fetch_array(mysql_query($queryprezzoSeconda,$conn));
 						$nbagagli=$_REQUEST["psabagagli".$i];
 						$prezzototale=$nbagagli*$bagaglio["1"]+$resultprezzoSeconda["0"];
-						if($_REQUEST['ppatipo'.$i]=='bambino')
+						if($_REQUEST['psatipo'.$i]=='bambino')
 								$prezzototale=$prezzototale-$prezzototale*$resultprezzoseconda["1"];
 													
 						if(isset($_REQUEST["offerte"]))
@@ -230,7 +230,7 @@
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
 							$prezzototale=$nbagagli*$prezzoperBagaglio["0"]+$resultprezzoSeconda["0"];
-							if($_REQUEST['ppatipo'.$i]=='bambino')
+							if($_REQUEST['psatipo'.$i]=='bambino')
 								$prezzototale=$prezzototale-$prezzototale*$resultprezzoseconda["1"];
 							if(isset($_REQUEST["offerte"]))
 								$prezzototale=$prezzototale-$prezzototale*$resultriduzioneofferta["0"];	
@@ -391,7 +391,7 @@
 							$resultprezzoSeconda=mysql_fetch_array(mysql_query($queryprezzoSeconda,$conn));
 							$nbagagli=$_REQUEST["psabagagli".$i];
 							$prezzototale=$nbagagli*$bagaglio["1"]+$resultprezzoSeconda["0"];
-							if($_REQUEST['ppatipo'.$i]=='bambino')
+							if($_REQUEST['psatipo'.$i]=='bambino')
 								$prezzototale=$prezzototale-$prezzototale*$resultprezzoSeconda["1"];
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -417,7 +417,7 @@
 								$queryprezzobagaglio="SELECT prezzo FROM TariffeBagagli WHERE idBagaglio=$resultidbagaglio[0] AND idCompagnia=$rowcvs[0]";
 								$prezzoperBagaglio=mysql_fetch_array(mysql_query($queryprezzobagaglio,$conn));
 								$prezzototale=$nbagagli*$queryprezzobagaglio["0"]+$resultprezzoSeconda["0"];
-								if($_REQUEST['ppatipo'.$i]=='bambino')
+								if($_REQUEST['psatipo'.$i]=='bambino')
 									$prezzototale=$prezzototale-$prezzototale*$resultprezzoSeconda["1"];
 								$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 								$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -553,7 +553,7 @@
 							$resultprezzoSeconda=mysql_fetch_array(mysql_query($queryprezzoSeconda,$conn));
 							$nbagagli=$_REQUEST["psabagagli".$i];
 							$prezzototale=$nbagagli*$bagaglio["1"]+$resultprezzoSeconda["0"];
-							if($_REQUEST['ppatipo'.$i]=='bambino')
+							if($_REQUEST['psatipo'.$i]=='bambino')
 								$prezzototale=$prezzototale-$prezzototale*$resultprezzoSeconda["1"];
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -579,7 +579,7 @@
 								$queryprezzobagaglio="SELECT prezzo FROM TariffeBagagli WHERE idBagaglio=$resultidbagaglio[0] AND idCompagnia=$rowcvs[0]";
 								$prezzoperBagaglio=mysql_fetch_array(mysql_query($queryprezzobagaglio,$conn));
 								$prezzototale=$nbagagli*$queryprezzobagaglio["0"]+$resultprezzoSeconda["0"];
-								if($_REQUEST['ppatipo'.$i]=='bambino')
+								if($_REQUEST['psatipo'.$i]=='bambino')
 									$prezzototale=$prezzototale-$prezzototale*$resultprezzoSeconda["1"];
 								$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 								$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
