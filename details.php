@@ -19,7 +19,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:default.php");
+				header("Location: /basidati/~msartore/default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
@@ -28,7 +28,7 @@
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 	}
 	else{
-		header("Location:default.php");	
+		header("Location: /basidati/~msartore/default.php");	
 	}
 	
 ?>
