@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location: /basidati/~msartore/default.php");
+				header("Location:/basidati/~msartore/default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"default.php?cmd=logout\" >Logout</a>";
@@ -45,18 +45,8 @@
 
 <div id="voliDelGiorno" align="center" color="123456" style="background-color:#805080; width:75%; float:left;">
 	<?php
-<<<<<<< HEAD
-<<<<<<< HEAD
-		//require "component/db_connection.php";
-		$query="SELECT * FROM viewViaggiDiretti WHERE giorno=CURDATE() AND postiSeconda>1 ";
-=======
 		require "component/db_connection.php";
 		$query="SELECT * FROM viewViaggiDiretti WHERE postiSeconda>1 AND stato='previsto' AND giorno>NOW() ORDER BY giorno ASC LIMIT 0,20";
->>>>>>> c162995c05e30d3f9f6b9126ed14718cce63a1d4
-=======
-		require "component/db_connection.php";
-		$query="SELECT * FROM viewViaggiDiretti WHERE postiSeconda>1 AND stato='previsto' AND giorno>NOW() ORDER BY giorno ASC LIMIT 0,20";
->>>>>>> c162995c05e30d3f9f6b9126ed14718cce63a1d4
 		$result=mysql_query($query,$conn);
 			
 		if(isset($_SESSION["Privileges"]))

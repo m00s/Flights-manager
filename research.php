@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:default.php");
+				header("Location:/basidati/~msartore/default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"research.php?cmd=logout\" >Logout</a>";
@@ -189,7 +189,7 @@
 				{
 					$data=explode('/',$_REQUEST['giornoa']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
 				}
 			}	
 			else
@@ -198,14 +198,14 @@
 					{
 						$data=explode('/',$_REQUEST['giornoa']);
 						$checkData=checkdate($data[1],$data[2],$data[0]);
-						if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
+						if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
 					}
 					
 				if(isset($_REQUEST['giornor']))
 				{
 					$data=explode('/',$_REQUEST['giornor']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
 				}
 			}
 		}
@@ -743,7 +743,7 @@
 			}
 		}
 		else
-		header("Location: /basidati/~msartore/default.php");
+		header("Location:/basidati/~msartore/default.php");
 	}
 	
 ?>

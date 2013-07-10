@@ -337,7 +337,7 @@
 			}
 		}
 		
-		header("Location: /basidati/~msartore/personale.php");
+		header("Location:/basidati/~msartore/personale.php");
 	}
 	
 	?>
