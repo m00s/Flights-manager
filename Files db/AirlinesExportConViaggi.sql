@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generato il: Lug 02, 2013 alle 14:07
+-- Generato il: Lug 10, 2013 alle 12:17
 -- Versione del server: 5.5.25
 -- Versione PHP: 5.4.4
 
@@ -213,6 +213,7 @@ CREATE TABLE IF NOT EXISTS `Anagrafiche` (
 
 INSERT INTO `Anagrafiche` (`idAnag`, `nome`, `cognome`, `nascita`, `sesso`, `email`, `tipo`) VALUES
 (1, 'Marco', 'Curo', '1990-06-09', 'M', 'a@dom.it', 'adulto'),
+(2, 'Maria', 'Rossi', '1990-06-09', 'M', 'b@dom.it', 'adulto'),
 (3, 'Mirko', 'Pavanello', '1990-05-13', 'M', 'p@admin.it', 'adulto'),
 (4, 'Massimiliano', 'Sartoretto', '1991-09-20', 'M', 's@admin.it', 'adulto'),
 (5, 'Franco', 'Stanly', '1970-06-09', 'M', 'e@dom.it', 'adulto'),
@@ -266,7 +267,7 @@ CREATE TABLE IF NOT EXISTS `Assistenze` (
 --
 
 INSERT INTO `Assistenze` (`idViaggio`, `matricola`) VALUES
-(1, 176358928);
+(3, 87629376);
 
 -- --------------------------------------------------------
 
@@ -278,7 +279,14 @@ CREATE TABLE IF NOT EXISTS `Bagagli` (
   `idBagaglio` int(11) NOT NULL AUTO_INCREMENT,
   `peso` int(2) DEFAULT NULL,
   PRIMARY KEY (`idBagaglio`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dump dei dati per la tabella `Bagagli`
+--
+
+INSERT INTO `Bagagli` (`idBagaglio`, `peso`) VALUES
+(1, 20);
 
 -- --------------------------------------------------------
 
@@ -304,7 +312,7 @@ INSERT INTO `Compagnie` (`idCompagnia`, `nome`, `numTel`, `email`, `nazione`) VA
 (2, 'Lufthansa', '+393338765019', 'info@lufthansa.com', 'Germania'),
 (3, 'Alitalia', '+393338765876', 'info@alitalia.com', 'Italia'),
 (4, 'Airfrance', '+393338765346', 'info@airfrance.com', 'Francia'),
-(5, 'Airarabia', '+393338712354', 'info@airarabia.com', 'Arabia Saudita'),
+(5, 'Air Arabia', '+393338712354', 'info@airarabia.com', 'Arabia Saudita'),
 (6, 'Ryanair', '+393338765456', 'info@ryanair.com', 'Irlanda'),
 (7, 'Air Asia', '0229319093', 'airasia@info.com', 'Malesia'),
 (8, 'Air Berlin', '0219823823', 'airberlin@info.com', 'Germania');
@@ -435,11 +443,20 @@ INSERT INTO `Luoghi` (`idLuogo`, `nomecitta`, `nazione`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `Offerte` (
-  `idViaggioConScali` int(11) NOT NULL,
+  `idViaggio` int(11) NOT NULL,
   `scontoperc` int(11) DEFAULT NULL,
   `disponibili` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idViaggioConScali`)
+  PRIMARY KEY (`idViaggio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dump dei dati per la tabella `Offerte`
+--
+
+INSERT INTO `Offerte` (`idViaggio`, `scontoperc`, `disponibili`) VALUES
+(3, 10, 30),
+(6, 10, 30),
+(7, 12, 30);
 
 -- --------------------------------------------------------
 
@@ -539,8 +556,10 @@ INSERT INTO `PostiPrimaClasse` (`numero`, `aereo`) VALUES
 CREATE TABLE IF NOT EXISTS `Prenotazioni` (
   `idPrenotazione` int(100) NOT NULL AUTO_INCREMENT,
   `idViaggio` int(11) NOT NULL,
+  `diretto` tinyint(1) DEFAULT '1',
+  `idViaggioConScali` int(11) DEFAULT NULL,
   `acquirente` int(11) NOT NULL,
-  `passeggero` int(11) NOT NULL,
+  `passeggero` int(11) DEFAULT NULL,
   `numeroBagagli` int(3) DEFAULT NULL,
   `type` enum('prima','seconda') DEFAULT 'seconda',
   `stato` enum('valido','annullato','rimborsato') DEFAULT 'valido',
@@ -549,6 +568,7 @@ CREATE TABLE IF NOT EXISTS `Prenotazioni` (
   PRIMARY KEY (`idPrenotazione`),
   KEY `posto` (`posto`),
   KEY `idViaggio` (`idViaggio`),
+  KEY `idViaggioConScali` (`idViaggioConScali`),
   KEY `acquirente` (`acquirente`),
   KEY `passeggero` (`passeggero`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -572,11 +592,10 @@ CREATE TABLE IF NOT EXISTS `Scali` (
 --
 
 INSERT INTO `Scali` (`idViaggioConScali`, `idViaggioDiretto`, `ordine`) VALUES
-(60, 4, 2),
-(60, 5, 3),
-(60, 8, 1),
-(61, 1, 1),
-(61, 8, 2);
+(6, 1, 2),
+(6, 3, 1),
+(7, 1, 2),
+(7, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -592,6 +611,20 @@ CREATE TABLE IF NOT EXISTS `TariffeBagagli` (
   KEY `idCompagnia` (`idCompagnia`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dump dei dati per la tabella `TariffeBagagli`
+--
+
+INSERT INTO `TariffeBagagli` (`idBagaglio`, `idCompagnia`, `prezzo`) VALUES
+(1, 1, 20),
+(1, 2, 20),
+(1, 3, 30),
+(1, 4, 20),
+(1, 5, 20),
+(1, 6, 20),
+(1, 7, 20),
+(1, 8, 20);
+
 -- --------------------------------------------------------
 
 --
@@ -605,7 +638,7 @@ CREATE TABLE IF NOT EXISTS `Tratte` (
   PRIMARY KEY (`idTratta`),
   KEY `a` (`a`),
   KEY `da` (`da`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
 
 --
 -- Dump dei dati per la tabella `Tratte`
@@ -613,13 +646,9 @@ CREATE TABLE IF NOT EXISTS `Tratte` (
 
 INSERT INTO `Tratte` (`idTratta`, `da`, `a`) VALUES
 (1, 2, 6),
-(2, 1, 6),
-(3, 28, 27),
-(4, 28, 5),
-(5, 28, 6),
-(6, 2, 5),
-(7, 1, 5),
-(8, 18, 33);
+(2, 18, 14),
+(3, 14, 12),
+(4, 18, 12);
 
 -- --------------------------------------------------------
 
@@ -639,7 +668,8 @@ CREATE TABLE IF NOT EXISTS `Utenti` (
 --
 
 INSERT INTO `Utenti` (`idAnag`, `password`, `type`) VALUES
-(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Guest'),
+(1, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Admin'),
+(2, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Guest'),
 (3, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Admin'),
 (4, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Admin');
 
@@ -662,21 +692,19 @@ CREATE TABLE IF NOT EXISTS `Viaggi` (
   PRIMARY KEY (`idViaggio`),
   KEY `inseritoDa` (`inseritoDa`),
   KEY `idTratta` (`idTratta`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 
 --
 -- Dump dei dati per la tabella `Viaggi`
 --
 
 INSERT INTO `Viaggi` (`idViaggio`, `giorno`, `stato`, `prezzoPrima`, `prezzoSeconda`, `postiPrima`, `postiSeconda`, `idTratta`, `inseritoDa`) VALUES
-(1, '2013-05-07', 'previsto', 800, 700, 0, 0, 2, 4),
-(3, '2013-08-08', 'previsto', 900, 700, 0, 270, 1, 4),
-(4, '2013-07-21', 'previsto', 1200, 800, 10, 400, 1, 4),
-(5, '2013-09-28', 'previsto', 900, 600, 0, 280, 2, 4),
-(7, '2013-08-08', 'previsto', 800, 700, 0, 280, 2, 4),
-(8, '2013-09-12', 'previsto', 1200, 900, 0, 400, 4, 4),
-(60, '2013-09-12', 'previsto', 3300, 2300, 0, 280, 5, 4),
-(61, '2013-05-07', 'previsto', 2000, 1600, 0, 300, 7, 4);
+(1, '2013-09-18', 'previsto', 700, 600, 15, 200, 3, 4),
+(2, '2013-09-28', 'previsto', 800, 400, 0, 500, 1, 4),
+(3, '2013-09-18', 'previsto', 600, 500, 0, 300, 2, 4),
+(4, '2013-08-08', 'previsto', 600, 400, 0, 400, 2, 4),
+(6, '2013-09-18', 'previsto', 1300, 1100, 0, 200, 4, 4),
+(7, '2013-09-18', 'previsto', 1300, 1100, 0, 200, 4, 4);
 
 -- --------------------------------------------------------
 
@@ -694,8 +722,8 @@ CREATE TABLE IF NOT EXISTS `ViaggiConScali` (
 --
 
 INSERT INTO `ViaggiConScali` (`idViaggioConScali`) VALUES
-(60),
-(61);
+(6),
+(7);
 
 -- --------------------------------------------------------
 
@@ -724,12 +752,10 @@ CREATE TABLE IF NOT EXISTS `ViaggiDiretti` (
 --
 
 INSERT INTO `ViaggiDiretti` (`idViaggioDiretto`, `idVolo`, `aereo`, `comandante`, `vice`, `ridottoPerc`, `idCompagniaEsec`) VALUES
-(1, 'AF56B5', 'N-981CF', 654387899, 109899765, 10, 6),
-(3, 'AE30Y7', 'N-860DF', 566473983, 564783902, 5, 7),
-(4, 'AE30Y7', 'N-870AA', 198276354, 654283765, 10, 5),
-(5, 'AF56B5', 'N-659', 912483647, 453657689, 4, 3),
-(7, 'AF56B5', 'N-659', 912483647, 453657689, 10, 3),
-(8, 'RD56C2', 'N-453HY', 566473983, 564783902, 10, 7);
+(1, 'AC21J7', 'N-014', 1009119202, 219862369, 10, 1),
+(2, 'AE30Y7', 'N-4BA', 912483647, 453657689, 5, 3),
+(3, 'AB56A3', 'N-981CF', 654387899, 109899765, 5, 6),
+(4, 'AB56A3', 'N-453HY', 566473983, 564783902, 5, 7);
 
 -- --------------------------------------------------------
 
@@ -777,8 +803,8 @@ CREATE TABLE IF NOT EXISTS `viewViaggiConScali` (
 ,`giorno` date
 ,`da` varchar(40)
 ,`a` varchar(40)
-,`oraP` time
-,`oraA` time
+,`luogoP` varchar(40)
+,`luogoA` varchar(40)
 ,`stato` enum('effettuato','previsto','soppresso')
 ,`prezzoPrima` int(11)
 ,`prezzoSeconda` int(11)
@@ -796,13 +822,17 @@ CREATE TABLE IF NOT EXISTS `viewViaggiDiretti` (
 ,`giorno` date
 ,`da` varchar(40)
 ,`a` varchar(40)
+,`luogoP` varchar(40)
+,`luogoA` varchar(40)
 ,`oraP` time
 ,`oraA` time
+,`durata` time
 ,`stato` enum('effettuato','previsto','soppresso')
 ,`prezzoPrima` int(11)
 ,`prezzoSeconda` int(11)
 ,`postiPrima` int(11)
 ,`postiSeconda` int(11)
+,`compagnia` varchar(30)
 ,`admin` int(11)
 );
 -- --------------------------------------------------------
@@ -840,11 +870,9 @@ CREATE TABLE IF NOT EXISTS `Voli` (
 --
 
 INSERT INTO `Voli` (`idVolo`, `oraP`, `oraA`, `idTratta`, `idCompagnia`) VALUES
-('AE30Y7', '08:00:00', '09:40:00', 1, 6),
-('AF56B5', '12:00:00', '13:40:00', 2, 6),
-('AV67S9', '14:00:00', '15:30:00', 3, 7),
-('RD56C2', '11:00:00', '17:50:00', 4, 7),
-('TF4RF6', '12:00:00', '14:30:00', 8, 5);
+('AB56A3', '11:00:00', '12:00:00', 2, 7),
+('AC21J7', '13:00:00', '14:50:00', 3, 1),
+('AE30Y7', '08:00:00', '09:40:00', 1, 6);
 
 -- --------------------------------------------------------
 
@@ -880,7 +908,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `viewViaggiConScali`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiConScali` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`vvd1`.`oraP` AS `oraP`,`vvd2`.`oraA` AS `oraA`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`v`.`inseritoDa` AS `admin` from ((((((`Viaggi` `v` join `ViaggiConScali` `vcs` on((`v`.`idViaggio` = `vcs`.`idViaggioConScali`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Scali` `s1` on((`vcs`.`idViaggioConScali` = `s1`.`idViaggioConScali`))) join `viewViaggiDiretti` `vvd1` on((`s1`.`idViaggioDiretto` = `vvd1`.`idViaggio`))) join `Scali` `s2` on((`vcs`.`idViaggioConScali` = `s2`.`idViaggioConScali`))) join `viewViaggiDiretti` `vvd2` on((`s2`.`idViaggioDiretto` = `vvd2`.`idViaggio`))) where ((`s1`.`ordine` = 1) and (`s2`.`ordine` = (select max(`Scali`.`ordine`) from `Scali` where (`Scali`.`idViaggioConScali` = `vcs`.`idViaggioConScali`))));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiConScali` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`l1`.`nomecitta` AS `luogoP`,`l2`.`nomecitta` AS `luogoA`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`v`.`inseritoDa` AS `admin` from (((((`Viaggi` `v` join `ViaggiConScali` `vcs` on((`v`.`idViaggio` = `vcs`.`idViaggioConScali`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Tratte` `t` on((`vt`.`Tratta` = `t`.`idTratta`))) join `Luoghi` `l1` on((`t`.`da` = `l1`.`idLuogo`))) join `Luoghi` `l2` on((`t`.`a` = `l2`.`idLuogo`)));
 
 -- --------------------------------------------------------
 
@@ -889,7 +917,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `viewViaggiDiretti`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiDiretti` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`vo`.`oraP` AS `oraP`,`vo`.`oraA` AS `oraA`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`v`.`inseritoDa` AS `admin` from (((`Viaggi` `v` join `ViaggiDiretti` `vd` on((`v`.`idViaggio` = `vd`.`idViaggioDiretto`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Voli` `vo` on((`vd`.`idVolo` = `vo`.`idVolo`)));
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `viewViaggiDiretti` AS select `v`.`idViaggio` AS `idViaggio`,`v`.`giorno` AS `giorno`,`vt`.`Partenza` AS `da`,`vt`.`Arrivo` AS `a`,`l1`.`nomecitta` AS `luogoP`,`l2`.`nomecitta` AS `luogoA`,`vo`.`oraP` AS `oraP`,`vo`.`oraA` AS `oraA`,timediff(`vo`.`oraA`,`vo`.`oraP`) AS `durata`,`v`.`stato` AS `stato`,`v`.`prezzoPrima` AS `prezzoPrima`,`v`.`prezzoSeconda` AS `prezzoSeconda`,`v`.`postiPrima` AS `postiPrima`,`v`.`postiSeconda` AS `postiSeconda`,`c`.`nome` AS `compagnia`,`v`.`inseritoDa` AS `admin` from (((((((`Viaggi` `v` join `ViaggiDiretti` `vd` on((`v`.`idViaggio` = `vd`.`idViaggioDiretto`))) join `viewTratte` `vt` on((`v`.`idTratta` = `vt`.`Tratta`))) join `Voli` `vo` on((`vd`.`idVolo` = `vo`.`idVolo`))) join `Compagnie` `c` on((`vd`.`idCompagniaEsec` = `c`.`idCompagnia`))) join `Tratte` `t` on((`vt`.`Tratta` = `t`.`idTratta`))) join `Luoghi` `l1` on((`t`.`da` = `l1`.`idLuogo`))) join `Luoghi` `l2` on((`t`.`a` = `l2`.`idLuogo`)));
 
 -- --------------------------------------------------------
 
@@ -934,7 +962,7 @@ ALTER TABLE `Dipendenti`
 -- Limiti per la tabella `Offerte`
 --
 ALTER TABLE `Offerte`
-  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `Offerte_ibfk_1` FOREIGN KEY (`idViaggio`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `PostiPrimaClasse`
@@ -948,8 +976,9 @@ ALTER TABLE `PostiPrimaClasse`
 ALTER TABLE `Prenotazioni`
   ADD CONSTRAINT `Prenotazioni_ibfk_1` FOREIGN KEY (`posto`) REFERENCES `PostiPrimaClasse` (`numero`) ON UPDATE CASCADE,
   ADD CONSTRAINT `Prenotazioni_ibfk_2` FOREIGN KEY (`idViaggio`) REFERENCES `Viaggi` (`idViaggio`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `Prenotazioni_ibfk_3` FOREIGN KEY (`acquirente`) REFERENCES `Utenti` (`idAnag`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `Prenotazioni_ibfk_4` FOREIGN KEY (`passeggero`) REFERENCES `Anagrafiche` (`idAnag`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `Prenotazioni_ibfk_3` FOREIGN KEY (`idViaggioConScali`) REFERENCES `ViaggiConScali` (`idViaggioConScali`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `Prenotazioni_ibfk_4` FOREIGN KEY (`acquirente`) REFERENCES `Utenti` (`idAnag`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Prenotazioni_ibfk_5` FOREIGN KEY (`passeggero`) REFERENCES `Anagrafiche` (`idAnag`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Limiti per la tabella `Scali`
