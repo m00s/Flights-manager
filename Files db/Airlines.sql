@@ -213,11 +213,14 @@ CREATE TABLE Prenotazioni (
 	acquirente	INT NOT NULL,
 	passeggero	INT,
 	numeroBagagli	INT(3),
+	idBagaglio	INT NOT NULL,
 	type		ENUM('prima','seconda') DEFAULT 'seconda',
 	stato		ENUM('valido','annullato','rimborsato') DEFAULT 'valido',
 	prezzoPrenotazione INT,
 	posto		VARCHAR(3),
 	FOREIGN KEY (posto)	REFERENCES PostiPrimaClasse (numero) 
+				ON UPDATE CASCADE,
+	FOREIGN KEY (idBagaglio) REFERENCES Bagagli (idBagaglio) 
 				ON UPDATE CASCADE,
 	FOREIGN KEY (idViaggio)	REFERENCES Viaggi (idViaggio)
                             	ON UPDATE CASCADE,
