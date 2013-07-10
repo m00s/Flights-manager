@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location: /basidati/~msartore/default.php");
+				header("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"research.php?cmd=logout\" >Logout</a>";
@@ -36,7 +36,7 @@
 
 <?php
 
-	require "\component\db_connection.php";
+	require "component/db_connection.php";
 	
 	if(isset($_REQUEST["cmd"]) && $_REQUEST["cmd"]=="offerte")
 	{
@@ -68,7 +68,7 @@
 					while($row=mysql_fetch_array($resultoffertedirette))
 					{
 						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
+						<form method=\"POST\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] $row[6]</td>
 								<td>$row[5] $row[3] $row[7]</td>
@@ -99,14 +99,14 @@
 					while($row=mysql_fetch_array($resultoffertescali))
 					{
 						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
+						<form method=\"POST\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
 								<td>$row[1]</td>
 								<td>$row[8],00€</td>
 								<td>Con Scali</td>
-								<td>$row[11]</td>
+								<td>$row[12]</td>
 								<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
 								<input type=\"hidden\" name=\"voloa\" value=\"scali\">
 								<input type=\"hidden\" name=\"offerte\" value=\"on\">
@@ -136,7 +136,7 @@
 					while($row=mysql_fetch_array($resultoffertedirette))
 					{
 						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
+						<form method=\"POST\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] $row[6]</td>
 								<td>$row[5] $row[3] $row[7]</td>
@@ -162,7 +162,7 @@
 					while($row=mysql_fetch_array($resultoffertescali))
 					{
 						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
+						<form method=\"POST\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
@@ -180,46 +180,146 @@
 
 		
 	}
-	
-	if(isset($_REQUEST['tipo']))
+	else
 	{
-		if($_REQUEST['tipo']=='andata'){
-			if(isset($_REQUEST['giornoa']))
-			{
-				$data=explode('/',$_REQUEST['giornoa']);
-				$checkData=checkdate($data[1],$data[2],$data[0]);
-				if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
-			}
-		}	
-		else
+		if(isset($_REQUEST['tipo']))
 		{
-			if(isset($_REQUEST['giornoa']))
+			if($_REQUEST['tipo']=='andata'){
+				if(isset($_REQUEST['giornoa']))
 				{
 					$data=explode('/',$_REQUEST['giornoa']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location: default.php?err=dateerr");
 				}
-				
-			if(isset($_REQUEST['giornor']))
+			}	
+			else
 			{
-				$data=explode('/',$_REQUEST['giornor']);
-				$checkData=checkdate($data[1],$data[2],$data[0]);
-				if(!$checkData) header ("Location: /basidati/~msartore/default.php?err=dateerr");
+				if(isset($_REQUEST['giornoa']))
+					{
+						$data=explode('/',$_REQUEST['giornoa']);
+						$checkData=checkdate($data[1],$data[2],$data[0]);
+						if(!$checkData) header ("Location: default.php?err=dateerr");
+					}
+					
+				if(isset($_REQUEST['giornor']))
+				{
+					$data=explode('/',$_REQUEST['giornor']);
+					$checkData=checkdate($data[1],$data[2],$data[0]);
+					if(!$checkData) header ("Location: default.php?err=dateerr");
+				}
 			}
 		}
-	}
-	
-	
-	if(isset($_REQUEST['tipo']) && !isset($_REQUEST['checkscali']))
-	{
-		$query="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]'  AND postiSeconda>1";		
-		$result=mysql_query($query,$conn);
 		
-		if(isset($_SESSION["Privileges"]))
+		
+		if(isset($_REQUEST['tipo']) && !isset($_REQUEST['checkscali']))
 		{
+			$query="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]'  AND postiSeconda>1";		
+			$result=mysql_query($query,$conn);
 			
+			if(isset($_SESSION["Privileges"]))
+			{
+				
+				if($_REQUEST['tipo']=='andata')
+				{/*solo andata con privilegi*/
+					echo "
+						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+							<tr>
+								<th>Partenza</th>
+								<th>Arrivo</th>
+								<th>Durata</th>
+								<th>Prezzo</th>
+								<th>Acquista</th>
+								
+							</tr>";
+					while($row=mysql_fetch_array($result))
+					{
+					echo "<form method=\"POST\" action=\"details.php\" class=\"form\">
+						<tr>
+							<td>$row[4] $row[2] $row[6]</td>
+							<td>$row[5] $row[3] $row[7]</td>
+							<td>$row[8]</td>
+							<td>$row[11],00€</td>
+							<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
+							<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
+							<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\ height=\"30\" width=\"30\" alt=\"Acquista\"></td>
+						</tr>
+					</form>";	
+					
+					}
+					echo"</table> </div>";
+				}
+				else 
+				{/*andata ritorno senza scali con privilegi*/
+					$query="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
+							
+					$result1=mysql_query($query,$conn);
+					
+					echo "
+					<form method=\"POST\" action=\"details.php\" class=\"form\">
+					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
+						<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
+						<input type=\"submit\" Value=\"Acquista\">
+					</div>
+						<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+							<tr>
+								<th>Partenza</th>
+								<th>Arrivo</th>
+								<th>Durata</th>
+								<th>Prezzo</th>
+								<th>Seleziona</th>
+								
+							</tr>";
+					while($row=mysql_fetch_array($result))
+					{
+					echo "
+						<tr>
+							<td>$row[4] $row[2] $row[6]</td>
+							<td>$row[5] $row[3] $row[7]</td>
+							<td>$row[8]</td>
+							<td>$row[11],00€</td>					
+							<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
+							<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
+						</tr>";	
+					
+					}
+					echo"</table> </div>";		
+					echo "
+						<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right; background-color:#65AF99\">
+						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+							<tr>
+								<th>Partenza</th>
+								<th>Arrivo</th>
+								<th>Durata</th>
+								<th>Prezzo</th>
+								<th>Seleziona</th>
+								
+							</tr>";
+					while($row=mysql_fetch_array($result1))
+					{
+					echo "
+						<tr>
+							<td>$row[4] $row[2] $row[6]</td>
+							<td>$row[5] $row[3] $row[7]</td>
+							<td>$row[8]</td>
+							<td>$row[11],00€</td>
+							<input type=\"hidden\" name=\"volor\" value=\"diretto\">
+							<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
+						</tr>
+					";	
+					
+					}
+					echo"</table> </div></form>";
+				}	
+				
+			}
+			else{
 			if($_REQUEST['tipo']=='andata')
-			{/*solo andata con privilegi*/
+			{/*entrata sezione senza privilegi*/
 				echo "
 					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
@@ -228,21 +328,16 @@
 							<th>Partenza</th>
 							<th>Arrivo</th>
 							<th>Durata</th>
-							<th>Prezzo</th>
-							<th>Acquista</th>
-							
+							<th>Prezzo</th>						
 						</tr>";
 				while($row=mysql_fetch_array($result))
 				{
-				echo "<form method=\"GET\" action=\"details.php\" class=\"form\">
+				echo "<form method=\"POST\" class=\"form\">
 					<tr>
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
 						<td>$row[11],00€</td>
-						<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
-						<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
-						<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\ height=\"30\" width=\"30\" alt=\"Acquista\"></td>
 					</tr>
 				</form>";	
 				
@@ -250,17 +345,13 @@
 				echo"</table> </div>";
 			}
 			else 
-			{/*andata ritorno senza scali con privilegi*/
-				$query="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
+			{/*andata ritorno diretti senza scali senza privilegi*/
+				$query="SELECT * FROM viewViaggi WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";
 						
 				$result1=mysql_query($query,$conn);
 				
 				echo "
-				<form method=\"GET\" action=\"details.php\" class=\"form\">
-				<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
-					<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
-					<input type=\"submit\" Value=\"Acquista\">
-				</div>
+				<form method=\"POST\" class=\"form\">
 					<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -268,9 +359,7 @@
 							<th>Partenza</th>
 							<th>Arrivo</th>
 							<th>Durata</th>
-							<th>Prezzo</th>
-							<th>Seleziona</th>
-							
+							<th>Prezzo</th>						
 						</tr>";
 				while($row=mysql_fetch_array($result))
 				{
@@ -279,9 +368,7 @@
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
-						<td>$row[11],00€</td>					
-						<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
-						<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
+						<td>$row[11],00€</td>
 					</tr>";	
 				
 				}
@@ -294,9 +381,7 @@
 							<th>Partenza</th>
 							<th>Arrivo</th>
 							<th>Durata</th>
-							<th>Prezzo</th>
-							<th>Seleziona</th>
-							
+							<th>Prezzo</th>	
 						</tr>";
 				while($row=mysql_fetch_array($result1))
 				{
@@ -306,445 +391,361 @@
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
 						<td>$row[11],00€</td>
-						<input type=\"hidden\" name=\"volor\" value=\"diretto\">
-						<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
 					</tr>
 				";	
 				
 				}
-				echo"</table> </div></form>";
+				echo"</table> </div> 
+				</form>";
+			}
 			}	
 			
 		}
-		else{
-		if($_REQUEST['tipo']=='andata')
-		{/*entrata sezione senza privilegi*/
-			echo "
-				<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
-				<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-					<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-					<tr>
-						<th>Partenza</th>
-						<th>Arrivo</th>
-						<th>Durata</th>
-						<th>Prezzo</th>						
-					</tr>";
-			while($row=mysql_fetch_array($result))
-			{
-			echo "<form method=\"GET\" class=\"form\">
-				<tr>
-					<td>$row[4] $row[2] $row[6]</td>
-					<td>$row[5] $row[3] $row[7]</td>
-					<td>$row[8]</td>
-					<td>$row[11],00€</td>
-				</tr>
-			</form>";	
-			
-			}
-			echo"</table> </div>";
-		}
-		else 
-		{/*andata ritorno diretti senza scali senza privilegi*/
-			$query="SELECT * FROM viewViaggi WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";
-					
-			$result1=mysql_query($query,$conn);
-			
-			echo "
-			<form method=\"GET\" class=\"form\">
-				<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
-				<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-					<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-					<tr>
-						<th>Partenza</th>
-						<th>Arrivo</th>
-						<th>Durata</th>
-						<th>Prezzo</th>						
-					</tr>";
-			while($row=mysql_fetch_array($result))
-			{
-			echo "
-				<tr>
-					<td>$row[4] $row[2] $row[6]</td>
-					<td>$row[5] $row[3] $row[7]</td>
-					<td>$row[8]</td>
-					<td>$row[11],00€</td>
-				</tr>";	
-			
-			}
-			echo"</table> </div>";		
-			echo "
-				<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right; background-color:#65AF99\">
-				<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
-					<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-					<tr>
-						<th>Partenza</th>
-						<th>Arrivo</th>
-						<th>Durata</th>
-						<th>Prezzo</th>	
-					</tr>";
-			while($row=mysql_fetch_array($result1))
-			{
-			echo "
-				<tr>
-					<td>$row[4] $row[2] $row[6]</td>
-					<td>$row[5] $row[3] $row[7]</td>
-					<td>$row[8]</td>
-					<td>$row[11],00€</td>
-				</tr>
-			";	
-			
-			}
-			echo"</table> </div> 
-			</form>";
-		}
-		}	
-		
-	}
-	else
-	if(isset($_REQUEST['tipo']) && isset($_REQUEST['checkscali']))
-	{
-		$queryd="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";
-		$querys="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";		
-		$resultd=mysql_query($queryd,$conn);
-		$results=mysql_query($querys,$conn);
-		if(isset($_SESSION["Privileges"]))
+		else
+		if(isset($_REQUEST['tipo']) && isset($_REQUEST['checkscali']))
 		{
-				
-			if($_REQUEST['tipo']=='andata')
+			$queryd="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";
+			$querys="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]' AND postiSeconda>1";		
+			$resultd=mysql_query($queryd,$conn);
+			$results=mysql_query($querys,$conn);
+			if(isset($_SESSION["Privileges"]))
 			{
-				echo "
-				<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
-				<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-					<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Acquista</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultd))
-					{
-						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
-							<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-								<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
-								<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
-								<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\" height=\"30\" width=\"30\" alt=\"Acquista\"></td>
-							</tr></form>";	
 					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Acquista</th>
-							</tr>";
-					while($row=mysql_fetch_array($results))
-					{
-						echo "
-						<form method=\"GET\" action=\"details.php\" class=\"form\">
-							<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-								<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
-								<input type=\"hidden\" name=\"voloa\" value=\"scali\">
-								<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\ height=\"30\" width=\"30\" alt=\"Acquista\"></td>
-							</tr></form>
-						";	
-					
-					}				
-				echo"</table> </div>";
-			}
-			else 
-			{/*Tipo andata ritorno*/
-				$querydr="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
-				$querysr="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";		
-				$resultdr=mysql_query($querydr,$conn);
-				$resultsr=mysql_query($querysr,$conn);
-						
-				echo "
-				<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
-				<form method=\"GET\" action=\"details.php\" class=\"form\">
-				<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
-					<input type=\"submit\" Value=\"Acquista\">
-				</div>
-					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
-				
+				if($_REQUEST['tipo']=='andata')
+				{
+					echo "
+					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-						<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Seleziona</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultd))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-								<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
-							</tr>
-						";	
-					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Seleziona</th>
+						<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Acquista</th>
 							</tr>";
-					while($row=mysql_fetch_array($results))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-								<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
-							</tr>";						
-					}				
-				echo"</table></div>";	
-				
-				/*Viaggi di Ritorno*/
-				echo "
-				<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
-					<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
-					<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Seleziona</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultdr))
-					{
-						echo "
-						<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-								<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
-							</tr>";	
-					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-								<th>Seleziona</th>
-							</tr>";
-					while($row=mysql_fetch_array($resultsr))
-					{
-						echo "
-						<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-								<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
-							</tr>
-						";	
-					
-					}				
-				echo"</table> </form> </div>";
-			
-		}
-		}
-		else{
-		/*Parte senza privilegi*/	
-			if($_REQUEST['tipo']=='andata')
-			{
-				echo "
-				<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
-				<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-					<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
-					
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultd))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-							</tr>";	
-					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-							</tr>";
-					while($row=mysql_fetch_array($results))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-							</tr>
-						";	
-					
-					}				
-				echo"</table>";
-			}
-			else 
-			{/*Tipo andata ritorno*/
-				$querydr="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
-				$querysr="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";		
-				$resultdr=mysql_query($querydr,$conn);
-				$resultsr=mysql_query($querysr,$conn);
+						while($row=mysql_fetch_array($resultd))
+						{
+							echo "
+							<form method=\"POST\" action=\"details.php\" class=\"form\">
+								<tr>
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+									<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
+									<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
+									<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\" height=\"30\" width=\"30\" alt=\"Acquista\"></td>
+								</tr></form>";	
 						
-				echo "
-					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
-					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-						<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultd))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-							</tr>
-						";	
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Acquista</th>
+								</tr>";
+						while($row=mysql_fetch_array($results))
+						{
+							echo "
+							<form method=\"POST\" action=\"details.php\" class=\"form\">
+								<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+									<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
+									<input type=\"hidden\" name=\"voloa\" value=\"scali\">
+									<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\ height=\"30\" width=\"30\" alt=\"Acquista\"></td>
+								</tr></form>
+							";	
+						
+						}				
+					echo"</table> </div>";
+				}
+				else 
+				{/*Tipo andata ritorno*/
+					$querydr="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
+					$querysr="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";		
+					$resultdr=mysql_query($querydr,$conn);
+					$resultsr=mysql_query($querysr,$conn);
+							
+					echo "
+					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
+					<form method=\"POST\" action=\"details.php\" class=\"form\">
+					<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
+						<input type=\"submit\" Value=\"Acquista\">
+					</div>
+						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
 					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
+						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
+							<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Seleziona</th>
 							</tr>";
-					while($row=mysql_fetch_array($results))
-					{
-						echo "
+						while($row=mysql_fetch_array($resultd))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+									<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
+								</tr>
+							";	
+						
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Seleziona</th>
+								</tr>";
+						while($row=mysql_fetch_array($results))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+									<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
+								</tr>";						
+						}				
+					echo"</table></div>";	
+					
+					/*Viaggi di Ritorno*/
+					echo "
+					<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
+						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
+						<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Seleziona</th>
+							</tr>";
+						while($row=mysql_fetch_array($resultdr))
+						{
+							echo "
 							<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-							</tr>";						
-					}				
-				echo"</table></div>";	
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+									<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
+								</tr>";	
+						
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+									<th>Seleziona</th>
+								</tr>";
+						while($row=mysql_fetch_array($resultsr))
+						{
+							echo "
+							<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+									<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
+								</tr>
+							";	
+						
+						}				
+					echo"</table> </form> </div>";
 				
-				/*Viaggi di Ritorno*/
-				echo "
-				<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
-					<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
-					<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Durata</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
-						</tr>";
-					while($row=mysql_fetch_array($resultdr))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] $row[6]</td>
-								<td>$row[5] $row[3] $row[7]</td>
-								<td>$row[8]</td>
-								<td>$row[11],00€</td>
-								<td>Diretto</td>
-							</tr>";	
-					
-					}
-					echo"</table> 
-					<h4>Viaggi Con Scali Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
-						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
-							<tr>
-								<th>Partenza</th>
-								<th>Arrivo</th>
-								<th>Prezzo</th>
-								<th>Tipo Volo</th>
+			}
+			}
+			else{
+			/*Parte senza privilegi*/	
+				if($_REQUEST['tipo']=='andata')
+				{
+					echo "
+					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
+						<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+						
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
 							</tr>";
-					while($row=mysql_fetch_array($resultsr))
-					{
-						echo "
-							<tr>
-								<td>$row[4] $row[2] </td>
-								<td>$row[5] $row[3] </td>
-								<td>$row[8],00€</td>
-								<td>Con Scali</td>
-							</tr>
-						";	
-					}				
-				echo"</table></div>";
-			
-			}	
+						while($row=mysql_fetch_array($resultd))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+								</tr>";	
+						
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+								</tr>";
+						while($row=mysql_fetch_array($results))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+								</tr>
+							";	
+						
+						}				
+					echo"</table>";
+				}
+				else 
+				{/*Tipo andata ritorno*/
+					$querydr="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";
+					$querysr="SELECT * FROM viewViaggiConScali WHERE giorno='$_REQUEST[giornor]' AND luogoP='$_REQUEST[a]' AND luogoA='$_REQUEST[da]' AND postiSeconda>1";		
+					$resultdr=mysql_query($querydr,$conn);
+					$resultsr=mysql_query($querysr,$conn);
+							
+					echo "
+						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
+						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
+							<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+							</tr>";
+						while($row=mysql_fetch_array($resultd))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+								</tr>
+							";	
+						
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+								</tr>";
+						while($row=mysql_fetch_array($results))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+								</tr>";						
+						}				
+					echo"</table></div>";	
+					
+					/*Viaggi di Ritorno*/
+					echo "
+					<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
+						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
+						<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Durata</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+							</tr>";
+						while($row=mysql_fetch_array($resultdr))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] $row[6]</td>
+									<td>$row[5] $row[3] $row[7]</td>
+									<td>$row[8]</td>
+									<td>$row[11],00€</td>
+									<td>Diretto</td>
+								</tr>";	
+						
+						}
+						echo"</table> 
+						<h4>Viaggi Con Scali Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
+							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
+								<tr>
+									<th>Partenza</th>
+									<th>Arrivo</th>
+									<th>Prezzo</th>
+									<th>Tipo Volo</th>
+								</tr>";
+						while($row=mysql_fetch_array($resultsr))
+						{
+							echo "
+								<tr>
+									<td>$row[4] $row[2] </td>
+									<td>$row[5] $row[3] </td>
+									<td>$row[8],00€</td>
+									<td>Con Scali</td>
+								</tr>
+							";	
+						}				
+					echo"</table></div>";
+				
+				}	
+			}
 		}
+		else
+		header("Location: default.php");
 	}
-	else
-	{
-		header("Location: /basidati/~msartore/default.php");
-	}
+	
 ?>
 </body>
 </html>

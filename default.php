@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location: /basidati/~msartore/default.php");
+				header("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"default.php?cmd=logout\" >Logout</a>";
@@ -45,19 +45,20 @@
 
 <div id="voliDelGiorno" align="center" color="123456" style="background-color:#805080; width:75%; float:left;">
 	<?php
-		//require "/component/db_connection.php";
-		$query="SELECT * FROM viewViaggiDiretti WHERE giorno=CURDATE() AND postiSeconda>1 ";
+		require "component/db_connection.php";
+		$query="SELECT * FROM viewViaggiDiretti WHERE postiSeconda>1 AND stato='previsto' AND giorno>NOW() ORDER BY giorno ASC LIMIT 0,20";
 		$result=mysql_query($query,$conn);
 			
 		if(isset($_SESSION["Privileges"]))
 		{
 		
-		echo "<h4>Voli della giornata <br>"; echo date('Y-m-d'); echo"</h4>
+		echo "<h4>Voli previsti a breve <br>"; echo date('Y-m-d'); echo"</h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 				<tr>
 					<th>Partenza</th>
 					<th>Arrivo</th>
 					<th>Durata</th>
+					<th>Giorno</th>
 					<th>Prezzo</th>
 					<th>Acquista</th>
 					
@@ -65,11 +66,12 @@
 		while($row=mysql_fetch_array($result))
 		{
 		echo "
-			<form method=\"GET\" action=\"details.php\" >
+			<form method=\"POST\" action=\"details.php\" >
 			<tr>
 					<td>$row[4] $row[2] $row[6]</td>
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
+					<td>$row[1]</td>
 					<td>$row[11],00€</td>
 					<td height=\"25\">
 					<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
@@ -89,15 +91,17 @@
 					<th>Partenza</th>
 					<th>Arrivo</th>
 					<th>Durata</th>
+					<th>Giorno</th>
 					<th>Prezzo</th>					
 				</tr>";
 		while($row=mysql_fetch_array($result))
 		{
-		echo "<form method=\"GET\" class=\"form\">
+		echo "<form method=\"POST\" class=\"form\">
 			<tr>
 					<td>$row[4] $row[2] $row[6]</td>
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
+					<td>$row[1]</td>
 					<td>$row[11],00€</td>
 			</tr>
 		</form>";		
