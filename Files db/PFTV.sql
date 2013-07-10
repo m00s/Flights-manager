@@ -235,7 +235,8 @@ FROM Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto) JOIN vi
 		vt.Tratta=t.idTratta JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)
 
 CREATE VIEW viewViaggiConScali AS
-SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima,
+SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, l1.nomecitta AS luogoP, l2.nomecitta AS luogoA, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima,
 		v.postiSeconda,v.inseritoDa AS admin
-FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
+FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta) JOIN Tratte t ON (vt.Tratta=t.idTratta)
+	JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)
 														
