@@ -71,7 +71,7 @@
 						
 						echo "
 						<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
-						<form method=\"POST\" action=\"appo.php\" class=\"form\">
+						<form method=\"GET\" action=\"appo.php\" class=\"form\">
 							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 							<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 								<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -112,7 +112,7 @@
 							
 							echo "
 							<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
-							<form method=\"POST\" action=\"appo.php?rimborsato=on&\" class=\"form\">
+							<form method=\"GET\" action=\"appo.php?rimborsato=on&\" class=\"form\">
 								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 								<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 									<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -155,7 +155,7 @@
 						
 						echo "
 						<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
-						<form method=\"POST\" action=\"appo.php\" class=\"form\">
+						<form method=\"GET\" action=\"appo.php\" class=\"form\">
 							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 							<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 								<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -196,7 +196,7 @@
 							
 							echo "
 							<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
-							<form method=\"POST\" action=\"appo.php?rimborsato=on&\" class=\"form\">
+							<form method=\"GET\" action=\"appo.php?rimborsato=on&\" class=\"form\">
 								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 								<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 									<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -337,7 +337,7 @@
 			}
 		}
 		
-		header("Location:/basidati/~msartore/personale.php");
+		header ("Location:personale.php");
 	}
 	
 	?>

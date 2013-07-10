@@ -19,13 +19,13 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
 	}
 	else{
-		header("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 ?>
 </div>
@@ -293,7 +293,7 @@ if(isset($_REQUEST["idva"]) & isset($_REQUEST["idvr"]))
 if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"])))
 {
 
-	echo"<form method=\"POST\" action=\"pay.php\" class=\"form\">";
+	echo"<form method=\"GET\" action=\"pay.php\" class=\"form\">";
 		if(isset($_REQUEST["bigliettiPrima"]) && $_REQUEST["bigliettiPrima"]!=0)
 			{
 			echo"<h4>Nome passeggeri Prima Classe Viaggio D'andata, Un bagaglio da 20KG già incluso, Selezionare Eventuali Da Aggiungere Massimo 2, Bagaglio A Mano Incluso</h4>";

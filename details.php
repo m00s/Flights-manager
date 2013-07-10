@@ -19,7 +19,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
@@ -28,7 +28,7 @@
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 	}
 	else{
-		header("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 	
 ?>
@@ -48,7 +48,7 @@
 			echo "
 			<div id=\"volodirettosingolo\" style=\"background-color:yellow\" >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Viaggio Selezionato</h4>
-			<form method=\"POST\" action=\"buy.php\" class=\"form\">
+			<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>
@@ -165,7 +165,7 @@
 			echo "
 			<div id=\"voloconscalisingolo\" style=\"background-color:green\">
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scali Selezionato</h4>
-				<form method=\"POST\" action=\"buy.php\" class=\"form\">
+				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>
@@ -308,7 +308,7 @@
 			
 			echo "<h4 align=\"center\" style=\"color:blue;\">Riepilogo Viaggi Selezionati</h4>
 			<h2 align=\"left\" style=\"color:blue;\">Andata</h2>
-			<form method=\"POST\" action=\"buy.php\" class=\"form\">
+			<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>
@@ -471,7 +471,7 @@
 			echo "<h4 align=\"center\" style=\"color:blue;\">Riepilogo Viaggi Selezionati</h4>
 			<h2 align=\"left\" style=\"color:blue;\">Andata</h2>
 			<div id=\"voloandataritornodirettoscali\" style=\"background-color:green\">
-			<form method=\"POST\" action=\"buy.php\" class=\"form\">
+			<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>
@@ -649,7 +649,7 @@
 			echo "
 			<div id=\"voloandataritornoscalidiretto\" style=\"background-color:green\">
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scalo Selezionato Per l'Andata</h4>
-				<form method=\"POST\" action=\"buy.php\" class=\"form\">
+				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>
@@ -824,7 +824,7 @@
 			echo "
 			<div id=\"voloconscalisingolo\" style=\"background-color:green\">
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scalo Selezionato Per l'Andata</h4>
-				<form method=\"POST\" action=\"buy.php\" class=\"form\">
+				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
 						<th>Partenza</th>

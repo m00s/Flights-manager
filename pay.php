@@ -19,13 +19,13 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
 	}
 	else{
-		header("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 	
 ?>
@@ -87,7 +87,7 @@
 						/*trovare un posto libero di prima classe per assegnarglielo*/
 						$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
 											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
-												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv])LIMIT 0,1";
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 						$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 						$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 						$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -132,8 +132,8 @@
 								
 							/*trovare un posto libero di prima classe per assegnarglielo*/
 							$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
-												WHERE vd.idViaggioDiretto=$rowcvs[1] AND pps.numero NOT IN 
-													(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$rowcvs[1])LIMIT 0,1";
+											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 							$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -200,6 +200,7 @@
 																			type,prezzoPrenotazione) 
 													VALUES ($_REQUEST[idv],NULL,$resultidacquirente[0],$idpass[0],$nbagagli,$resultidbagaglio[0],'seconda',
 													$prezzototale)";
+						echo $queryinsertprenotazione;
 						mysql_query($queryinsertprenotazione,$conn);
 						$totaledapagare=$totaledapagare+$prezzototale;
 					}
@@ -251,7 +252,7 @@
 			echo"
 			<h2>Riepologo Totale E Pagamento</h2>
 			<h4>Totale Prezzo da Pagare:$totaledapagare</h4>
-			<form method=\"POST\" action=\"personale.php\" class=\"form\>
+			<form method=\"GET\" action=\"personale.php\" class=\"form\>
 				<label for=\"CC\">Numero Carta Di Credito<input type=\"text\" name=\"cc\"></label>
 				<input type=\"hidden\" name=\"pagamento\" value=\"ok\">
 				<input type=\"submit\" value=\"Paga\">			
@@ -309,8 +310,8 @@
 								$prezzototale=$prezzototale-$prezzototale*($resultprezzoprima["1"]/100);
 							/*trovare un posto libero di prima classe per assegnarglielo*/
 							$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
-												WHERE vd.idViaggioDiretto=$_REQUEST[idva] AND pps.numero NOT IN 
-													(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idva])LIMIT 0,1";
+											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 							$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -342,8 +343,8 @@
 									$prezzototale=$prezzototale-$prezzototale*($resultprezzoprima["1"]/100);
 								/*trovare un posto libero di prima classe per assegnarglielo*/
 								$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
-													WHERE vd.idViaggioDiretto=$rowcvs[1] AND pps.numero NOT IN 
-														(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$rowcvs[1])LIMIT 0,1";
+											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 								$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 								$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 								$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -473,8 +474,8 @@
 								$prezzototale=$prezzototale-$prezzototale*($resultprezzoprima["1"]/100);
 							/*trovare un posto libero di prima classe per assegnarglielo*/
 							$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
-												WHERE vd.idViaggioDiretto=$_REQUEST[idva] AND pps.numero NOT IN 
-													(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idvr])LIMIT 0,1";
+											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 							$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 							$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 							$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));
@@ -506,8 +507,8 @@
 									$prezzototale=$prezzototale-$prezzototale*($resultprezzoprima["1"]/100);
 								/*trovare un posto libero di prima classe per assegnarglielo*/
 								$querypostoprima="SELECT pps.numero,pps.aereo FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo)
-													WHERE vd.idViaggioDiretto=$rowcvs[1] AND pps.numero NOT IN 
-														(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$rowcvs[1])LIMIT 0,1";
+											WHERE vd.idViaggioDiretto=$_REQUEST[idv] AND pps.numero NOT IN 
+												(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=$_REQUEST[idv] AND p.type='prima')LIMIT 0,1";
 								$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 								$queryidacquirente="SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]'";
 								$resultidacquirente=mysql_fetch_array(mysql_query($queryidacquirente,$conn));

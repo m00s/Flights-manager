@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"research.php?cmd=logout\" >Logout</a>";
@@ -68,7 +68,7 @@
 					while($row=mysql_fetch_array($resultoffertedirette))
 					{
 						echo "
-						<form method=\"POST\" action=\"details.php\" class=\"form\">
+						<form method=\"GET\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] $row[6]</td>
 								<td>$row[5] $row[3] $row[7]</td>
@@ -99,7 +99,7 @@
 					while($row=mysql_fetch_array($resultoffertescali))
 					{
 						echo "
-						<form method=\"POST\" action=\"details.php\" class=\"form\">
+						<form method=\"GET\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
@@ -136,7 +136,7 @@
 					while($row=mysql_fetch_array($resultoffertedirette))
 					{
 						echo "
-						<form method=\"POST\" action=\"details.php\" class=\"form\">
+						<form method=\"GET\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] $row[6]</td>
 								<td>$row[5] $row[3] $row[7]</td>
@@ -162,7 +162,7 @@
 					while($row=mysql_fetch_array($resultoffertescali))
 					{
 						echo "
-						<form method=\"POST\" action=\"details.php\" class=\"form\">
+						<form method=\"GET\" action=\"details.php\" class=\"form\">
 							<tr>
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
@@ -189,7 +189,7 @@
 				{
 					$data=explode('/',$_REQUEST['giornoa']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:default.php?err=dateerr");
 				}
 			}	
 			else
@@ -198,14 +198,14 @@
 					{
 						$data=explode('/',$_REQUEST['giornoa']);
 						$checkData=checkdate($data[1],$data[2],$data[0]);
-						if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+						if(!$checkData) header ("Location:default.php?err=dateerr");
 					}
 					
 				if(isset($_REQUEST['giornor']))
 				{
 					$data=explode('/',$_REQUEST['giornor']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:default.php?err=dateerr");
 				}
 			}
 		}
@@ -235,7 +235,7 @@
 							</tr>";
 					while($row=mysql_fetch_array($result))
 					{
-					echo "<form method=\"POST\" action=\"details.php\" class=\"form\">
+					echo "<form method=\"GET\" action=\"details.php\" class=\"form\">
 						<tr>
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
@@ -257,7 +257,7 @@
 					$result1=mysql_query($query,$conn);
 					
 					echo "
-					<form method=\"POST\" action=\"details.php\" class=\"form\">
+					<form method=\"GET\" action=\"details.php\" class=\"form\">
 					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
 						<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
 						<input type=\"submit\" Value=\"Acquista\">
@@ -332,7 +332,7 @@
 						</tr>";
 				while($row=mysql_fetch_array($result))
 				{
-				echo "<form method=\"POST\" class=\"form\">
+				echo "<form method=\"GET\" class=\"form\">
 					<tr>
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
@@ -351,7 +351,7 @@
 				$result1=mysql_query($query,$conn);
 				
 				echo "
-				<form method=\"POST\" class=\"form\">
+				<form method=\"GET\" class=\"form\">
 					<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -429,7 +429,7 @@
 						while($row=mysql_fetch_array($resultd))
 						{
 							echo "
-							<form method=\"POST\" action=\"details.php\" class=\"form\">
+							<form method=\"GET\" action=\"details.php\" class=\"form\">
 								<tr>
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
@@ -455,7 +455,7 @@
 						while($row=mysql_fetch_array($results))
 						{
 							echo "
-							<form method=\"POST\" action=\"details.php\" class=\"form\">
+							<form method=\"GET\" action=\"details.php\" class=\"form\">
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
@@ -479,7 +479,7 @@
 							
 					echo "
 					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
-					<form method=\"POST\" action=\"details.php\" class=\"form\">
+					<form method=\"GET\" action=\"details.php\" class=\"form\">
 					<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
 						<input type=\"submit\" Value=\"Acquista\">
 					</div>
@@ -743,7 +743,7 @@
 			}
 		}
 		else
-		header("Location:/basidati/~msartore/default.php");
+		header ("Location:default.php");
 	}
 	
 ?>

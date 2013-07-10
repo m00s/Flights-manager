@@ -18,7 +18,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"default.php?cmd=logout\" >Logout</a>";
@@ -52,7 +52,7 @@
 		if(isset($_SESSION["Privileges"]))
 		{
 		
-		echo "<h4>Voli previsti a breve <br>"; echo date('Y-m-d'); echo"</h4>
+		echo "<h4>Voli previsti a breve <br></h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 				<tr>
 					<th>Partenza</th>
@@ -66,7 +66,7 @@
 		while($row=mysql_fetch_array($result))
 		{
 		echo "
-			<form method=\"POST\" action=\"details.php\" >
+			<form method=\"GET\" action=\"details.php\" >
 			<tr>
 					<td>$row[4] $row[2] $row[6]</td>
 					<td>$row[5] $row[3] $row[7]</td>
@@ -96,7 +96,7 @@
 				</tr>";
 		while($row=mysql_fetch_array($result))
 		{
-		echo "<form method=\"POST\" class=\"form\">
+		echo "<form method=\"GET\" class=\"form\">
 			<tr>
 					<td>$row[4] $row[2] $row[6]</td>
 					<td>$row[5] $row[3] $row[7]</td>
