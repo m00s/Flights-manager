@@ -232,11 +232,55 @@ SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, l1.nomecitta AS
 		v.postiPrima, v.postiSeconda, c.nome AS compagnia, v.inseritoDa AS admin
 FROM Viaggi v JOIN ViaggiDiretti vd ON (v.idViaggio=vd.idViaggioDiretto) JOIN viewTratte vt ON (v.idTratta=vt.Tratta)
 		JOIN Voli vo ON vd.idVolo=vo.idVolo JOIN Compagnie c ON (vd.idCompagniaEsec=c.idCompagnia) JOIN Tratte t ON 
-		vt.Tratta=t.idTratta JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)
+		vt.Tratta=t.idTratta JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo);
 
 CREATE VIEW viewViaggiConScali AS
 SELECT v.idViaggio, v.giorno, vt.Partenza AS da, vt.Arrivo AS a, l1.nomecitta AS luogoP, l2.nomecitta AS luogoA, v.stato, v.prezzoPrima, v.prezzoSeconda, v.postiPrima,
 		v.postiSeconda,v.inseritoDa AS admin
 FROM Viaggi v JOIN ViaggiConScali vcs ON (v.idViaggio=vcs.idViaggioConScali) JOIN viewTratte vt ON (v.idTratta=vt.Tratta) JOIN Tratte t ON (vt.Tratta=t.idTratta)
-	JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)
+	JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo);
+	
+DELIMITER $
+
+CREATE PROCEDURE ScalaPosti ( IN nbiglietti INT, IN prima INT,IN idv INT,IN scali INT)
+BEGIN
+DECLARE idvs INT;
+DECLARE idvd INT;
+DECLARE Cur CURSOR FOR SELECT idViaggioDiretto,idViaggioConScali FROM Scali;
+DECLARE EXIT HANDLER FOR NOT FOUND
+BEGIN END;
+
+IF scali=0 THEN
+	IF prima=1 THEN
+			UPDATE Viaggi SET postiPrima=postiPrima-nbiglietti WHERE idViaggio=idv;
+		ELSE
+			UPDATE Viaggi SET postiSeconda=postiSeconda-nbiglietti WHERE idViaggio=idv;
+	END IF;
+END IF;
+IF scali=1 THEN
+	IF prima=1 THEN
+	UPDATE Viaggi SET postiPrima=postiPrima-nbiglietti WHERE idViaggio=idv;
+			OPEN Cur;
+				LOOP
+					FETCH Cur INTO idvd,idvs;
+					IF idvs=idv THEN
+						UPDATE Viaggi SET postiPrima=postiPrima-nbiglietti WHERE idViaggio=idvd;
+					END IF;
+				END LOOP;
+			CLOSE Cur;
+		ELSE		
+			UPDATE Viaggi SET postiSeconda=postiSeconda-nbiglietti WHERE idViaggio=idv;
+			OPEN Cur;
+				LOOP
+					FETCH Cur INTO idvd,idvs;
+					IF idvs=idv THEN
+						UPDATE Viaggi SET postiSeconda=postiSeconda-nbiglietti WHERE idViaggio=idvd;
+					END IF;
+				END LOOP;
+			CLOSE Cur;
+	END IF;
+END IF;
+END;$
+
+DELIMITER ;
 														
