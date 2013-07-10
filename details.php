@@ -155,8 +155,8 @@
 		else
 		{/*Volo singolo con scali*/
 			$query="SELECT vvd.* ,s.ordine
-					FROM viewviaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
-					JOIN viewviaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
+					FROM viewViaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
+					JOIN viewViaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
 					WHERE vvs.idViaggio=$_REQUEST[idv]
 					ORDER BY s.ordine ASC";
 			$result=mysql_query($query,$conn);
@@ -281,8 +281,8 @@
 	else/*ANDATA E RITORNO*/
 	if(isset($_REQUEST["idva"]) && isset($_REQUEST["idvr"]))
 	{	
-		$queryca="SELECT idViaggioDiretto FROM viaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idva]";
-		$querycr="SELECT idViaggioDiretto FROM viaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idvr]";
+		$queryca="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idva]";
+		$querycr="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idvr]";
 		$resultca=mysql_query($queryca,$conn);
 		$resultcr=mysql_query($querycr,$conn);
 		$rowca=mysql_fetch_array($resultca);
@@ -502,8 +502,8 @@
 				</table>";
 				
 				$query="SELECT vvd.* ,s.ordine
-					FROM viewviaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
-					JOIN viewviaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
+					FROM viewViaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
+					JOIN viewViaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
 					WHERE vvs.idViaggio=$_REQUEST[idvr]
 					ORDER BY s.ordine ASC";
 				$result=mysql_query($query,$conn);
@@ -639,8 +639,8 @@
 			{
 			
 			$query="SELECT vvd.* ,s.ordine
-					FROM viewviaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
-					JOIN viewviaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
+					FROM viewViaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
+					JOIN viewViaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
 					WHERE vvs.idViaggio=$_REQUEST[idva]
 					ORDER BY s.ordine ASC";
 				$result=mysql_query($query,$conn);	
@@ -814,8 +814,8 @@
 			if($voloa=='scali' & $volor=='scali' )
 			{
 				$query="SELECT vvd.* ,s.ordine
-					FROM viewviaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
-					JOIN viewviaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
+					FROM viewViaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
+					JOIN viewViaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
 					WHERE vvs.idViaggio=$_REQUEST[idva]
 					ORDER BY s.ordine ASC";
 				$result=mysql_query($query,$conn);	
@@ -863,8 +863,8 @@
 			</table></div>";				
 				
 				$query="SELECT vvd.* ,s.ordine
-					FROM viewviaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
-					JOIN viewviaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
+					FROM viewViaggiconscali vvs join scali s ON (vvs.idViaggio=s.idViaggioConScali) 
+					JOIN viewViaggiDiretti vvd ON(s.idViaggioDiretto=vvd.idViaggio)
 					WHERE vvs.idViaggio=$_REQUEST[idvr]
 					ORDER BY s.ordine ASC";
 				$result=mysql_query($query,$conn);

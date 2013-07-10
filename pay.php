@@ -37,7 +37,7 @@
 		{/*viaggio diretto solo andata*/
 			
 			require "component/db_connection.php";
-			$queryca="SELECT idViaggioDiretto FROM viaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idv]";
+			$queryca="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idv]";
 			$resultca=mysql_fetch_array(mysql_query($queryca,$conn));
 			$voloa=$resultca["0"];
 			$totaledapagare=0;
@@ -265,10 +265,10 @@
 		if(isset($_REQUEST["idva"]) && isset($_REQUEST["idvr"]))
 		{
 			require "component/db_connection.php";
-			$queryca="SELECT idViaggioDiretto FROM viaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idva]";
+			$queryca="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idva]";
 			$resultca=mysql_fetch_array(mysql_query($queryca,$conn));
 			$voloa=$resultca["0"];
-			$querycr="SELECT idViaggioDiretto FROM viaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idvr]";
+			$querycr="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idvr]";
 			$resultcr=mysql_fetch_array(mysql_query($queryca,$conn));
 			$volor=$resultcr["0"];
 			$totaledapagare=0;
