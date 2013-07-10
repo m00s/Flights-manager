@@ -2,7 +2,7 @@
 <?php
 	if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin"){
 		if(isset($_GET['area'])){
-			require "../component/db_connection.php";
+			require "..component/db_connection.php";
 			switch($_GET['area']){
 			case "voli":
 				$idvolo=$_POST['numero'];

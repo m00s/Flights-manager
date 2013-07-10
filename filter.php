@@ -1,5 +1,5 @@
 <?php
-require "/component/db_connection.php";
+require "component/db_connection.php";
 
 echo"<form name=\"form1\" method=\"GET\" action=\"research.php\">
 		<table cellpadding=\"8\"style=\"background-color:white; border-right:1px solid #99FFFF; border-bottom:2px solid #99FFFF; padding:7px\">
@@ -7,7 +7,7 @@ echo"<form name=\"form1\" method=\"GET\" action=\"research.php\">
 				<td align=\"right\" class=\"sm\">Da:</td>
 				<td>
 				<select name=\"da\">";
-				$query="SELECT nomeCitta FROM Luoghi";
+				$query="SELECT nomeCitta FROM Luoghi ORDER BY nomeCitta ASC";
 				$partenze=mysql_query($query,$conn);
 					while ($row = mysql_fetch_array($partenze))
 						echo "<option>$row[0]</option>"	;
@@ -18,7 +18,7 @@ echo"<form name=\"form1\" method=\"GET\" action=\"research.php\">
 			<tr>
 				<td align=\"right\" class=\"sm\">A:</td>
 				<td><select name=\"a\">";
-				$query="SELECT nomeCitta FROM Luoghi";
+				$query="SELECT nomeCitta FROM Luoghi ORDER BY nomeCitta ASC";
 				$arrivi=mysql_query($query,$conn);
 					while ($row = mysql_fetch_array($arrivi))
 						echo "<option>$row[0]</option>"	;
