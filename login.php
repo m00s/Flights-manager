@@ -45,8 +45,7 @@
 			<form method="POST" action="component/check.php" class="form">
 			<table cellpadding="1" style="border-right:1px solid #000000; border-bottom:2px solid #000000; padding:7px">
 				<tr height="30px">
-					<td align="center"><h2 class="tt">Autenticati
-					<!-- BEGIN url --><a href="{URL}" class="postlink" target="_new">{DESCRIPTION}</a><!-- END url --></h2></td>
+					<td align="center"><h2 class="tt">Autenticati</h2></td>
 				</tr>
 				<tr>
 					<td>
