@@ -4,9 +4,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 CREATE TABLE Anagrafiche (
 	idAnag		INT AUTO_INCREMENT PRIMARY KEY,
-	nome		VARCHAR(15) NOT NULL,
-	cognome		VARCHAR(15) NOT NULL,
-	nascita		DATE NOT NULL,
+	nome		VARCHAR(15),
+	cognome		VARCHAR(15),
+	nascita		DATE,
 	sesso		ENUM('M','F') DEFAULT "M",
 	email		VARCHAR(25),
 	tipo		ENUM('adulto','bambino') DEFAULT "adulto",
@@ -129,7 +129,7 @@ CREATE TABLE Voli (
 
 CREATE TABLE Viaggi (
 	idViaggio	INT AUTO_INCREMENT PRIMARY KEY,
-	giorno		DATE NOT NULL,
+	giorno		DATE,
 	stato		ENUM('effettuato','previsto','soppresso') DEFAULT 'previsto',
 	prezzoPrima INT,
 	prezzoSeconda INT,
@@ -148,7 +148,7 @@ CREATE TABLE Viaggi (
 
 CREATE TABLE ViaggiDiretti (
 	idViaggioDiretto	INT PRIMARY KEY,
-	idVolo	VARCHAR(7),
+	idVolo	VARCHAR(7) NOT NULL,
 	aereo	VARCHAR(10),
 	comandante	INT(10), 
 	vice		INT(10),
@@ -213,7 +213,7 @@ CREATE TABLE Prenotazioni (
 	acquirente	INT NOT NULL,
 	passeggero	INT,
 	numeroBagagli	INT(3),
-	idBagaglio	INT NOT NULL,
+	idBagaglio	INT DEFAULT NULL,
 	type		ENUM('prima','seconda') DEFAULT 'seconda',
 	stato		ENUM('valido','annullato','rimborsato') DEFAULT 'valido',
 	prezzoPrenotazione INT,
