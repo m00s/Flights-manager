@@ -56,12 +56,14 @@
 	if(isset($_REQUEST["rimborso"]))
 	{
 		/*diretti*/
-		
-			$quueryprima="SELECT posto FROM Prenotazioni WHERE idPrenotazione=$_REQUEST[idp]";
-			$resultprima=mysql_query($query,$conn);
-			
-			if($resultprima)
-			{
+		$resultprima["0"]=NULL;
+		if(isset($_REQUEST["idp"]))
+		{
+			$queryprima="SELECT posto FROM Prenotazioni WHERE idPrenotazione=$_REQUEST[idp]";
+			$resultprima=mysql_query($queryprima,$conn);
+		}	
+			if($resultprima["0"]!=NULL)
+			{	
 				if(isset($_REQUEST["idp"]))
 				{
 				
@@ -146,11 +148,10 @@
 				}
 			}
 			else
-				{
+			{
 				if(isset($_REQUEST["idp"]))
 				{
 					$query="SELECT * FROM viewViaggiDiretti WHERE luogoP='$_REQUEST[luogopartenza]' AND luogoA='$_REQUEST[luogoarrivo]' AND stato='previsto' AND postiSeconda>1";
-								
 					$result=mysql_query($query,$conn);
 						
 						echo "
@@ -190,8 +191,7 @@
 				else
 				{
 					/*scali*/
-					$query="SELECT * FROM viewViaggiConScali WHERE luogoP='$_REQUEST[luogopartenza]' AND luogoA='$_REQUEST[luogoarrivo]' AND stato='previsto' AND postiSeconda>1";
-									
+					$query="SELECT * FROM viewViaggiConScali WHERE luogoP='$_REQUEST[luogopartenza]' AND luogoA='$_REQUEST[luogoarrivo]' AND stato='previsto' AND postiSeconda>1";			
 						$result=mysql_query($query,$conn);
 							
 							echo "
@@ -245,7 +245,8 @@
 					$resultpostoprima=mysql_fetch_array(mysql_query($querypostoprima,$conn));
 					$query="INSERT INTO Prenotazioni (idViaggio,idViaggioConScali,acquirente,passeggero,numeroBagagli,idBagaglio,
 														type,prezzoPrenotazione,posto) 
-							VALUES ($_REQUEST[idviaggio],NULL,$_REQUEST[idacquirente],$_REQUEST[idpass],$resultvv[5],$resultvv[6],'seconda',$resultvv[9],'resultpostoprima[0]')";
+							VALUES ($_REQUEST[idviaggio],NULL,$_REQUEST[idacquirente],$_REQUEST[idpass],$resultvv[6],$resultvv[7],'prima',$resultvv[10],'resultpostoprima[0]')";
+					
 					$queryaggiorna="UPDATE Prenotazioni SET stato='rimborsato' WHERE idPrenotazione=$_REQUEST[idp]";
 					echo $query;
 					echo $queryaggiorna;
@@ -259,13 +260,15 @@
 				{
 					if(isset($_REQUEST["classe"]) && $_REQUEST["classe"]=="Seconda")
 					{
-						$queryviaggiovecchio="SELECT * FROM Prenotazioni WHERE idPrenotazione=$_REQUEST[idp]";
+					$queryviaggiovecchio="SELECT * FROM Prenotazioni WHERE idPrenotazione=$_REQUEST[idp]";
 					$resultvv=mysql_fetch_array(mysql_query($queryviaggiovecchio,$conn));
 					
 					$query="INSERT INTO Prenotazioni (idViaggio,idViaggioConScali,acquirente,passeggero,numeroBagagli,idBagaglio,
 														type,prezzoPrenotazione) 
-							VALUES ($_REQUEST[idviaggio],NULL,$_REQUEST[idacquirente],$_REQUEST[idpass],$resultvv[5],$resultvv[6],'seconda',$resultvv[9])";
+							VALUES ($_REQUEST[idviaggio],NULL,$_REQUEST[idacquirente],$_REQUEST[idpass],$resultvv[6],$resultvv[7],'seconda',$resultvv[10])";
 					$queryaggiorna="UPDATE Prenotazioni SET stato='rimborsato' WHERE idPrenotazione=$_REQUEST[idp]";
+					echo $query;
+					echo $queryaggiorna;
 					$result=mysql_query($query,$conn);
 					$result=mysql_query($queryaggiorna,$conn);
 					
@@ -337,7 +340,7 @@
 			}
 		}
 		
-		header ("Location:/basidati/~msartore/personale.php");
+		header ("Location:personale.php");
 	}
 	
 	?>

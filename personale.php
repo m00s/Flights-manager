@@ -19,7 +19,7 @@
 			{
 				$_SESSION=array();
 				session_destroy();
-				header ("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
@@ -27,7 +27,7 @@
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 	}
 	else{
-		header ("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 ?>
 </div>
@@ -144,7 +144,7 @@
 													FROM Prenotazioni p JOIN viewViaggiConScali vvs ON (p.idViaggioConScali=vvs.idViaggio) 
 													JOIN Anagrafiche a ON (p.passeggero=a.idAnag)
 											WHERE p.acquirente=(SELECT idAnag FROM Anagrafiche WHERE email='$_SESSION[email]') AND p.stato='valido'
-											GROUP BY p.passeggero
+											GROUP BY p.passeggero,p.idViaggioConScali
                                             ORDER BY p.idPrenotazione ASC";
 		$resultprenotazionivalidescali=mysql_query($queryprenotazionivalidescali,$conn);
 		echo"<br><br><br>";
