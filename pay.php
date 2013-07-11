@@ -12,26 +12,26 @@
 <body>
 
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center" >
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
 			{
 				$_SESSION=array();
 				session_destroy();
-				header ("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
 	}
 	else{
-		header ("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 	
 ?>
 </div>
 
-<div id="pagamento" align="center" style="background-color:#954030;">
+<div id="pagamento" align="center" >
 	<?php
 		if(isset($_REQUEST["idv"]))
 		{/*viaggio diretto solo andata*/
@@ -183,7 +183,7 @@
 						$nbagagli=$_REQUEST["psabagagli".$i];
 						$prezzototale=$nbagagli*$bagaglio["1"]+$resultprezzoSeconda["0"];
 						if($_REQUEST['psatipo'.$i]=='bambino')
-								$prezzototale=$prezzototale-$prezzototale*($resultprezzoseconda["1"]/100);
+								$prezzototale=$prezzototale-$prezzototale*($resultprezzoSeconda["1"]/100);
 													
 						if(isset($_REQUEST["offerte"]))
 							{
@@ -200,7 +200,7 @@
 																			type,prezzoPrenotazione) 
 													VALUES ($_REQUEST[idv],NULL,$resultidacquirente[0],$idpass[0],$nbagagli,$resultidbagaglio[0],'seconda',
 													$prezzototale)";
-						echo $queryinsertprenotazione;
+						
 						mysql_query($queryinsertprenotazione,$conn);
 						$totaledapagare=$totaledapagare+$prezzototale;
 					}
@@ -255,7 +255,7 @@
 			<form method=\"GET\" action=\"personale.php\" class=\"form\>
 				<label for=\"CC\">Numero Carta Di Credito<input type=\"text\" name=\"cc\"></label>
 				<input type=\"hidden\" name=\"pagamento\" value=\"ok\">
-				<input type=\"submit\" value=\"Paga\">			
+				<input type=\"submit\" class=\"button\" value=\"Paga\">			
 			</form>
 			";
 			

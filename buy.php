@@ -12,25 +12,25 @@
 <body>
 
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center" >
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
 			{
 				$_SESSION=array();
 				session_destroy();
-				header ("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
 	}
 	else{
-		header ("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 ?>
 </div>
 
-<div id="biglietti" align="left" style="background-color:orange;">
+<div id="biglietti" align="left" >
 <?php
 	$voloa=NULL;
 if(isset($_REQUEST["idv"]))
@@ -306,8 +306,9 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 						<label for=\"Nome\">Cognome</label><input type=\"text\" name=\"ppacognome".$i."\">
 						<label for=\"Nome\">Nascita</label><input type=\"text\" name=\"ppanascita".$i."\"value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" />
 						<label for=\"Nome\">Sesso</label>
-						<label form\"Maschio\">Maschio<input type=\"radio\" name=\"ppasesso".$i."\" value=\"M\"></label>
+						<label form\"Maschio\">Maschio<input type=\"radio\" name=\"ppasesso".$i."\" value=\"M\" checked></label>
 						<label form\"Femmina\">Femmina<input type=\"radio\" name=\"ppasesso".$i."\" value=\"F\"></label>
+						<label for=\"Tipo\">Tipo</label>
 						<label form\"Adulto\">Adulto<input type=\"radio\" name=\"ppatipo".$i."\" value=\"adulto\" checked></label>
 						<label form\"Bambino\">Bambino<input type=\"radio\" name=\"ppatipo".$i."\" value=\"bambino\"></label>
 						<label for=\"Nome\">Email</label><input type=\"text\" name=\"ppaemail".$i."\">
@@ -342,8 +343,9 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 						<label for=\"Nome\">Cognome</label><input type=\"text\" name=\"psacognome".$i."\">
 						<label for=\"Nome\">Nascita</label><input type=\"text\" name=\"psanascita".$i."\"value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" />
 						<label for=\"Nome\">Sesso</label>
-						<label form\"Maschio\">Maschio<input type=\"radio\" name=\"psasesso".$i."\" value=\"M\"></label>
+						<label form\"Maschio\">Maschio<input type=\"radio\" name=\"psasesso".$i."\" value=\"M\" checked></label>
 						<label form\"Femmina\">Femmina<input type=\"radio\" name=\"psasesso".$i."\" value=\"F\"></label>
+						<label for=\"Tipo\">Tipo</label>
 						<label form\"Adulto\">Adulto<input type=\"radio\" name=\"psatipo".$i."\" value=\"adulto\" checked></label>
 						<label form\"Bambino\">Bambino<input type=\"radio\" name=\"psatipo".$i."\" value=\"bambino\"></label>
 						<label for=\"Nome\">Email</label><input type=\"text\" name=\"psaemail".$i."\">
@@ -379,7 +381,7 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 					echo"<input type=\"hidden\" name=\"offerte\" value=\"on\">";
 					
 			if((isset($_REQUEST["bigliettiSeconda"]) && $_REQUEST["bigliettiSeconda"]!=0) || (isset($_REQUEST["bigliettiPrima"]) && $_REQUEST["bigliettiPrima"]!=0))
-			echo"<br><br><input type=\"submit\" value=\"Procedi Al Pagamento\">";
+			echo"<br><br><input type=\"submit\" class=\"button\" value=\"Procedi\">";
 			
 			echo"</form>";
 }

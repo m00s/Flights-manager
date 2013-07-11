@@ -74,7 +74,7 @@
 						echo "
 						<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
 						<form method=\"GET\" action=\"appo.php\" class=\"form\">
-							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; \">
 							<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 								<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
@@ -93,7 +93,7 @@
 								<td>$row[8]</td>
 								<td>$row[1]</td>
 								<input type=\"hidden\" name=\"idviaggio\" value=\"$row[0]\">
-								<td><input type=\"submit\" value=\"Acquista\"></td>
+								<td><input type=\"submit\" class=\"button\" value=\"Acquista\"></td>
 							</tr>";	
 						
 						}
@@ -115,7 +115,7 @@
 							echo "
 							<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
 							<form method=\"GET\" action=\"appo.php?rimborsato=on&\" class=\"form\">
-								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left;\">
 								<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 									<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 									<tr>
@@ -133,7 +133,7 @@
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[1]</td>
 									<input type=\"hidden\" name=\"idviaggio\" value=\"$row[0]\">
-									<td><input type=\"submit\" value=\"Acquista\"></td>
+									<td><input type=\"submit\" class=\"button\" value=\"Acquista\"></td>
 								</tr>";	
 							
 							}
@@ -157,7 +157,7 @@
 						echo "
 						<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
 						<form method=\"GET\" action=\"appo.php\" class=\"form\">
-							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+							<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left;\">
 							<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 								<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
@@ -176,7 +176,7 @@
 								<td>$row[8]</td>
 								<td>$row[1]</td>
 								<input type=\"hidden\" name=\"idviaggio\" value=\"$row[0]\">
-								<td><input type=\"submit\" value=\"Acquista\"></td>
+								<td><input type=\"submit\" class=\"button\" value=\"Acquista\"></td>
 							</tr>";	
 						
 						}
@@ -197,7 +197,7 @@
 							echo "
 							<h2>Seleziona il volo che ti piace e sarai rimborsato</h2>
 							<form method=\"GET\" action=\"appo.php?rimborsato=on&\" class=\"form\">
-								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+								<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; \">
 								<h4>Voli da: $_REQUEST[luogopartenza] <br> a:$_REQUEST[luogoarrivo] <br> </h4>
 									<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 									<tr>
@@ -215,7 +215,7 @@
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[1]</td>
 									<input type=\"hidden\" name=\"idviaggio\" value=\"$row[0]\">
-									<td><input type=\"submit\" value=\"Acquista\"></td>
+									<td><input type=\"submit\" class=\"button\" value=\"Acquista\"></td>
 								</tr>";	
 							
 							}

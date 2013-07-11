@@ -11,14 +11,14 @@
 <body link="#002089" alink="#002089" vlink="#002089">
 
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center">
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
 			{
 				$_SESSION=array();
 				session_destroy();
-				header ("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"research.php?cmd=logout\" >Logout</a>";
@@ -28,7 +28,8 @@
 	}
 	else{
 		echo "<p>Torna Alla <a href=\"default.php\" >Pagina Iniziale</a></p>";
-		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
+		if(!(isset($_REQUEST["cmd"]) && $_REQUEST["cmd"]=="offerte"))
+			echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 		echo "Devi essere loggato o registrato per effettuare una prenotazione <a href=\"login.php\" class=\"postlink\" target=\"_new\">Login o Registrati</a>";
 	}
 ?>
@@ -51,9 +52,9 @@
 		if(isset($_SESSION["Privileges"]))
 		{
 				echo "
-				<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+				<div id=\"voliAndata\" align=\"center\" >
 				<h4>Offerte Disponibili Dirette</h4>
-					<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+					<h4>Viaggi Per informazioni Seleziona per informazioni</h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 							<tr>
 								<th>Partenza</th>
@@ -120,9 +121,9 @@
 		else
 		{
 				echo "
-				<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+				<div id=\"voliAndata\" align=\"center\" >
 				<h4>Offerte Disponibili Dirette</h4>
-					<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+					<h4>Viaggi Disponibile Per informazioni Selezionarlo</h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 							<tr>
 								<th>Partenza</th>
@@ -189,7 +190,7 @@
 				{
 					$data=explode('/',$_REQUEST['giornoa']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:default.php?err=dateerr");
 				}
 			}	
 			else
@@ -198,14 +199,14 @@
 					{
 						$data=explode('/',$_REQUEST['giornoa']);
 						$checkData=checkdate($data[1],$data[2],$data[0]);
-						if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+						if(!$checkData) header ("Location:default.php?err=dateerr");
 					}
 					
 				if(isset($_REQUEST['giornor']))
 				{
 					$data=explode('/',$_REQUEST['giornor']);
 					$checkData=checkdate($data[1],$data[2],$data[0]);
-					if(!$checkData) header ("Location:/basidati/~msartore/default.php?err=dateerr");
+					if(!$checkData) header ("Location:default.php?err=dateerr");
 				}
 			}
 		}
@@ -222,7 +223,7 @@
 				if($_REQUEST['tipo']=='andata')
 				{/*solo andata con privilegi*/
 					echo "
-						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+						<div id=\"voliAndata\" align=\"center\" >
 						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 							<tr>
@@ -258,11 +259,11 @@
 					
 					echo "
 					<form method=\"GET\" action=\"details.php\" class=\"form\">
-					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
+					<div id=\"seleziona\" align=\"center\" >
 						<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
-						<input type=\"submit\" Value=\"Acquista\">
+						<input type=\"submit\" class=\"button\" Value=\"Acquista\">
 					</div>
-						<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+						<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left;\">
 						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 							<tr>
@@ -288,7 +289,7 @@
 					}
 					echo"</table> </div>";		
 					echo "
-						<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right; background-color:#65AF99\">
+						<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right;>
 						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 							<tr>
@@ -321,7 +322,7 @@
 			if($_REQUEST['tipo']=='andata')
 			{/*entrata sezione senza privilegi*/
 				echo "
-					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+					<div id=\"voliAndata\" align=\"center\" >
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 						<tr>
@@ -352,7 +353,7 @@
 				
 				echo "
 				<form method=\"GET\" class=\"form\">
-					<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left; background-color:#059899\">
+					<div id=\"voliAndata\" align=\"center\" style=\"width:50%; float:left;\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 						<tr>
@@ -374,7 +375,7 @@
 				}
 				echo"</table> </div>";		
 				echo "
-					<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right; background-color:#65AF99\">
+					<div id=\"voliRitorno\" align=\"center\" style=\"width:50%; float:right; \">
 					<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
 						<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 						<tr>
@@ -414,9 +415,9 @@
 				if($_REQUEST['tipo']=='andata')
 				{
 					echo "
-					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+					<div id=\"voliAndata\" align=\"center\">
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-						<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+						<h4>Viaggi Diretti Per informazioni selezionarlo</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
 									<th>Partenza</th>
@@ -443,7 +444,7 @@
 						
 						}
 						echo"</table> 
-						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
+						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
 									<th>Partenza</th>
@@ -478,12 +479,12 @@
 					$resultsr=mysql_query($querysr,$conn);
 							
 					echo "
-					<div id=\"seleziona\" align=\"center\" style=\"background-color:#123456;\">
+					<div id=\"seleziona\" align=\"center\" >
 					<form method=\"GET\" action=\"details.php\" class=\"form\">
 					<h2 style=\"color:blue;\">Selezionare i viaggi Desiderati e poi confermare per procedere all'acquisto</h2>
-						<input type=\"submit\" Value=\"Acquista\">
+						<input type=\"submit\" class=\"button\" Value=\"Acquista\">
 					</div>
-						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
+						<div id=\"voliAndata\" align=\"center\" style=\"width:50%;float:left;\">
 					
 						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 							<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
@@ -535,7 +536,7 @@
 					
 					/*Viaggi di Ritorno*/
 					echo "
-					<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
+					<div id=\"voliRitorno\" align=\"center\" style=\"width:50%;float:right\">
 						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
 						<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -592,9 +593,9 @@
 				if($_REQUEST['tipo']=='andata')
 				{
 					echo "
-					<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99\">
+					<div id=\"voliAndata\" align=\"center\" >
 					<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
-						<h4>Viaggi Diretti Per informazioni dettagliati selezionarlo per i dettagli</h4>
+						<h4>Viaggi Diretti Per informazioni selezionarlo</h4>
 						
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
@@ -617,7 +618,7 @@
 						
 						}
 						echo"</table> 
-						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo per i dettagli</h4>
+						<h4>Viaggi Con Scali Per informazioni dettagliati selezionarlo</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 								<tr>
 									<th>Partenza</th>
@@ -647,7 +648,7 @@
 					$resultsr=mysql_query($querysr,$conn);
 							
 					echo "
-						<div id=\"voliAndata\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:left;\">
+						<div id=\"voliAndata\" align=\"center\" style=\"width:50%;float:left;\">
 						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>
 							<h4>Viaggi Diretti Andata,Per informazioni dettagliati selezionarlo per i dettagli</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -694,7 +695,7 @@
 					
 					/*Viaggi di Ritorno*/
 					echo "
-					<div id=\"voliRitorno\" align=\"center\" style=\"background-color:#65AF99;width:50%;float:right\">
+					<div id=\"voliRitorno\" align=\"center\" style=\"width:50%;float:right\">
 						<h4>Voli da: $_REQUEST[a] <br> a:$_REQUEST[da] <br> il giorno $_REQUEST[giornor] </h4>
 						<h4>Viaggi Diretti Ritorno,Per informazioni dettagliati selezionarlo per i dettagli</h4>
 							<table align=\"center\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -743,7 +744,7 @@
 			}
 		}
 		else
-		header ("Location:/basidati/~msartore/default.php");
+		header ("Location:default.php");
 	}
 	
 ?>

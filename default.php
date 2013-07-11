@@ -11,14 +11,14 @@
 
 <body link="#002089" alink="#002089" vlink="#002089">
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center" >
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
 			{
 				$_SESSION=array();
 				session_destroy();
-				header("Location:/basidati/~msartore//basidati/~msartore/default.php");
+				header("Location:/basidati/~msartore/default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"default.php?cmd=logout\" >Logout</a>";
@@ -26,14 +26,13 @@
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 	}
 	else{
-		echo "<p>Torna Alla <a href=\"default.php\" >Pagina Iniziale</a></p>";
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 		echo "Devi essere loggato o registrato per effettuare una prenotazione <a href=\"login.php\" class=\"postlink\" target=\"_new\">Login o Registrati</a>";
 	}
 ?>
 </div>
 
-<div id="filtri" align="center" style="background-color:#CC8078; float:right; width:25%;" >
+<div id="filtri" align="center" style="float:right; width:25%; background-color:#00FFF3" >
 	<?php require "filter.php";?>
 	<?php
 		if(isset($_REQUEST['err']))
@@ -43,7 +42,7 @@
 	?>
 </div>
 
-<div id="voliDelGiorno" align="center" color="123456" style="background-color:#805080; width:75%; float:left;">
+<div id="voliDelGiorno" align="center" color="123456" style="width:75%; float:left;">
 	<?php
 		require "component/db_connection.php";
 		$query="SELECT * FROM viewViaggiDiretti WHERE postiSeconda>1 AND stato='previsto' AND giorno>NOW() ORDER BY giorno ASC LIMIT 0,20";

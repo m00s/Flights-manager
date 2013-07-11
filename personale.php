@@ -12,7 +12,7 @@
 <body>
 
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center">
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
@@ -32,9 +32,9 @@
 ?>
 </div>
 
-<div id="informazioni" align="center" style="background-color:#FF4030;">
+<div id="informazioni" align="center" >
 
-<div id="dettaglipersona" align="center" style="background-color:#FF4030;">
+<div id="dettaglipersona" align="center" >
 	<?php 
 	
 		require "component/db_connection.php";
@@ -65,7 +65,7 @@
 	?>
 </div>
 
-<div id="prenotazioni valide" align="center" style="background-color:#FF4030;">
+<div id="prenotazioni valide" align="center" >
 	<?php
 	echo"<br><br><br>";
 		$queryprenotazionivalidedirette="SELECT p.idPrenotazione,p.numeroBagagli,p.type,p.prezzoPrenotazione,p.posto
@@ -204,7 +204,7 @@
 	?>
 </div>
 
-<div id="prenotazionidarimborsare" align="center" style="background-color:#FF4030;">
+<div id="prenotazionidarimborsare" align="center" >
 	<?php		
 		echo"<br><br><br>";	
 		$queryprenotazionirimbrosdirette="SELECT p.idPrenotazione,p.numeroBagagli,p.type,p.prezzoPrenotazione,p.posto

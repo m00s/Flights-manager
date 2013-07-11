@@ -12,14 +12,14 @@
 <body>
 
 
-<div id="personale" align="center" style="background-color:#FF4030;">
+<div id="personale" align="center" >
 <?php
 	if(isset($_REQUEST["cmd"]))
 		if($_REQUEST["cmd"]=="logout")
 			{
 				$_SESSION=array();
 				session_destroy();
-				header ("Location:/basidati/~msartore/default.php");
+				header ("Location:default.php");
 			}
 	if(isset($_SESSION["Privileges"])){
 		echo "Benvenuto ".$_SESSION["email"] .", <a href=\"details.php?cmd=logout\" >Logout</a>";
@@ -28,7 +28,7 @@
 		echo "<p>Vedi le <a href=\"research.php?cmd=offerte\" >Offerte</a></p>";
 	}
 	else{
-		header ("Location:/basidati/~msartore/default.php");	
+		header ("Location:default.php");	
 	}
 	
 ?>
@@ -46,7 +46,7 @@
 			$row=mysql_fetch_array($result);
 			
 			echo "
-			<div id=\"volodirettosingolo\" style=\"background-color:yellow\" >
+			<div id=\"volodirettosingolo\"  >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Viaggio Selezionato</h4>
 			<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -149,7 +149,7 @@
 				
 				echo"
 				<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
-				<tr><td><input type=\"submit\" value=\"Acquista\" style=\"float:left;\"></td></tr>
+				<tr><td><input type=\"submit\" class=\"button\" value=\"Acquista\" style=\"float:left;\"></td></tr>
 				</table></form></div>";
 			}
 		else
@@ -163,7 +163,7 @@
 			
 			
 			echo "
-			<div id=\"voloconscalisingolo\" style=\"background-color:green\">
+			<div id=\"voloconscalisingolo\" >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scali Selezionato</h4>
 				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -274,7 +274,7 @@
 					echo"<input type=\"hidden\" name=\"offerte\" value=\"on\">";
 				echo"
 				<input type=\"hidden\" name=\"idv\" value=\"$_REQUEST[idv]\"
-				<tr><td><input type=\"submit\" value=\"Acquista\" style=\"float:left;\"></td></tr>
+				<tr><td><input type=\"submit\" class=\"button\" value=\"Acquista\" style=\"float:left;\"></td></tr>
 				</table></form></div>";
 			}
 	}
@@ -456,7 +456,7 @@
 				echo"
 				<input type=\"hidden\" name=\"idva\" value=\"$_REQUEST[idva]\">
 				<input type=\"hidden\" name=\"idvr\" value=\"$_REQUEST[idvr]\">
-				<tr><td><input type=\"submit\" value=\"Acquista\" style=\"float:left;\"></td></tr>
+				<tr><td><input type=\"submit\" class=\"button\" value=\"Acquista\" style=\"float:left;\"></td></tr>
 				</table>
 				</form>";
 		}
@@ -470,7 +470,7 @@
 			
 			echo "<h4 align=\"center\" style=\"color:blue;\">Riepilogo Viaggi Selezionati</h4>
 			<h2 align=\"left\" style=\"color:blue;\">Andata</h2>
-			<div id=\"voloandataritornodirettoscali\" style=\"background-color:green\">
+			<div id=\"voloandataritornodirettoscali\" >
 			<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
@@ -631,7 +631,7 @@
 				<input type=\"hidden\" name=\"idva\" value=\"$_REQUEST[idva]\">
 				<input type=\"hidden\" name=\"idvr\" value=\"$_REQUEST[idvr]\">
 				</table>
-				<input type=\"submit\" value=\"Procedi con l'acquisto\">
+				<input type=\"submit\" class=\"button\" value=\"Procedi con l'acquisto\">
 				</form></div>";
 			}
 			else
@@ -647,7 +647,7 @@
 			
 			
 			echo "
-			<div id=\"voloandataritornoscalidiretto\" style=\"background-color:green\">
+			<div id=\"voloandataritornoscalidiretto\" >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scalo Selezionato Per l'Andata</h4>
 				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -805,7 +805,7 @@
 				<input type=\"hidden\" name=\"idva\" value=\"$_REQUEST[idva]\">
 				<input type=\"hidden\" name=\"idvr\" value=\"$_REQUEST[idvr]\">
 				</table>
-				<input type=\"submit\" value=\"Procedi con l'acquisto\">
+				<input type=\"submit\" class=\"button\" value=\"Procedi con l'acquisto\">
 				</form></div>";
 			
 				
@@ -822,7 +822,7 @@
 			
 			
 			echo "
-			<div id=\"voloconscalisingolo\" style=\"background-color:green\">
+			<div id=\"voloconscalisingolo\" >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scalo Selezionato Per l'Andata</h4>
 				<form method=\"GET\" action=\"buy.php\" class=\"form\">
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
@@ -870,7 +870,7 @@
 				$result=mysql_query($query,$conn);
 			
 			echo "
-			<div id=\"voloconscalisingolo\" style=\"background-color:green\">
+			<div id=\"voloconscalisingolo\" >
 			<h4 align=\"center\" style=\"color:blue;\">Riepilogo Dei Viaggi Del Viaggio Con Scalo Selezionato Per il Ritorno</h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 					<tr>
@@ -990,7 +990,7 @@
 				<input type=\"hidden\" name=\"idva\" value=\"$_REQUEST[idva]\">
 				<input type=\"hidden\" name=\"idvr\" value=\"$_REQUEST[idvr]\">
 				</table>
-				<input type=\"submit\" value=\"Procedi con l'acquisto\">
+				<input type=\"submit\" class=\"button\" value=\"Procedi con l'acquisto\">
 				</form></div>";
 			}
 	}
