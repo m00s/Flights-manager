@@ -1,0 +1,16 @@
+//Per ogni compagnia il numero di viaggi effettuati e l'incasso totale dei viaggi effettuati tale da essere maggiore della media degli incassi
+SELECT c.nome,COUNT(*) AS NumeroViaggiEffettuati,SUM(p.prezzoPrenotazione) AS Incasso
+FROM Compagnie c JOIN ViaggiDiretti vd ON(c.idCompagnia=vd.idCompagniaEsec) JOIN Viaggi v ON(vd.idViaggioDiretto=v.idViaggio) JOIN
+		Prenotazioni p ON(v.idViaggio=p.idViaggio)
+WHERE p.stato='valido' AND v.stato='effettuato'
+GROUP BY c.idCompagnia
+HAVING SUM(p.prezzoPrenotazione)>AVG(p.prezzoPrenotazione)
+
+// Per ogni viaggio previsto il numero di volo, da dove parte a dove arriva, il numero dei posti di prima ancora disponibili 
+SELECT vo.idVolo AS NumeroVolo,l1.nomeCitta AS Partenza,l2.nomeCitta AS Arrivo,pps.numero,a.marca AS MarcaAereo,a.modello AS ModelloAereo
+FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo) JOIN Aerei a ON(a.matricola=pps.aereo)
+	JOIN Viaggi v ON(v.idViaggio=vd.idViaggioDiretto) JOIN Voli vo ON(vo.idVolo=vd.idVolo) JOIN Tratte t ON 
+		(v.idTratta=t.idTratta) JOIN Luoghi l1 ON (t.da=l1.idLuogo) JOIN Luoghi l2 ON (t.a=l2.idLuogo)	
+WHERE pps.numero NOT IN 
+		(SELECT p.posto FROM Prenotazioni p WHERE p.idViaggio=vd.idViaggioDiretto AND p.type='prima' ) 
+	AND v.stato='previsto'
