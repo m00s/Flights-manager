@@ -211,7 +211,12 @@
 			}
 		}
 		
-		
+		if(isset($_REQUEST["da"]) && isset($_REQUEST["a"]))
+		{
+			$expire=time()+(60*60*24*5);
+			setcookie("Destinazioni", "$_REQUEST[da],$_REQUEST[a]", $expire);
+		}
+			
 		if(isset($_REQUEST['tipo']) && !isset($_REQUEST['checkscali']))
 		{
 			$query="SELECT * FROM viewViaggiDiretti WHERE giorno='$_REQUEST[giornoa]' AND luogoP='$_REQUEST[da]' AND luogoA='$_REQUEST[a]'  AND postiSeconda>1";		
@@ -222,6 +227,7 @@
 				
 				if($_REQUEST['tipo']=='andata')
 				{/*solo andata con privilegi*/
+					
 					echo "
 						<div id=\"voliAndata\" align=\"center\" >
 						<h4>Voli da: $_REQUEST[da] <br> a:$_REQUEST[a] <br> il giorno $_REQUEST[giornoa] </h4>

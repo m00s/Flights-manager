@@ -32,13 +32,21 @@
 ?>
 </div>
 
-<div id="filtri" align="center" style="float:right; width:25%; background-color:#00FFF3" >
-	<?php require "filter.php";?>
-	<?php
+<div id="filtri" align="center" style="float:right; width:25%;" >
+	<?php require "filter.php";
+	
 		if(isset($_REQUEST['err']))
 		{
 			echo "<p style=\"color:red;\">Data inserita in modo sbagliato ripetere la ricerca</p>";
 		}
+		if(isset($_COOKIE["Destinazioni"]))
+		{
+			$destinazioni=explode(',',$_COOKIE["Destinazioni"]);
+			echo "<h3 style=\"color:blue\"> Ultma ricerca effettuata</h3>
+					<p>DA: $destinazioni[0]</p>
+					<p>A: $destinazioni[1]</p>";
+		}
+			
 	?>
 </div>
 
