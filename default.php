@@ -6,6 +6,7 @@
 	</title>
 	<head>
 		<link rel="stylesheet" type="text/css" href="\component\style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 </head>
 
@@ -79,7 +80,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00â‚¬</td>
 					<td height=\"25\">
 					<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
 					<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
@@ -109,7 +110,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00â‚¬</td>
 			</tr>
 		</form>";		
 			

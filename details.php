@@ -6,6 +6,7 @@
 	</title>
 	<head>
 		<link rel="stylesheet" type="text/css" href="\component\style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 </head>
 
@@ -67,8 +68,8 @@
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
-						<td>$row[10],00€</td>
-						<td>$row[11],00€</td>
+						<td>$row[10],00â‚¬</td>
+						<td>$row[11],00â‚¬</td>
 						<td>$row[12]</td>
 						<td>$row[13]</td>
 						<td>$row[14]</td>
@@ -192,8 +193,8 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[10],00€</td>
-							<td>$row[11],00€</td>
+							<td>$row[10],00â‚¬</td>
+							<td>$row[11],00â‚¬</td>
 							<td>$row[12]</td>
 							<td>$row[13]</td>
 							<td>$row[14]</td>
@@ -327,8 +328,8 @@
 						<td>$rowa[4] $rowa[2] $rowa[6]</td>
 						<td>$rowa[5] $rowa[3] $rowa[7]</td>
 						<td>$rowa[8]</td>
-						<td>$rowa[10],00€</td>
-						<td>$rowa[11],00€</td>
+						<td>$rowa[10],00â‚¬</td>
+						<td>$rowa[11],00â‚¬</td>
 						<td>$rowa[12]</td>
 						<td>$rowa[13]</td>
 						<td>$rowa[14]</td>
@@ -363,8 +364,8 @@
 						<td>$rowr[4] $rowr[2] $rowr[6]</td>
 						<td>$rowr[5] $rowr[3] $rowr[7]</td>
 						<td>$rowr[8]</td>
-						<td>$rowr[10],00€</td>
-						<td>$rowr[11],00€</td>
+						<td>$rowr[10],00â‚¬</td>
+						<td>$rowr[11],00â‚¬</td>
 						<td>$rowr[12]</td>
 						<td>$rowr[13]</td>
 						<td>$rowr[14]</td>
@@ -490,8 +491,8 @@
 						<td>$rowa[4] $rowa[2] $rowa[6]</td>
 						<td>$rowa[5] $rowa[3] $rowa[7]</td>
 						<td>$rowa[8]</td>
-						<td>$rowa[10],00€</td>
-						<td>$rowa[11],00€</td>
+						<td>$rowa[10],00â‚¬</td>
+						<td>$rowa[11],00â‚¬</td>
 						<td>$rowa[12]</td>
 						<td>$rowa[13]</td>
 						<td>$rowa[14]</td>
@@ -537,8 +538,8 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[10],00€</td>
-							<td>$row[11],00€</td>
+							<td>$row[10],00â‚¬</td>
+							<td>$row[11],00â‚¬</td>
 							<td>$row[12]</td>
 							<td>$row[13]</td>
 							<td>$row[14]</td>
@@ -676,8 +677,8 @@
 								<td>$row[4] $row[2] $row[6]</td>
 								<td>$row[5] $row[3] $row[7]</td>
 								<td>$row[8]</td>
-								<td>$row[10],00€</td>
-								<td>$row[11],00€</td>
+								<td>$row[10],00â‚¬</td>
+								<td>$row[11],00â‚¬</td>
 								<td>$row[12]</td>
 								<td>$row[13]</td>
 								<td>$row[14]</td>
@@ -711,8 +712,8 @@
 						<td>$rowr[4] $rowr[2] $rowr[6]</td>
 						<td>$rowr[5] $rowr[3] $rowr[7]</td>
 						<td>$rowr[8]</td>
-						<td>$rowr[10],00€</td>
-						<td>$rowr[11],00€</td>
+						<td>$rowr[10],00â‚¬</td>
+						<td>$rowr[11],00â‚¬</td>
 						<td>$rowr[12]</td>
 						<td>$rowr[13]</td>
 						<td>$rowr[14]</td>
@@ -851,8 +852,8 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[10],00€</td>
-							<td>$row[11],00€</td>
+							<td>$row[10],00â‚¬</td>
+							<td>$row[11],00â‚¬</td>
 							<td>$row[12]</td>
 							<td>$row[13]</td>
 							<td>$row[14]</td>
@@ -898,8 +899,8 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[10],00€</td>
-							<td>$row[11],00€</td>
+							<td>$row[10],00â‚¬</td>
+							<td>$row[11],00â‚¬</td>
 							<td>$row[12]</td>
 							<td>$row[13]</td>
 							<td>$row[14]</td>

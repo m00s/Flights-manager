@@ -6,6 +6,7 @@
 	</title>
 	<head>
 		<link rel="stylesheet" type="text/css" href="\component\style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 </head>
 
@@ -61,7 +62,7 @@
 					}
 					
 					
-					/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+					/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 					$prezzototale=0;
 					if($voloa)
 					{	/*prima diretto*/
@@ -169,7 +170,7 @@
 					}
 									
 					
-					/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+					/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 					$prezzototale=0;
 					if($voloa)
 					{
@@ -294,7 +295,7 @@
 						}
 						
 						
-						/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+						/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 						$prezzototale=0;
 						if($voloa)
 						{	/*prima diretto*/
@@ -379,7 +380,7 @@
 						}
 										
 						
-						/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+						/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 						$prezzototale=0;
 						if($voloa)
 						{
@@ -458,7 +459,7 @@
 						}
 						
 						
-						/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+						/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 						$prezzototale=0;
 						if($voloa)
 						{	/*prima diretto*/
@@ -544,7 +545,7 @@
 						}
 										
 						
-						/*calcolare il prezzo della prenotazione che è data dai bagagli e dal prezzo del viaggio di prima classe*/
+						/*calcolare il prezzo della prenotazione che Ã¨ data dai bagagli e dal prezzo del viaggio di prima classe*/
 						$prezzototale=0;
 						if($voloa)
 						{
