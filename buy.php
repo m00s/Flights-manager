@@ -6,6 +6,7 @@
 	</title>
 	<head>
 		<link rel="stylesheet" type="text/css" href="\component\style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 </head>
 
@@ -297,11 +298,11 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 	echo"<form method=\"GET\" action=\"pay.php\" class=\"form\">";
 		if(isset($_REQUEST["bigliettiPrima"]) && $_REQUEST["bigliettiPrima"]!=0)
 			{
-			echo"<h4>Nome passeggeri Prima Classe Viaggio D'andata, Un bagaglio da 20KG già incluso, Selezionare Eventuali Da Aggiungere Massimo 2, Bagaglio A Mano Incluso</h4>";
+			echo"<h4>Nome passeggeri Prima Classe Viaggio D'andata, Un bagaglio da 20KG giÃ  incluso, Selezionare Eventuali Da Aggiungere Massimo 2, Bagaglio A Mano Incluso</h4>";
 			
 				for($i=1;$i<$_REQUEST["bigliettiPrima"]+1;$i++)
 				{/*ppa=PasseggeroPrimaAndata*/
-					echo"<h4>Passeggero N°".$i."</h4>
+					echo"<h4>Passeggero NÂ°".$i."</h4>
 						<label for=\"Nome\">Nome</label><input type=\"text\" name=\"ppanome".$i."\">
 						<label for=\"Nome\">Cognome</label><input type=\"text\" name=\"ppacognome".$i."\">
 						<label for=\"Nome\">Nascita</label><input type=\"text\" name=\"ppanascita".$i."\"value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" />
@@ -321,7 +322,7 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 						{
 							$queryb="SELECT b.peso,tb.prezzo FROM Bagagli b NATURAL JOIN TariffeBagagli tb 
 									WHERE tb.idCompagnia=(SELECT idCompagniaEsec FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idv])";
-							echo"<label for=\"Bagagli\">Peso,Prezzo (kg,€)<select name=\"ppapesobagagli".$i."\">";
+							echo"<label for=\"Bagagli\">Peso,Prezzo (kg,â‚¬)<select name=\"ppapesobagagli".$i."\">";
 										$resultb=mysql_query($queryb,$conn);
 										while($row=mysql_fetch_array($resultb))
 										{
@@ -338,7 +339,7 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 			echo"<h4>Nome passeggeri Seconda Classe Viaggio D'andata, Bagaglio A Mano Incluso, Selezionare Il Numero Di Bagagli In Stiva Massimo 3</h4>";
 				for($i=1;$i<$_REQUEST["bigliettiSeconda"]+1;$i++)
 				{/*psa=PasseggeroSecondaAndata*/
-					echo"<h4>Passeggero N°".$i."</h4>
+					echo"<h4>Passeggero NÂ°".$i."</h4>
 						<label for=\"Nome\">Nome</label><input type=\"text\" name=\"psanome".$i."\">
 						<label for=\"Nome\">Cognome</label><input type=\"text\" name=\"psacognome".$i."\">
 						<label for=\"Nome\">Nascita</label><input type=\"text\" name=\"psanascita".$i."\"value=\"(aaaa/mm/dd)\" onblur=\"if(this.value=='') this.value='(aaaa/mm/dd)';\" onfocus=\"if(this.value=='(aaaa/mm/dd)') this.value='';\" />
@@ -359,7 +360,7 @@ if(isset($_REQUEST["idv"]) || (isset($_REQUEST["idva"])&&isset($_REQUEST["idvr"]
 						{
 							$queryb="SELECT b.peso,tb.prezzo FROM Bagagli b NATURAL JOIN TariffeBagagli tb 
 									WHERE tb.idCompagnia=(SELECT idCompagniaEsec FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idv])";
-							echo"<label for=\"Bagagli\">Peso,Prezzo (kg,€)<select name=\"psapesobagagli".$i."\">";
+							echo"<label for=\"Bagagli\">Peso,Prezzo (kg,â‚¬)<select name=\"psapesobagagli".$i."\">";
 										$resultb=mysql_query($queryb,$conn);
 										while($row=mysql_fetch_array($resultb))
 										{

@@ -6,6 +6,7 @@
 	</title>
 	<head>
 		<link rel="stylesheet" type="text/css" href="\component\style.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	</head>
 </head>
 <body link="#002089" alink="#002089" vlink="#002089">
@@ -75,7 +76,7 @@
 								<td>$row[5] $row[3] $row[7]</td>
 								<td>$row[8]</td>
 								<td>$row[1]</td>
-								<td>$row[11],00€</td>
+								<td>$row[11],00â‚¬</td>
 								<td>Diretto</td>
 								<td>$row[16]</td>
 								<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
@@ -105,7 +106,7 @@
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
 								<td>$row[1]</td>
-								<td>$row[8],00€</td>
+								<td>$row[8],00â‚¬</td>
 								<td>Con Scali</td>
 								<td>$row[12]</td>
 								<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
@@ -143,7 +144,7 @@
 								<td>$row[5] $row[3] $row[7]</td>
 								<td>$row[8]</td>
 								<td>$row[1]</td>
-								<td>$row[11],00€</td>
+								<td>$row[11],00â‚¬</td>
 								<td>Diretto</td>
 								<td>$row[16]</td>
 							</tr></form>";	
@@ -168,7 +169,7 @@
 								<td>$row[4] $row[2] </td>
 								<td>$row[5] $row[3] </td>
 								<td>$row[1]</td>
-								<td>$row[8],00€</td>
+								<td>$row[8],00â‚¬</td>
 								<td>Con Scali</td>
 								<td>$row[11]</td>
 							</tr></form>
@@ -247,7 +248,7 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[11],00€</td>
+							<td>$row[11],00â‚¬</td>
 							<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
 							<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
 							<td><input type=\"image\" src=\"images\go.png\" value=\"Dettagli\ height=\"30\" width=\"30\" alt=\"Acquista\"></td>
@@ -287,7 +288,7 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[11],00€</td>					
+							<td>$row[11],00â‚¬</td>					
 							<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
 							<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
 						</tr>";	
@@ -313,7 +314,7 @@
 							<td>$row[4] $row[2] $row[6]</td>
 							<td>$row[5] $row[3] $row[7]</td>
 							<td>$row[8]</td>
-							<td>$row[11],00€</td>
+							<td>$row[11],00â‚¬</td>
 							<input type=\"hidden\" name=\"volor\" value=\"diretto\">
 							<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
 						</tr>
@@ -344,7 +345,7 @@
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
-						<td>$row[11],00€</td>
+						<td>$row[11],00â‚¬</td>
 					</tr>
 				</form>";	
 				
@@ -375,7 +376,7 @@
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
-						<td>$row[11],00€</td>
+						<td>$row[11],00â‚¬</td>
 					</tr>";	
 				
 				}
@@ -397,7 +398,7 @@
 						<td>$row[4] $row[2] $row[6]</td>
 						<td>$row[5] $row[3] $row[7]</td>
 						<td>$row[8]</td>
-						<td>$row[11],00€</td>
+						<td>$row[11],00â‚¬</td>
 					</tr>
 				";	
 				
@@ -441,7 +442,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 									<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
 									<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
@@ -466,7 +467,7 @@
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 									<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
 									<input type=\"hidden\" name=\"voloa\" value=\"scali\">
@@ -510,7 +511,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 									<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
 								</tr>
@@ -533,7 +534,7 @@
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 									<td><input type=\"radio\" name=\"idva\" value=\"$row[0]\"></td>
 								</tr>";						
@@ -561,7 +562,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 									<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
 								</tr>";	
@@ -583,7 +584,7 @@
 							<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 									<td><input type=\"radio\" name=\"idvr\" value=\"$row[0]\"></td>
 								</tr>
@@ -618,7 +619,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 								</tr>";	
 						
@@ -638,7 +639,7 @@
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 								</tr>
 							";	
@@ -672,7 +673,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 								</tr>
 							";	
@@ -693,7 +694,7 @@
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 								</tr>";						
 						}				
@@ -719,7 +720,7 @@
 									<td>$row[4] $row[2] $row[6]</td>
 									<td>$row[5] $row[3] $row[7]</td>
 									<td>$row[8]</td>
-									<td>$row[11],00€</td>
+									<td>$row[11],00â‚¬</td>
 									<td>Diretto</td>
 								</tr>";	
 						
@@ -739,7 +740,7 @@
 								<tr>
 									<td>$row[4] $row[2] </td>
 									<td>$row[5] $row[3] </td>
-									<td>$row[8],00€</td>
+									<td>$row[8],00â‚¬</td>
 									<td>Con Scali</td>
 								</tr>
 							";	
