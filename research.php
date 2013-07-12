@@ -38,7 +38,7 @@
 
 <?php
 
-	require "component/db_connection.php";
+	require_once "component/db_connection.php";
 	
 	if(isset($_REQUEST["cmd"]) && $_REQUEST["cmd"]=="offerte")
 	{

@@ -13,7 +13,7 @@
 <body>
 <div>
 	<?php
-	require "component/db_connection.php";
+	require_once "component/db_connection.php";
 	if(isset($_REQUEST["idv"]) && isset($_REQUEST["passeggero"]))
 	{
 		$query="SELECT p.posto,vvd.*,p.idPrenotazione

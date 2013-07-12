@@ -36,7 +36,7 @@
 	$voloa=NULL;
 if(isset($_REQUEST["idv"]))
 {
-	require "component/db_connection.php";
+	require_once "component/db_connection.php";
 	$queryca="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idv]";
 	$res=mysql_query($queryca,$conn);
 	$resultca=mysql_fetch_array($res);
@@ -90,7 +90,7 @@ if(isset($_REQUEST["idv"]))
 
 if(isset($_REQUEST["idva"]) & isset($_REQUEST["idvr"]))
 {
-	require "component/db_connection.php";
+	require_once "component/db_connection.php";
 	
 		$queryca="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idva]";
 		$querycr="SELECT idViaggioDiretto FROM ViaggiDiretti WHERE idViaggioDiretto=$_REQUEST[idvr]";

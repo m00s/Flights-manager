@@ -110,7 +110,7 @@
 					for($k=1; $k<=$n; $k++){
 						$var="idViaggio".$k;
 						
-						// SE $k É IL PRIMO O L'ULTIMO VIAGGIO PRENDO L'AEROPORTO PER CREARE LA TRATTA SUCCESSIVAMENTE
+						// SE $k Ã‰ IL PRIMO O L'ULTIMO VIAGGIO PRENDO L'AEROPORTO PER CREARE LA TRATTA SUCCESSIVAMENTE
 						if($k==1){
 							$query="SELECT vt.Partenza, v.giorno FROM viewTratte vt JOIN Viaggi v ON (v.idTratta=vt.Tratta)
 								WHERE idViaggio=$_REQUEST[$var]";
@@ -147,7 +147,7 @@
 	
 					}
 					
-					// CERCO ID_TRATTA E SE NON É PRESENTE LA CREO
+					// CERCO ID_TRATTA E SE NON Ã‰ PRESENTE LA CREO
 					$query="SELECT Tratta FROM viewTratte WHERE Partenza='$aeroportoP' AND Arrivo='$aeroportoA'";
 					$result = mysql_query($query,$conn) or die ("Query fallita select" . mysql_error($conn));
 					if($row = mysql_fetch_array($result)){

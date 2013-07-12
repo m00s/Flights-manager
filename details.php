@@ -37,7 +37,7 @@
 
 
 <?php 
-	require "component/db_connection.php";
+	require_once "component/db_connection.php";
 	if(isset($_REQUEST["idv"]) && isset($_REQUEST['voloa']))
 	{
 		if($_REQUEST['voloa']=='diretto')

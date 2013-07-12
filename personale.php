@@ -38,7 +38,7 @@
 <div id="dettaglipersona" align="center" >
 	<?php 
 	
-		require "component/db_connection.php";
+		require_once "component/db_connection.php";
 		$querydettagli="SELECT * FROM Anagrafiche WHERE email='$_SESSION[email]'";
 		$resultdettagli=mysql_fetch_array(mysql_query($querydettagli,$conn));
 		echo"
