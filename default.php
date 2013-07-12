@@ -1,5 +1,6 @@
 <?php session_start();?>
 <html>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <head>
 	<title> 
 		Airlines 
@@ -37,7 +38,7 @@
 	
 		if(isset($_REQUEST['err']))
 		{
-			echo "<p style=\"color:red;\">Data inserita in modo sbagliato ripetere la ricerca</p>";
+			echo "<p style=\"color:red;\"> (!) Errore data. Ripetere la ricerca</p>";
 		}
 		if(isset($_COOKIE["Destinazioni"]))
 		{
@@ -52,7 +53,6 @@
 
 <div id="voliDelGiorno" align="center" color="123456" style="width:75%; float:left;">
 	<?php
-		require "component/db_connection.php";
 		$query="SELECT * FROM viewViaggiDiretti WHERE postiSeconda>1 AND stato='previsto' AND giorno>NOW() ORDER BY giorno ASC LIMIT 0,20";
 		$result=mysql_query($query,$conn);
 			
@@ -79,7 +79,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00;</td>
 					<td height=\"25\">
 					<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
 					<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
@@ -109,7 +109,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00Ã„</td>
 			</tr>
 		</form>";		
 			

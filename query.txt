@@ -6,7 +6,8 @@ WHERE p.stato='valido' AND v.stato='effettuato'
 GROUP BY c.idCompagnia
 HAVING SUM(p.prezzoPrenotazione)>AVG(p.prezzoPrenotazione)
 
-// Per ogni viaggio previsto il numero di volo, da dove parte a dove arriva, il numero dei posti di prima ancora disponibili 
+// Per ogni viaggio previsto, il numero di volo, da dove parte a dove arriva, il numero dei posti di prima ancora disponibili 
+
 SELECT vo.idVolo AS NumeroVolo,l1.nomeCitta AS Partenza,l2.nomeCitta AS Arrivo,pps.numero,a.marca AS MarcaAereo,a.modello AS ModelloAereo
 FROM postiPrimaClasse pps JOIN ViaggiDiretti vd ON (pps.aereo=vd.aereo) JOIN Aerei a ON(a.matricola=pps.aereo)
 	JOIN Viaggi v ON(v.idViaggio=vd.idViaggioDiretto) JOIN Voli vo ON(vo.idVolo=vd.idVolo) JOIN Tratte t ON 
