@@ -20,10 +20,10 @@
 					if(isset($_GET['idVolo']) && isset($_GET['Compagnia'])){
 						if(isset($_GET['tariffe']))
 						{
-							$_SESSION[Aereo]=$_GET[aereo];
-							$_SESSION[Comandante]=$_GET[comandante];
-							$_SESSION[Vice]=$_GET[vice];
-							$_SESSION[Giorno]=$_GET[giorno];
+							$_SESSION['Aereo']=$_GET['aereo'];
+							$_SESSION['Comandante']=$_GET['comandante'];
+							$_SESSION['Vice']=$_GET['vice'];
+							$_SESSION['Giorno']=$_GET['giorno'];
 							echo"
 								<div class=\"content\">
 								<form method=\"POST\" action=\"managecheck.php?area=viaggi\" class=\"form\">
@@ -31,7 +31,8 @@
 										<tr>
 											<td align=\"center\"><h2 class=\"tt\">Inserisci Viaggio</h2></td>
 										</tr>
-										<td>	
+										<td>
+										<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 										<tr width=\"96\" align=\"right\" class=\"sm\">
 											<td><label>Prezzo Business</label></td>
 											<td><input type=\"TEXT\" name=\"pPrima\"/></td>
@@ -56,8 +57,8 @@
 						else
 						{
 							$path = $_SERVER['PHP_SELF'];
-							$_SESSION[Volo]=$_GET[idVolo];
-							$_SESSION[Compagnia]=$_GET[Compagnia];
+							$_SESSION['Volo']=$_GET['idVolo'];
+							$_SESSION['Compagnia']=$_GET['Compagnia'];
 							echo"
 								<div class=\"content\">
 								<form method=\"GET\" action=\"$path\" class=\"form\">
@@ -177,7 +178,7 @@
 						echo"
 						<div class=\"content\">
 							<div style=\"padding-left:15%\">
-								<meta http-equiv=\"refresh\" content=\"3;url=/basidati/~msartore/admin/manageviaggi.php?option=insert\">
+								<meta http-equiv=\"refresh\" content=\"3;url=/basidati/~msartore/admin/manageassistenze.php\">
 								<h2>Viaggio inserito con successo</h2>
 								<h4>a breve sarai reindirizzato alla pagina degli assistenti di volo..</h4>
 							</div>

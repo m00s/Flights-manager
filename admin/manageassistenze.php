@@ -18,7 +18,7 @@
 			
 			if(isset($_REQUEST['idviaggio'])){	
 				echo "<div class=\"content\">
-						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
+						<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti</h2></td>
 						</tr>
@@ -55,7 +55,7 @@
 			else{
 				echo"
 					<div class=\"content\">
-						<table border=\"1px\" style=\"padding:7px; margin-left:10%\">
+						<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Assegna assistenti - Scelta viaggio</h2></td>
 						</tr>

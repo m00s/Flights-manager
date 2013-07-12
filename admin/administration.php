@@ -21,8 +21,8 @@
 				if($row = mysql_fetch_row($result))
 					$string = $row[0]." ".$row[1];
 				echo "<div class=\"content\">
-						<div style=\"padding-left:12%\">
-						<table border=\"2\">
+						<div style=\"padding-left:7%\">
+						<table border=\"1\" bordercolor=\"#99FFFF\" cellspacing=\"0\" align=\"center\" class=\"table\" cellpadding=\"3\" >
 						<tr>
 							<td colspan=\"7\" align=\"center\"><h2>Riepilogo viaggi inseriti da $string</h2></td>
 						</tr>

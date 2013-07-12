@@ -70,7 +70,7 @@
 						$test = mysql_fetch_assoc($Rcontrol);
 						if($test['flag']=1){
 							//echo "<meta http-equiv=\"refresh\" content=\"5;url=http://localhost:8888/default.php\">";
-							echo "<meta http-equiv=\"refresh\" content=\"5;url=http://basidati/basidati/~msartore/default.php\">";
+							echo "<meta http-equiv=\"refresh\" content=\"5;url=/basidati/~msartore/default.php\">";
 							echo "Registrazione effettuata con successo, verrai reindirizzato a breve..";
 							$_SESSION['utente'] = $_POST['mail'];
 						}
