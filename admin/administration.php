@@ -12,7 +12,7 @@
 	<body link="#002089" alink="#002089" vlink="#002089">
 		<?php
 			if(isset($_SESSION['Privileges']) && $_SESSION['Privileges']=="Admin"){
-				require "../component/db_connection.php";
+				require_once "../component/db_connection.php";
 				require "banneradmin.php";
 				include "sidebar.php";
 				$id=$_SESSION['id'];
