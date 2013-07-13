@@ -93,7 +93,7 @@
 		}
 		else{
 			
-		echo "<h4>Voli della giornata <br>"; echo date('Y-m-d'); echo"</h4>
+		echo "<h4>Voli Previsti a breve <br> </h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 				<tr>
 					<th>Partenza</th>
