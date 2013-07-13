@@ -38,12 +38,12 @@
 	
 		if(isset($_REQUEST['err']))
 		{
-			echo "<p style=\"color:red;\">Data inserita in modo sbagliato ripetere la ricerca</p>";
+			echo "<p style=\"color:red;\">Errore data. Ripetere la ricerca</p>";
 		}
 		if(isset($_COOKIE["Destinazioni"]))
 		{
 			$destinazioni=explode(',',$_COOKIE["Destinazioni"]);
-			echo "<h3 style=\"color:blue\"> Ultma ricerca effettuata</h3>
+			echo "<h3 style=\"color:blue\"> Ultima ricerca effettuata</h3>
 					<p>DA: $destinazioni[0]</p>
 					<p>A: $destinazioni[1]</p>";
 		}
