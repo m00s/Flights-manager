@@ -60,7 +60,7 @@
 		if(isset($_SESSION["Privileges"]))
 		{
 		
-		echo "<h4>Voli previsti a breve <br></h4>
+		echo "<h4>Prossimi viaggi in programma <br></h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 				<tr>
 					<th>Partenza</th>
@@ -93,7 +93,7 @@
 		}
 		else{
 			
-		echo "<h4>Voli Previsti a breve <br> </h4>
+		echo "<h4>Prossimi viaggi in programma <br> </h4>
 				<table align=\"top-left\" border=\"2px\" bordercolor=\"#99AF99\" style=\"margin:0px\">
 				<tr>
 					<th>Partenza</th>
