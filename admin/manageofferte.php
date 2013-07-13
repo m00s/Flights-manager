@@ -82,7 +82,7 @@
 							<th>Partenza</th>
 							<th>Arrivo</th>
 							<th>Disponibili</th>
-							<th>Sconto</th>
+							<th>Sconto %</th>
 							<th>Elimina offerta</th>";
 								$query = "SELECT vi.idViaggio, vi.giorno, vt.Partenza, vt.Arrivo, o.disponibili, o.scontoperc
 											FROM Viaggi vi JOIN viewTratte vt ON (vi.idTratta=vt.Tratta) JOIN Offerte o ON (vi.idViaggio=o.idViaggio) WHERE vi.stato='previsto' AND vi.idViaggio IN (SELECT idViaggio FROM Offerte) ORDER BY vi.giorno";
