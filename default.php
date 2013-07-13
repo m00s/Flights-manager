@@ -80,7 +80,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00E</td>
 					<td height=\"25\">
 					<input type=\"hidden\" name=\"voloa\" value=\"diretto\">
 					<input type=\"hidden\" name=\"idv\" value=\"$row[0]\">
@@ -110,7 +110,7 @@
 					<td>$row[5] $row[3] $row[7]</td>
 					<td>$row[8]</td>
 					<td>$row[1]</td>
-					<td>$row[11],00€</td>
+					<td>$row[11],00E</td>
 			</tr>
 		</form>";		
 			
