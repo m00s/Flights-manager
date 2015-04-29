@@ -1,12 +1,15 @@
-airlines
-========
+# Airlines
 
-Progetto di Basi di Dati, università di Padova AA 2012/13
+Databases exam project, University of Padua (2012/13)
 
-Prenotazione di viaggi aerei, con o senza scali, con diverse scelte di bagagli e tratte.
+### Description
+
+This is a sample website to execute CRUD functions on the designed db.
+
+You can read a detailed description of the architecture in `Relazione.pdf`
 
 ---------------------
-
-Database  MySQL
-Backend   PHP
-Frontend  HTML + CSS + Javascript
+#### Technology stack
+* Database  MySQL
+* Backend   PHP
+* Frontend  HTML/CSS/JS
